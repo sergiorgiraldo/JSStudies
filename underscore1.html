@@ -1,0 +1,26 @@
+<!DOCTYPE html> 
+<script  type="text/javascript" src="lib/underscore-min.js"></script>
+<script type="text/javascript">
+var actors=[
+	{name:"De niro", movie:"Taxi Driver"},
+	{name:"Stallone", movie:"Rambo 1"},
+	{name:"Marisa Tomei", movie:"Meu primo vinny"},
+	{name:"Stallone", movie:"Rambo 2"},
+	{name:"Stallone", movie:"Rambo3"},
+	{name:"Stallone", movie:"Rambo3"},
+	{name:"De niro", movie:"Touro indomavel"},
+	{name:"Stallone", movie:"Cobra"},
+	{name:"Stallone", movie:"Rocky"},
+	{name:"Brad Pitt", movie:"Clube da Luta"},
+	{name:"Edward Norton", movie:"Clube da Luta"},
+	{name:"Brad Pitt", movie:"Snatch"}
+];
+var groups=_.groupBy(actors, "name");
+_.each(groups, function(movies,actor){
+	document.write(actor+ "<br/>");
+	_.each(movies, function(_){
+		document.write("&nbsp;&nbsp;&nbsp;&bull;" + _.movie + "<br/>");
+			
+		});
+	});
+</script>

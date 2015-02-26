@@ -1,0 +1,148 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+ <meta charset="UTF-8"> 
+
+ <title>another url redirecto</title> 
+
+<style> 
+	 body{  	
+	 	font-family:verdana; 
+	 	font-size:large; 
+	 } 
+	 div#info, label.title{ 
+	 	font-weight: bolder; 
+	 } 
+	 form>p>label, p>label{ 
+	 	width: 150px; 
+	 } 
+	 form>p>label,form>input,p>input{ 
+	 	float:left; 
+	 } 
+ </style> 
+
+ <script type="text/javascript" src="../lib/jquery-2.1.3.min.js"></script> 
+ <script type="text/javascript" src="../lib/underscore-min.js"></script> 
+ <script type="text/javascript" src="../lib/backbone-min.js"></script> 
+ <script type="text/javascript" src="../lib/backbone.marionette.min.js"></script>
+
+ <script type="text/javascript"> 
+	var app = app || {}; 
+
+	app.url = Backbone.Model.extend({ 
+		defaults:{ 
+			key: "", 
+		 	url: "" 
+	 	} 
+	});
+
+	app.urls = Backbone.Collection.extend({ 
+		model: app.url 
+	});  
+
+	app.urlsView = Backbone.View.extend({ 
+		el:"#urls", 
+
+		events:{ 
+		 	"click #add": "addUrl", 
+		 	"click #get": "getUrl" 
+		},
+
+		addUrl:function(e){
+			e.preventDefault(); 
+			var data={}; 
+
+      if($("#newMnemonic").val() != "")
+			  data["key"] = $("#newMnemonic").val();
+      else
+			  data["key"] = this.getId();
+			data["url"] = $("#newUrl").val();
+
+			$.ajax({ 
+				url: "https://api.mongolab.com/api/1/databases/test/collections/urls?apiKey=5062cef2e4b088b309ccc936",
+      			data: JSON.stringify( data ),
+      			type: "POST",
+      			contentType: "application/json",
+      			success:function(){
+      					$("#addedUrl").html("<a target='_blank' href='http://giral.do/" + data["key"] + "!'>http://giral.do/" + data["key"] + "!</a>");
+      					$("#newUrl").html("");	
+      				} 
+      			});
+      		},
+
+		getUrl:function(e){
+		 	e.preventDefault(); 
+			$.ajax({ 
+				url: "https://api.mongolab.com/api/1/databases/test/collections/urls?q={\"key\":\"" + $("#existingId").val() + "\"}&apiKey=5062cef2e4b088b309ccc936",
+      			type: "GET",
+      			success:function(data){
+      					$("#existingUrl").html(_.pluck(data, "url"));
+      				}
+      			});
+		},
+
+		getId:function(){
+			var yr=new Date().getYear();
+		 	var mo=new Date().getMonth();
+		 	var day=new Date().getDate();
+		 	var rnd = Math.floor(Math.random()*99);
+		 	return yr + "" + mo + day + rnd; 	
+		}
+	});	
+
+  app.allUrlsView = Backbone.View.extend({
+    el:"#allUrls",
+
+    template: "#urlListTemplate",
+
+    events:{
+      "#getAll click" : "getAll"
+    },
+
+    getAll:function(e){
+		 	e.preventDefault(); 
+      alert("working");
+    }
+  });
+
+	$(document).ready(function(){ 
+	 	new app.urlsView(); 
+
+	 	$("#newUrl").focus(); 
+	 }); 
+ </script>
+
+ <script type="text/html" id="urlListTemplate">
+  <%= key %> ..::.. <%= url %><br />
+ </script>
+ </head>
+
+<body> 
+ <div id="urls"> 
+	 <form id="addUrl" action="#"> 
+		<p><label class="title">url</label><input id="newUrl" type="text" style="width:500px;"/></p> 
+    <br/><p><label class="title">mnemonic</label><input id="newMnemonic" type="text" style="width:200px;"/></p> 
+		<br/><p><label>&nbsp;</label><button id="add">Add</button></p> 
+	 	<div class="info" id="addedUrl"></div>
+	 </form> 
+
+	 <hr />
+
+	 <form id="getUrl" action="#"> 
+		<p><label class="title">which id?</label><input id="existingId" type="text" style="width:100px;" /><p>
+		<br/><p><label>&nbsp;</label><button id="get">Get</button></p> 
+	 	<div  class="info" id="existingUrl"></div>
+	 </form> 
+ </div> 
+
+ <div id="allUrls"> 
+	 <hr /> 
+	 
+  <form id="getUrls" action="#"> 
+    <br/><p><label>&nbsp;</label><button id="getAll">Get All</button></p> 
+    <div  class="info" id="allUrls"></div>
+  </form> 
+ </div>
+
+ </body> 
+</html> 

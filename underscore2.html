@@ -1,0 +1,155 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+ <meta charset="UTF-8"> 
+
+ <title>my first backbone</title> 
+
+ <script type="text/javascript" src="lib/jquery-2.1.3.min.js"></script> 
+ <script type="text/javascript" src="lib/underscore-min.js"></script> 
+ <script type="text/javascript" src="lib/backbone-min.js"></script> 
+ <script type="text/javascript" src="lib/backbone.localStorage-min.js"></script> 
+
+ <script type="text/template" id="teamTemplate"> 
+ <ul> 
+ <li><%= name %></li> 
+ <li><%= local %></li> 
+ </ul> 
+ </script> 
+
+ <script type="text/javascript"> 
+	 var app = app || {}; 
+
+	 app.team = Backbone.Model.extend({ 
+	 defaults:{ 
+		 name: "", 
+		 local: "" 
+	 } 
+	 }); 
+
+	 app.teams = Backbone.Collection.extend({ 
+		 localStorage: new Backbone.LocalStorage("TeamsCollection"), 
+		 model: app.team 
+	 }); 
+
+	 app.teamView = Backbone.View.extend({ 
+		 tagName: "div", 
+
+		 template: _.template($("#teamTemplate").html()), 
+
+		 render: function(){ 
+		 	this.$el.html(this.template(this.model.attributes)); 
+		 	return this; 
+		 } 
+	 }); 
+
+	 app.teamsView = Backbone.View.extend({ 
+		 el:"#teams", 
+
+		 initialize: function(initialTeams){ 
+			 this.collection=new app.teams(); 
+			 this.collection.fetch(); 
+			 this.render(); 
+
+			 this.listenTo(this.collection, "add", this.renderTeam); 
+		 }, 
+
+		 events:{ 
+		 	"click #showNew": "toggleForm", 
+		 	"click #add": "addTeam" 
+		 }, 
+
+		 toggleForm:function(){ 
+			 var el = $("#addTeam"); 
+			 el.toggle(); 
+
+			 if (el.is(":visible")) { 
+			 	$("#showNew").html("hide form"); 
+			 } 
+			 else { 
+			 	$("#showNew").html("show form"); 
+			 }; 
+		 }, 
+
+		 addTeam:function(e){ 
+			 e.preventDefault(); 
+
+			 var data={}; 
+
+			 data["name"] = $("#name").val(); 
+			 data["local"] = $("#local").val(); 
+
+			 this.collection.add(new app.team(data)); 
+
+			 this.startOver(); 
+		}, 
+
+		startOver:function(){ 
+			 $("#name").val(""); 
+			 $("#local").val(""); 
+			 $("#name").focus(); 
+		}, 
+
+		render:function(){ 
+			 this.collection.each(function(item){ 
+			 this.renderTeam(item); 
+			}, this); 
+		}, 
+
+		renderTeam:function(item){ 
+		 	var teamView_ = new app.teamView({ 
+		 	model:item 
+		 	}); 
+		 	this.$el.append(teamView_.render().el); 
+		} 
+	 }); 
+
+	 $(document).ready(function(){ 
+	 	new app.teamsView(); 
+
+	 	$("#name").focus(); 
+	 }); 
+ </script> 
+
+ <style> 
+	 body{ 
+	 font-family:verdana; 
+	 font-size:medium; 
+	 } 
+	 label.title{ 
+	 font-size: xx-large; 
+	 font-weight: bold; 
+	 text-decoration: overline underline; 
+	 } 
+	 a#showNew{ 
+	 margin-left:30px; 
+	 } 
+	 form>p>label{ 
+	 width: 80px; 
+	 } 
+	 form>p>label,form>input{ 
+	 float:left; 
+	 } 
+ </style> 
+</head> 
+<body> 
+ <div id="teams"> 
+
+	 <p> 
+		 <label class="title">new team</label> 
+		 <a href="#" id="showNew">hide form</a> 
+	 </p> 
+
+	 <form id="addTeam" action="#"> 
+		 <p><label>name::</label><input id="name" type="text"/></p> 
+		 <p><label>local::</label><input id="local" type="text"/></p> 
+		 <p><button id="add">Add</button></p> 
+	 </form> 
+
+	 <br /> 
+
+	 <label class="title">list of teams</label> 
+ </div> 
+
+ </body> 
+</html> 
