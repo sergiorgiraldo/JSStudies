@@ -1,5 +1,5 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyDgmYXnonM6Y6vXOsd0FXgI3G1BN8egmcE",
+    apiKey: "pegar no site",
     authDomain: "vuefirechat-685e4.firebaseapp.com",
     databaseURL: "https://vuefirechat-685e4.firebaseio.com",
     projectId: "vuefirechat-685e4",
