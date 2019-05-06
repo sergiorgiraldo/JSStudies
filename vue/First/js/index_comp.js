@@ -3,7 +3,8 @@ var data = {
           { titulo: 'A Origem das Espécies', autor: 'Charles Darwin', checked: false }], 
   cabecalho: 'Livros Preferidos', 
   novoLivro: '',
-  novoAutor: ''
+  novoAutor: '',
+  simplePlaceholder: ''
 };
 
 /** 
@@ -30,6 +31,13 @@ var AlteraTituloComp = Vue.extend({
     return data; 
   }, 
   template: '<input v-model="cabecalho"/>' 
+}); 
+
+var MostraMeuPlaceholder = Vue.extend({ 
+  data: function () { 
+    return data; 
+  }, 
+  template: '<input v-model="simplePlaceholder"/>' 
 }); 
 
 var AddItemComp = Vue.extend({ 
@@ -70,6 +78,7 @@ var AddItemComp = Vue.extend({
  */ 
 Vue.component('itens-comp', ItensComp); 
 Vue.component('altera-titulo-comp', AlteraTituloComp); 
+Vue.component('my-placeholder', MostraMeuPlaceholder); 
 Vue.component('add-item-comp', AddItemComp);
 
 /** 

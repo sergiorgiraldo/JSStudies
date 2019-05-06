@@ -7,13 +7,20 @@
     <title>Hello World - Vue.js 2</title>
     <script src="https://unpkg.com/vue"></script></head>
 <body>
-    <div id="app">{{ message }}</div>
-             
+    <div id="app">
+        Static: <b id="app">{{ announce }}</b>
+        <br />
+        This is the value from the field: {{ message }}
+        <br />
+        <input v-model="message" placeholder="Edite-me"/>
+    </div>
+    
     <script type="text/javascript">
         new Vue({
             el: "#app",
             data: {
-                message: "Oi Teo!"
+                announce: "Hello Vue!",
+                message: ""
             }
         });
     </script>    
