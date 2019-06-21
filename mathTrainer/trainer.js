@@ -25,7 +25,7 @@
     max: 0,
     minutes: 0,
     avoidNegatives: true,
-    operators: ['add', 'div']
+    operators: ['add', 'mul', 'div', 'sub']
   };
 
   /**
@@ -394,6 +394,7 @@
       if (hasValidOptions) {
         trainer.question.createNew();
         trainer.run.initializeTrainer();
+        $('#result').focus();
       }
     });
 
