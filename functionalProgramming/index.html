@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Musings with js + functional programming</title>
+    <script src="./bundle.js"></script>
+    <script type="text/javascript">
+        function p(what){
+            document.writeln(what + "<br />")
+        }
+
+        p("exercises");
+
+        const numbers = [2,4,6];
+        p(numbers);
+        function double(n){return n *2};
+        p(numbers.map(double));
+
+        showFirstCity();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
