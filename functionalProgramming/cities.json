@@ -28,5 +28,35 @@
     "temp": 301.48333333333335,
     "humidity": 88,
     "internetSpeed": 20
+  },
+  {
+    "name": "Phuket",
+    "country": "TH",
+    "region": "SE Asia",
+    "cost": 1040,
+    "currency": "USD",
+    "temp": 302.03888888888895,
+    "humidity": 74,
+    "internetSpeed": 20
+  },
+  {
+    "name": "Hoi An",
+    "country": "VN",
+    "region": "SE Asia",
+    "cost": 1083,
+    "currency": "USD",
+    "temp": 299.2611111111112,
+    "humidity": 83,
+    "internetSpeed": 20
+  },
+  {
+    "name": "Prague",
+    "country": "CZ",
+    "region": "Europe",
+    "cost": 1191,
+    "currency": "USD",
+    "temp": 292.03888888888895,
+    "humidity": 77,
+    "internetSpeed": 40
   }
  ]
