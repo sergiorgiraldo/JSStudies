@@ -49,3 +49,7 @@ window.TotalCost = function () {
 window.TotalCost2 = function () {
     return totalCost2;
 };
+
+window.Test = function () {
+    return "Success!!!";
+};

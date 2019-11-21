@@ -113,6 +113,10 @@ window.TotalCost = function () {
 window.TotalCost2 = function () {
     return totalCost2;
 };
+
+window.Test = function () {
+    return "Success!!!";
+};
 },{"./cities.json":1,"ramda":87}],3:[function(require,module,exports){
 var always = /*#__PURE__*/require('./always');
 
