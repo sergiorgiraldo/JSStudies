@@ -97,26 +97,33 @@ const totalCostReducer = (acc, city) => {
 
 const totalCost = updatedCities2.reduce(totalCostReducer, 0);
 const totalCost2 = R.reduce(totalCostReducer, 0, updatedCities2);
+const cityCount = R.length(updatedCities2);
+const averageCost = totalCost2 / cityCount;
 
-window.Cities = function () {
-    return JSON.stringify(cities);
-};
-window.UpdatedCities = function () {
-    return JSON.stringify(updatedCities);
-};
-window.UpdatedCities2 = function () {
-    return JSON.stringify(updatedCities2);
-};
-window.TotalCost = function () {
-    return totalCost;
-};
-window.TotalCost2 = function () {
-    return totalCost2;
-};
+console.log(averageCost);
 
-window.Test = function () {
-    return "Success!!!";
-};
+if (typeof window !== 'undefined') {
+    window.Cities = function () {
+        return JSON.stringify(cities);
+    };
+    window.UpdatedCities = function () {
+        return JSON.stringify(updatedCities);
+    };
+    window.UpdatedCities2 = function () {
+        return JSON.stringify(updatedCities2);
+    };
+    window.TotalCost = function () {
+        return totalCost;
+    };
+    window.TotalCost2 = function () {
+        return totalCost2;
+    };
+    
+    window.Test = function () {
+        return "Success!!!";
+    };    
+}
+
 },{"./cities.json":1,"ramda":87}],3:[function(require,module,exports){
 var always = /*#__PURE__*/require('./always');
 

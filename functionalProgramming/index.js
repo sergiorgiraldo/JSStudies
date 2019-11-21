@@ -28,15 +28,7 @@ const totalCost = R.reduce(totalCostReducer, 0, cities);
 const cityCount = R.length(cities);
 // console.log(totalCost / cityCount);
 
-const groupByPropReducer = (acc, city) => {
-  const { cost = [], internetSpeed = [] } = acc;
-  return R.merge(acc, {
-    cost: R.append(city.cost, cost),
-    internetSpeed: R.append(city.internetSpeed, internetSpeed),
-  });
-}
 
-const groupedByProp = R.reduce(groupByPropReducer, {}, cities);
 
 // console.log(groupedByProp);
 
