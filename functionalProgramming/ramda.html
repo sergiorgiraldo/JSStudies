@@ -27,16 +27,74 @@
         $(document).ready(function(){
             var cities = readTextFile("https://raw.githubusercontent.com/knowthen/ramdatutorial/master/cities.json");
             
+            const percentile = (array, value) => {
+                const length = R.length(array);
+                const eqVal = R.equals(value);
+                const alen = !R.any(eqVal, array)
+                    ? R.range(0, length + 1)
+                    : R.range(0, length);
+                const sortedArray = R.sort((a, b) => a - b, array);
+                const idx = R.map(eqVal, sortedArray);
+                const alenTrue = R.filter((v, i) => {
+                    return idx[alen.indexOf(v)] === true;
+                }, alen);
+                const mean = R.mean(alenTrue);
+                const percent = mean / length;
+                return percent;
+                };
+
             const KelvinToCelsius = k => {return k - 273.15;};
+            
             const updateTemperature = R.curry((convertFn, city) => {
                 const temp = Math.round(convertFn(city.temp));
                 return R.merge(city, { temp });
             });
-            const updatedCities = R.map(updateTemperature(KelvinToCelsius), cities);
             
-            var firstCityText = "ORIGINAL::" + cities[0].name + "***" + cities[0].temp + "|||CONVERTED::" + updatedCities[0].name + "***" + updatedCities[0].temp;
-            alert(firstCityText);
-            $("#firstCity").html();
+            const filterByWeather = city => {
+                const { temp = 0, humidity = 0 } = city;
+                return temp > 68 && temp < 85 && humidity > 30 && humidity < 70;
+            };
+            
+            const calcScore = city => {
+                const { cost = 0, internetSpeed = 0 } = city;
+                const costPercentile = percentile(groupedByProp.cost, cost);
+                const internetSpeedPercentile = percentile(
+                    groupedByProp.internetSpeed,
+                    internetSpeed,
+                );
+                const score =
+                    100 * (1.0 - costPercentile) +
+                    20 * internetSpeedPercentile; 
+                return R.merge(city, { score });
+            }
+            
+            const cityToArray = city => {
+                const { name, country, score, cost, temp, internetSpeed } = city;
+                return [name, country, score, cost, temp, internetSpeed];
+            };
+            
+            const interestingProps = [
+                'Name',
+                'Country',
+                'Score',
+                'Cost',
+                'Temp',
+                'Internet'
+            ];
+
+            const topCities = R.pipe(
+                R.map(updateTemperature(KelvinToCelsius)),
+                R.filter(filterByWeather),
+                R.map(calcScore),
+                R.sortWith([R.descend(city => city.score)]),
+                R.take(10),
+                R.map(cityToArray),
+                R.prepend(interestingProps)
+                )(cities);
+            
+            console.log(topCities);    
+
+            $("#firstCity").html(topCities);
         });
     </script>
 </head>
