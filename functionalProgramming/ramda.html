@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ramda with javascript</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        function readTextFile(file) {
+            var rawtext;
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4) {
+                    if (rawFile.status === 200 || rawFile.status == 0) {
+                        var allText = JSON.parse(rawFile.responseText);
+                        rawtext = allText;
+                    }
+                }
+            }
+            rawFile.send(null);
+            return rawtext;
+        }
+
+        $(document).ready(function(){
+            var cities = readTextFile("https://raw.githubusercontent.com/knowthen/ramdatutorial/master/cities.json");
+            
+            const KelvinToCelsius = k => {return k - 273.15;};
+            const updateTemperature = R.curry((convertFn, city) => {
+                const temp = Math.round(convertFn(city.temp));
+                return R.merge(city, { temp });
+            });
+            const updatedCities = R.map(updateTemperature(KelvinToCelsius), cities);
+            
+            var firstCityText = "ORIGINAL::" + cities[0].name + "***" + cities[0].temp + "|||CONVERTED::" + updatedCities[0].name + "***" + updatedCities[0].temp;
+            alert(firstCityText);
+            $("#firstCity").html();
+        });
+    </script>
+</head>
+<body>
+    <p id="firstCity"></p>
+</body>
+</html>
