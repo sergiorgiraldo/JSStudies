@@ -8,7 +8,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
-        function readTextFile(file) {
+        function readTextFile(file){
             var rawtext;
             var rawFile = new XMLHttpRequest();
             rawFile.open("GET", file, false);
@@ -22,6 +22,21 @@
             }
             rawFile.send(null);
             return rawtext;
+        }
+
+        function array2Table(arr){
+            var html = "<table border='1'>";
+
+            for (var i=0; i<arr.length; i++) {
+                html += "<tr>";
+                for (var j=0; j<arr[i].length; j++) {
+                    html += "<td>" + arr[i][j] + "</td>";
+                }
+                html += "</tr>";
+            }    
+            html += "</table>";
+
+            return html;
         }
 
         $(document).ready(function(){
@@ -102,16 +117,8 @@
                 R.prepend(interestingProps)
                 )(cities);
             
-            var html = "<table border='1'>";
-            for (var i=0; i<topCities.length; i++) {
-                html += "<tr>";
-                for (var j=0; j<topCities[i].length; j++) {
-                    html += "<td>" + topCities[i][j] + "</td>";
-                }
-                html += "</tr>";
-            }    
-            html += "</table>";
-
+            const html = array2Table(topCities);
+                
             $("#firstCity").html(html);
         });
     </script>
