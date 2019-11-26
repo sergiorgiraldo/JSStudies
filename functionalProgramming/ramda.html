@@ -43,7 +43,7 @@
                 return percent;
                 };
 
-            const KelvinToCelsius = k => {return k - 273.15;};
+            const KelvinToFahrenheit = k => k * 9 / 5 - 459.67;
             
             const updateTemperature = R.curry((convertFn, city) => {
                 const temp = Math.round(convertFn(city.temp));
@@ -55,6 +55,16 @@
                 return temp > 68 && temp < 85 && humidity > 30 && humidity < 70;
             };
             
+            const groupByPropReducer = (acc, city) => {
+                const { cost = [], internetSpeed = [] } = acc;
+                return R.merge(acc, {
+                cost: R.append(city.cost, cost),
+                internetSpeed: R.append(city.internetSpeed, internetSpeed),
+                });
+            }
+  
+            const groupedByProp = R.reduce(groupByPropReducer, {}, cities);
+
             const calcScore = city => {
                 const { cost = 0, internetSpeed = 0 } = city;
                 const costPercentile = percentile(groupedByProp.cost, cost);
@@ -83,18 +93,26 @@
             ];
 
             const topCities = R.pipe(
-                R.map(updateTemperature(KelvinToCelsius)),
+                R.map(updateTemperature(KelvinToFahrenheit)),
                 R.filter(filterByWeather),
                 R.map(calcScore),
                 R.sortWith([R.descend(city => city.score)]),
-                R.take(10),
+                R.take(20),
                 R.map(cityToArray),
                 R.prepend(interestingProps)
                 )(cities);
             
-            console.log(topCities);    
+            var html = "<table border='1'>";
+            for (var i=0; i<topCities.length; i++) {
+                html += "<tr>";
+                for (var j=0; j<topCities[i].length; j++) {
+                    html += "<td>" + topCities[i][j] + "</td>";
+                }
+                html += "</tr>";
+            }    
+            html += "</table>";
 
-            $("#firstCity").html(topCities);
+            $("#firstCity").html(html);
         });
     </script>
 </head>
