@@ -6,7 +6,11 @@
     </head>
     <body>
         <form id="inputform">
-            <input type="text" placeholder="Add a new todo..." />
+            <input type="text" id="single" placeholder="Add a new todo..." size="20"/>
+        </form>
+        <br/>
+        <form id="batchform">
+            <input type="text" id="multiple" placeholder="Add a bunch of todos separated by ;..." size="50"/>
         </form>
 
         <h1>my todos</h1>
@@ -28,7 +32,7 @@
         </script>
         
         <script src="https://s3.amazonaws.com/builds.handlebarsjs.com/handlebars.min-v4.5.3.js"></script>
-        
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="http://hay.github.com/stapes/stapes.min.js"></script>
         <script type="text/javascript" src="./app.js"></script>
