@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>My todos</title>
+    </head>
+    <body>
+        <form id="inputform">
+            <input type="text" placeholder="Add a new todo..." />
+        </form>
+
+        <h1>my todos</h1>
+        <div id="todos">
+            <ul></ul>
+        </div>
+
+        <script type="text/html" id="template">
+            <ul>
+                {{#todos}}
+                <li data-id="{{id}}">
+                    <input type="checkbox" class="remove" />
+                    {{text}}
+                </li>
+                {{/todos}}
+            </ul>
+        
+            <p>{{size}} todos left</p>
+        </script>
+        
+        <script src="https://s3.amazonaws.com/builds.handlebarsjs.com/handlebars.min-v4.5.3.js"></script>
+        
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="http://hay.github.com/stapes/stapes.min.js"></script>
+        <script type="text/javascript" src="./app.js"></script>
+    </body>
+</html>
