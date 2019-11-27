@@ -1,23 +1,12 @@
 var listTemplate = Handlebars.compile( $("#template").html() );
 
-var TodosModel = Stapes.subclass({
-    constructor : function() {
-        if (window.localStorage.todos) {
-            var todos = JSON.parse( window.localStorage.todos );
-            this.set( todos );
-        }
-    },
-
-    save : function() {
-        window.localStorage.todos = JSON.stringify( this.getAll() );
-    }
-});
+var TodosModel = Stapes.subclass();
 
 var InputView = Stapes.subclass({
     constructor : function( model ) {
         this.model = model;
         this.$el = $("#inputform");
-        this.$input = this.$el.find("input");
+        this.$input = this.$el.find("#single");
         this.bindEventHandlers();
     },
 
@@ -33,6 +22,32 @@ var InputView = Stapes.subclass({
         }.bind(this));
     }
 });
+
+var BatchView = Stapes.subclass({
+    constructor : function( model ) {
+        this.model = model;
+        this.$el = $("#batchform");
+        this.$input = this.$el.find("#multiple");
+        this.bindEventHandlers();
+    },
+
+    bindEventHandlers : function() {
+        this.$el.on('submit', function(e) {
+            e.preventDefault();
+
+            var arrTodos = this.$input.val().split(';');
+            const populate = (t) => {
+                this.model.push({
+                    "text": t
+                })
+            };
+            R.map(populate, arrTodos);
+            
+            this.$input.val('');
+        }.bind(this));
+    }
+});
+
 
 var ListView = Stapes.subclass({
     constructor : function( model ) {
@@ -62,10 +77,10 @@ var TodosController = Stapes.subclass({
         this.model = new TodosModel();
         this.listView = new ListView( this.model )
         this.inputView = new InputView( this.model );
+        this.batchView = new BatchView( this.model );
         
         this.model.on('change', function() {
             this.listView.render();
-            this.model.save();
         }, this);
         
         this.listView.render();
