@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script type="text/javascript" src="vue.offline.js"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(){
+            var journal = new Vue({
+                el: '#journal',
+                data: {
+                    task: '',
+                    items: []
+                },
+                methods: {
+                    addItem: function (event) {                        
+                        this.items.push(this.task);
+                        this.task = '';
+                        this.$refs["taskEl"].focus(); // this allows to reference directly dom elements, like $
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="journal">
+        <input type="text" v-model="task" v-on:keyup.enter="addItem" ref="taskEl"/>
+        <input type="button" value="add" v-on:click="addItem"/>
+        <br />
+        <ul>
+            <li v-for="item in items">
+              {{ item }}
+            </li>
+        </ul>                
+    </div>
+</body>
+</html>
