@@ -382,7 +382,7 @@
    * *********** */
   $(document).ready(function () {
     $('#result').keyup(function (e) {
-      if (e.which === 32) {
+      if (e.which === 32) { //space
         trainer.question.skip();
       } else {
         trainer.question.verifyAndContinue();
