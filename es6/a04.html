@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=100, initial-scale=1.0">
+    <title>Arrow</title>
+</head>
+<body>
+    <script>
+        const cities = ["London", "Paris", "New York"];
+        const love = cities.map(function (name){
+            return `${name} is a great city`; //template string, notice the backtick, not single quote!
+        });
+
+        console.log(love);
+        const loveArrow = cities.map(name =>{
+            return `${name} is a great city`; //template string, notice the backtick, not single quote!
+        });
+        console.log(loveArrow);
+        
+        const loveOneLiner = cities.map(name => `${name} is a great city`);
+        console.log(loveOneLiner);
+        
+        const loveFilter = cities
+            .filter(name => name === "Paris")
+            .map(name => `${name} has Eiffel Tower`);
+        console.log(loveFilter);
+</script>
+</body>
+</html>
