@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>01 - Array improvements</title>
+</head>
+<body>
+    
+    <ul id="list">
+        <li>Willian</li>
+        <li>Jonas</li>
+        <li>Gabriel</li>
+    </ul>
+
+</body>
+
+<script>
+    console.log("====ARRAY FROM");
+    const list = document.querySelectorAll('#list li');
+    console.log(list);
+    const listArray = Array.from(list)
+    console.log(listArray);
+
+    const names = listArray.map((name) => name.textContent);
+
+    console.log(names);
+
+    console.log("====ARRAY OF");
+
+    const array = Array.of(1,4, 'Willian', {name: 'Jonas'});
+
+    console.log(array);
+
+    console.log("====ARRAY FIND");
+    const data = [
+        {
+            name: 'Willian',
+            age: 26,
+            city: 'Dublin'
+        },
+        {
+            name: 'Jonas',
+            age: 22,
+            city: 'Cologne'
+        }
+    ];
+
+    const sampleArray = [4, -5, 0, -1];
+    const underZero = sampleArray.find(x => x < 0);
+    const underZeroIndex = sampleArray.findIndex(x => x < 0);
+    console.log(underZero);
+    console.log(underZeroIndex);
+
+    const jonas = data.find(person => person.name === 'Jonas');
+    const jonasIndex = data.findIndex(person => person.name === 'Jonas');
+    console.log(jonas);    
+    console.log(jonasIndex);    
+
+    console.log("====ARRAY FILL");
+
+    const arr = new Array(50);
+    arr.fill('lol', 3, 6);
+    
+    console.log(arr);
+
+    const newArr = [1,2,3,4,5,6];
+
+    newArr.fill('lol', 1, 3);
+
+    console.log(newArr);    
+</script>
+</html>
