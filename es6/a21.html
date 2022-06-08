@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>03 - Promises Múltiplas</title>
+    <meta charset="utf-8"/>
+</head>
+<body>
+</body>
+
+<script>
+    const currency = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({ currency: 'euro', value: 3.50 });
+        }, 5000);
+    });
+
+    const countries = new Promise((resolve, reject) => {
+        resolve(['Ireland', 'England', 'Scotland']);
+    });
+
+    Promise
+        .all([currency, countries])
+        .then(responses => {
+            console.log("=====.ALL");
+            console.log(responses);
+        })
+
+    const currency2 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({ currency: 'euro', value: 3.50 });
+        }, 5000);
+    });
+
+    const countries2 = new Promise((resolve, reject) => {
+        resolve(['Ireland', 'England', 'Scotland']);
+    });        
+
+    Promise
+    .race([currency2, countries2])
+    .then(responses => {
+            console.log("=====.RACE");
+            console.log(responses);
+        })
+    //notice that the RACE is executed first because 'countries2' has no timeout so it is executed instantaneously
+    //after 5 secs we see the ALL when 'countries' returns
+</script>
+</html>

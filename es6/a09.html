@@ -20,7 +20,7 @@
     const otherThing = 'Leprechaums';
     const who = "John Doe";
 
-    function green(template, ...values) { // ...values = array de valores
+    function green(template, ...values) { // ...values = array de valores //spread, ver aula 18
         console.log(template);
         console.log(values);
         return template.reduce((accumulator, part, i) => {

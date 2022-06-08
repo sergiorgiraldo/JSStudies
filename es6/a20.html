@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>02 - Promises Example</title>
+</head>
+<body>
+</body>
+
+<script>
+    var posts = fetch('https://jsonplaceholder.typicode.com/todos');
+    //fetch is native and it returns a promise
+    //status of a promise:
+    // - pending
+    // - resolved
+    // - rejected
+
+    posts
+    .then(data => data.json())
+    .then(data => data.map(item => {
+        console.log(item.title);
+    }));
+    
+    var post1 = fetch('https://jsonplaceholder.typicode.com/todos/1');
+   
+    post1
+        .then(data => data.json()) //this 'then' pushes data into following 'then'
+        .then(json => {
+            console.log(json.title); //look, this is not an array, it just one item so can just access the property
+        })
+        .catch(err => console.log(err));
+
+</script>
+</html>
