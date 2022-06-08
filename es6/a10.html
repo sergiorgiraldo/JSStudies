@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>01 - Shorthand Properties</title>
+</head>
+<body>
+</body>
+
+<script>
+    let firstName = 'Willian';
+    let surname = 'Justen';
+    let age = 26;
+
+    const person = {
+        firstName, //same as firstName: firstName (the variable has the same name)
+        surname, //same as surname: surname
+        age, //same as age: age
+
+        hello:function() { 
+            console.log('Hello!')
+        },
+
+        bye() { //dont need the function keyword
+            console.log('Bye!')
+        }
+    };
+
+    console.log(person);
+
+    person.hello();
+    person.bye();
+
+</script>
+</html>
