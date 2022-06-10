@@ -1,0 +1,39 @@
+<script>
+    const lastAccessedProp = Symbol.for('last_accessed_prop');
+const lastAccessedTime = Symbol.for('last_accessed_time');
+
+class User {
+    constructor(f_name, l_name, address) {
+        this.first_name = f_name;
+        this.last_name = l_name;
+        this.address = address;
+    }
+
+    get FirstName() {
+        this[lastAccessedProp] = 'first_name'
+        this[lastAccessedTime] = new Date();
+        return this.first_name;
+    }
+
+    get LastName() {
+        this[lastAccessedProp] = 'last_name'
+        this[lastAccessedTime] = new Date();
+        return this.last_name;
+    }
+
+    get Address() {
+        this[lastAccessedProp] = 'address'
+        this[lastAccessedTime] = new Date();
+        return this.address;
+    }
+}
+
+let myUser = new User('Fernando', 'Doglio', 'Madrid, Spain');
+console.log(myUser.FirstName, myUser.LastName)
+console.log("Metadata:", myUser[lastAccessedProp], " read at ", myUser[lastAccessedTime].toTimeString())
+
+console.log("Iterating over attributes: ")
+for(k in myUser) {
+    console.log(k, "=", myUser[k])
+}
+</script>
