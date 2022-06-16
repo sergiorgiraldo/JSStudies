@@ -12,4 +12,4 @@ const navbar = (
     </nav>
 )
 
-ReactDOM.render(navbar, document.getElementById("root"))
+reactDOM.render(navbar, document.getElementById("root"))
