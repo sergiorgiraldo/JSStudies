@@ -1,0 +1,8 @@
+{
+  "short_name": "a05",
+  "name": "a05 Hello Wold",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
