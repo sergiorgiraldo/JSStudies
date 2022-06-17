@@ -1,0 +1,22 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+h1{
+    margin-left: 200px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.main--facts {
+    margin-top: 46px;
+    margin-left: 200px;
+    max-width: 500px;
+}
+.main--facts > li {
+    line-height: 19px;
+    padding-block: 10px;
+}
+.main--facts > li::marker {
+    font-size: 1.4rem;
+    color: #61DAFB;
+}
