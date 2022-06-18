@@ -1,14 +1,15 @@
 import React from "react"
-import Header from "./components/header"
-
-/*
-Challenge: Build the Navbar component.
-Check the Figma file for the design specifics.
-*/
+import NavBar from "./components/navbar"
+import Hero from "./components/hero"
+import Card from "./components/card"
 
 function App() {
     return (
-        <Header />
+        <>
+            <NavBar />
+            <Hero />
+            <Card />
+        </>
     )
 }
 
