@@ -1,0 +1,33 @@
+import React from "react"
+import NavBar from "./components/navbar"
+import Hero from "./components/hero"
+import Card from "./components/card"
+import Data from "./data.js"
+
+function App() {
+    const cards = Data.map(d=> {
+        return( 
+            <Card 
+                key={d.id}
+                img={d.coverImg}
+                rating={d.stats.rating}
+                reviewCount={d.stats.reviewCount}
+                location={d.location}
+                title={d.title}
+                price={d.price}
+                openSpots={d.openSpots}
+            />
+        )
+    });
+
+    return (
+        <div>
+            <NavBar />
+            <Hero />
+            <section className="cards-list">
+                {cards}
+            </section>
+        </div>
+    )
+}
+export default App;
