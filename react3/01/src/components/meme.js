@@ -7,16 +7,13 @@ function Meme() {
                 <input 
                     type="text"
                     placeholder="Top text"
-                    className="form--input"
-                />
+                    className="form--input" />
                 <input 
                     type="text"
                     placeholder="Bottom text"
-                    className="form--input"
-                />
+                    className="form--input" />
                 <button 
-                    className="form--button"
-                >
+                    className="form--button">
                     Get a new meme image 🖼
                 </button>
             </form>
