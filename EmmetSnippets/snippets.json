@@ -1,0 +1,13 @@
+{
+    "html": {
+      "snippets": {
+        "elbyid": "{document.getElementById('${1}')}",
+        "log":"{console.log(${1});}"
+      }
+    },
+    "css": {
+      "snippets": {
+      }
+    }
+  }
+  
