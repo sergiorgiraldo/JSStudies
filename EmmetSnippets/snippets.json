@@ -1,7 +1,7 @@
 {
     "html": {
       "snippets": {
-        "elbyid": "{document.getElementById('${1}')}",
+        "elbyid": "{const ${1}= document.getElementById('${2}');}",
         "log":"{console.log(${1});}"
       }
     },
