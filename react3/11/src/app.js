@@ -1,5 +1,6 @@
 import React from "react"
 import boxes from "./boxes"
+import Box from "./box"
 
 export default function App() {
     const [myBoxes, setMyBoxes] = React.useState(boxes);
@@ -15,14 +16,12 @@ export default function App() {
         });
     }
 
-    const styles = {
-        backgroundColor: "cyan"
-    }
-
     const boxesRendered = myBoxes.map((item) =>
-        <div key={item.id} className="box" style={styles} onClick={()=>toggleBox(item.id)}>
-            {item.id}
-        </div>
+        <Box 
+            key={item.id} 
+            box={item} 
+            handleClick={()=>toggleBox(item.id)}
+            />
     );
 
     return (
