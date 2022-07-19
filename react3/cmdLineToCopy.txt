@@ -1,0 +1,1 @@
+export src=14 && export x=15 && cp -r $src $x && cd $x && yq e -i '.name=strenv(x)' package.json
