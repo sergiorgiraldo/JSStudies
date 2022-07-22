@@ -15,7 +15,8 @@ export default function App() {
         (notes[0] && notes[0].id) || "")
 
     React.useEffect(() => {
-        localStorage.setItem("notes", JSON.stringify(notes))
+        console.log("update local storage")
+        localStorage.setItem("notes", JSON.stringify(notes));
     }, [notes])
             
     function createNewNote() {
@@ -28,14 +29,15 @@ export default function App() {
     }
     
     function updateNote(text) {
-        setNotes(oldNotes => oldNotes.map(oldNote => {
-            return oldNote.id === currentNoteId
-                ? { ...oldNote, body: text }
-                : oldNote
-        }));
-
-        const idx = findIndexOfCurrentNote();
-        notes.splice(0, 0, notes.splice(idx, 1)[0]);       
+        setNotes(oldNotes => {
+            const idx = findIndexOfCurrentNote();
+            oldNotes.splice(0, 0, oldNotes.splice(idx, 1)[0]);       
+            return oldNotes.map(oldNote => {
+                return oldNote.id === currentNoteId
+                    ? { ...oldNote, body: text }
+                    : oldNote})
+            
+            });
     }
 
     function findCurrentNote() {
@@ -52,7 +54,12 @@ export default function App() {
 
     function deleteNote(event, which){
         event.stopPropagation();
-        setNotes(oldNotes => oldNotes.filter(note => note.id !== which))
+        setNotes(prevNotes => {
+            var prevNotes_ = [...prevNotes];
+            var idx = prevNotes_.findIndex(note => {return note.id === which});
+            prevNotes_.splice(idx,1);
+            return prevNotes_;
+        });
     }
 
     return (
