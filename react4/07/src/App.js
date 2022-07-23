@@ -1,11 +1,14 @@
 import React from "react"
 import Dice from "./components/Dice"
+import Stats from "./components/Stats"
 import Confetti from "react-confetti"
 
 export default function App() {
+    const [startDate, setStartDate] = React.useState(new Date())
     const [dices, setDices] = React.useState(allNewDice())
     const [rollsNo, setRollsNo] = React.useState(0)
     const [tenzies, setTenzies] = React.useState(false)
+    const [stats, setStats] = React.useState(()=> JSON.parse(localStorage.getItem("stats")) || [])
 
     function allNewDice(){
         const newDices =  [];
@@ -28,6 +31,7 @@ export default function App() {
         if(tenzies){
             setRollsNo(0);
             setTenzies(false);
+            setStartDate(new Date());
             setDices(allNewDice());
         }
         else{
@@ -49,6 +53,21 @@ export default function App() {
         });
     },[dices]
     );
+
+    React.useEffect(_ => {
+        if (tenzies){
+            const newStat = {
+                startDate: startDate,
+                endDate: new Date(),
+                count: rollsNo
+            }            
+            setStats(oldStats => [newStat, ...oldStats]);
+        }
+    },[tenzies]);
+
+    React.useEffect(() => {
+        localStorage.setItem("stats", JSON.stringify(stats));
+    }, [stats])
 
     function toggleDice(which){
         setDices(oldDice => oldDice.map(d => {
@@ -81,6 +100,11 @@ export default function App() {
             <button className="roll-dice" onClick={rollDices}>
                 {tenzies ? "New Game" : "Roll"}
             </button>
+
+            <hr/>
+            
+            <Stats
+                stats={stats} />    
         </main>
     )
 }
