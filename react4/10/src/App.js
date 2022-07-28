@@ -8,7 +8,13 @@ export default function App() {
     const [dices, setDices] = React.useState(allNewDice())
     const [rollsNo, setRollsNo] = React.useState(0)
     const [tenzies, setTenzies] = React.useState(false)
-    const [stats, setStats] = React.useState(()=> JSON.parse(localStorage.getItem("stats")) || [])
+    const [stats, setStats] = React.useState([])
+
+    React.useEffect(function() {
+        fetch("http://localhost:3100/stats")
+            .then(res => res.json())
+            .then(res => setStats(res.data))
+    },[])
 
     function allNewDice(){
         const newDices =  [];
@@ -75,16 +81,6 @@ export default function App() {
                 {...d, isHeld: !d.isHeld} :
                 d
         }));
-
-        // ☝️ much more elegant
-        // setDices((prevDices)=> {
-        //     const prevDices_ = [...prevDices];
-        //     const idx = prevDices_.findIndex(d => {
-        //         return d.id === which;
-        //     });
-        //     prevDices_[idx].isHeld = !prevDices_[idx].isHeld;    
-        //     return prevDices_;
-        // });
     }
 
     return (
