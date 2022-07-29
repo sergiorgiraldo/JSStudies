@@ -67,7 +67,20 @@ export default function App() {
                 endDate: new Date(),
                 count: rollsNo
             }            
-            setStats(oldStats => [newStat, ...oldStats]);
+            //setStats(oldStats => [newStat, ...oldStats]); //for now just save in DB
+
+            fetch("http://localhost:3100/stats",
+            {
+                method: "POST",
+                headers: {"Content-Type":"application/x-www-form-urlencoded"},
+                body: JSON.stringify(
+                    {
+                        duration: Math.ceil(Math.round((new Date(newStat.endDate).getTime() - new Date(newStat.startDate).getTime())) / 1000), 
+                        count: rollsNo
+                    })
+            })
+            .then(function(res){ console.log(res) })
+            .catch(function(res){ console.log(res) })            
         }
     },[tenzies]);
 
