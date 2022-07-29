@@ -13,6 +13,13 @@ function getMultiple(page = 1) {
   }
 }
 
+function putStat(statsObj) {
+  const {duration, count} = statsObj;
+  const msg = db.run('INSERT INTO stats (duration, count) VALUES (@duration, @count)', {duration, count});
+  return msg;
+}  
+
 module.exports = {
-  getMultiple
+  getMultiple,
+  putStat
 }
