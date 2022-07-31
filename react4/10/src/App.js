@@ -10,15 +10,9 @@ export default function App() {
     const [tenzies, setTenzies] = React.useState(false)
     const [stats, setStats] = React.useState([])
 
-    React.useEffect(function() {
-        fetch("http://localhost:3100/stats")
-            .then(res => res.json())
-            .then(res => setStats(res.data))
-    },[])
-
     function allNewDice(){
         const newDices =  [];
-
+        
         for (let index = 0; index < 10; index++) {
             newDices.push({
                 id: index,
@@ -28,11 +22,19 @@ export default function App() {
         }
         return newDices;
     }
-
+    
     function getRandomDiceValue(){
         return Math.floor(Math.random() * 6) + 1;
     }
-
+    
+    function toggleDice(which){
+        setDices(oldDice => oldDice.map(d => {
+            return d.id === which ? 
+                {...d, isHeld: !d.isHeld} :
+                d
+        }));
+    }
+    
     function rollDices(){
         if(tenzies){
             setRollsNo(0);
@@ -43,12 +45,18 @@ export default function App() {
         else{
             setDices(oldDice => oldDice.map(d => {
                 return d.isHeld ? 
-                    d :
-                    {...d, value: getRandomDiceValue()}
+                d :
+                {...d, value: getRandomDiceValue()}
             }));
             setRollsNo(current => current + 1);
         }
     }
+    
+    React.useEffect(function() {
+        fetch("http://localhost:3100/stats")
+            .then(res => res.json())
+            .then(res => setStats(res.data))
+    },[]);
 
     React.useEffect(_ => {
         const allHeld = dices.every(d=>d.isHeld);
@@ -61,40 +69,33 @@ export default function App() {
     );
 
     React.useEffect(_ => {
-        if (tenzies){
+        if (tenzies){       
             const newStat = {
                 startDate: startDate,
                 endDate: new Date(),
                 count: rollsNo
-            }            
-            //setStats(oldStats => [newStat, ...oldStats]); //for now just save in DB
-
+            };
+            
             fetch("http://localhost:3100/stats",
             {
                 method: "POST",
-                headers: {"Content-Type":"application/x-www-form-urlencoded"},
-                body: JSON.stringify(
-                    {
-                        duration: Math.ceil(Math.round((new Date(newStat.endDate).getTime() - new Date(newStat.startDate).getTime())) / 1000), 
-                        count: rollsNo
-                    })
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "duration": Math.ceil(Math.round((new Date(newStat.endDate).getTime() - new Date(newStat.startDate).getTime())) / 1000), 
+                    "count": rollsNo
+                })
             })
-            .then(function(res){ console.log(res) })
-            .catch(function(res){ console.log(res) })            
+            .then(function(res){ console.log("sent" + res) })
+            .catch(function(res){ console.log(res) });
+            
+            fetch("http://localhost:3100/stats")
+            .then(res => res.json())
+            .then(res => setStats(res.data))
         }
     },[tenzies]);
-
-    React.useEffect(() => {
-        localStorage.setItem("stats", JSON.stringify(stats));
-    }, [stats])
-
-    function toggleDice(which){
-        setDices(oldDice => oldDice.map(d => {
-            return d.id === which ? 
-                {...d, isHeld: !d.isHeld} :
-                d
-        }));
-    }
 
     return (
         <main>
