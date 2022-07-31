@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors')
-const app = express();
-const port = 3100 || process.env.PORT;
 const statsRouter = require('./routes/stats');
+
+const port = 3100 || process.env.PORT;
+
+const app = express();
 
 app.use(cors())
 app.use(bodyParser.json());

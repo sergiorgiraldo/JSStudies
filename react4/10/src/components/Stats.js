@@ -2,7 +2,6 @@ import React from "react"
 
 export default function Stats(props) {
 
-
     const stats_ = props.stats.map((s,index) => {
         return (
         <ul key={index}>
