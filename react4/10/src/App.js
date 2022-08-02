@@ -79,11 +79,15 @@ export default function App() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "duration": Math.ceil(Math.round((new Date(newStat.endDate).getTime() - new Date(newStat.startDate).getTime())) / 1000), 
-                    "count": rollsNo
+                    "duration": 
+                        Math.ceil(
+                            Math.round(
+                                (new Date(newStat.endDate).getTime() - new Date(newStat.startDate).getTime())) 
+                            / 1000), 
+                    "count": newStat.count
                 })
             })
-            .then(function(res){ setDbUpdated(oldValue => oldValue + 1) })
+            .then(function(){ setDbUpdated(oldValue => oldValue + 1) })
             .catch(function(res){ console.log(res) });
             
             
@@ -91,7 +95,6 @@ export default function App() {
     },[tenzies]);
     
     React.useEffect(function() {
-        console.log("updated");
         fetch("http://localhost:3100/stats")
             .then(res => res.json())
             .then(res => {
