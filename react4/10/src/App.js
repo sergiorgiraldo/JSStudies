@@ -83,17 +83,20 @@ export default function App() {
                     "count": rollsNo
                 })
             })
-            .then(function(res){ console.log("sent" + res) })
+            .then(function(res){ setDbUpdated(oldValue => oldValue + 1) })
             .catch(function(res){ console.log(res) });
             
-            setDbUpdated(oldValue => oldValue++);
+            
         }
     },[tenzies]);
     
     React.useEffect(function() {
+        console.log("updated");
         fetch("http://localhost:3100/stats")
             .then(res => res.json())
-            .then(res => setStats(res.data))
+            .then(res => {
+                setStats(res.data);
+            })
     },[dbUpdated]);
 
     return (

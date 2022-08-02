@@ -7,7 +7,7 @@ express.json();
 
 router.get('/', function(req, res, next) {
   try {
-    res.json(stats.getMultiple(req.query.page));
+    res.json(stats.getMultiple());
   } 
   catch(err) {
     console.error(`Error while getting stats `, err.message);
