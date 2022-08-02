@@ -9,6 +9,7 @@ export default function App() {
     const [rollsNo, setRollsNo] = React.useState(0)
     const [tenzies, setTenzies] = React.useState(false)
     const [stats, setStats] = React.useState([])
+    const [dbUpdated, setDbUpdated] = React.useState(0)
 
     function allNewDice(){
         const newDices =  [];
@@ -52,22 +53,16 @@ export default function App() {
         }
     }
     
-    React.useEffect(function() {
-        fetch("http://localhost:3100/stats")
-            .then(res => res.json())
-            .then(res => setStats(res.data))
-    },[]);
-
     React.useEffect(_ => {
         const allHeld = dices.every(d=>d.isHeld);
         const allSame = dices.every(d=>d.value == dices[0].value);
-
+        
         setTenzies(_ => {
             return allHeld && allSame;
         });
     },[dices]
     );
-
+    
     React.useEffect(_ => {
         if (tenzies){       
             const newStat = {
@@ -80,8 +75,8 @@ export default function App() {
             {
                 method: "POST",
                 headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     "duration": Math.ceil(Math.round((new Date(newStat.endDate).getTime() - new Date(newStat.startDate).getTime())) / 1000), 
@@ -91,11 +86,15 @@ export default function App() {
             .then(function(res){ console.log("sent" + res) })
             .catch(function(res){ console.log(res) });
             
-            fetch("http://localhost:3100/stats")
-            .then(res => res.json())
-            .then(res => setStats(res.data))
+            setDbUpdated(oldValue => oldValue++);
         }
     },[tenzies]);
+    
+    React.useEffect(function() {
+        fetch("http://localhost:3100/stats")
+            .then(res => res.json())
+            .then(res => setStats(res.data))
+    },[dbUpdated]);
 
     return (
         <main>
