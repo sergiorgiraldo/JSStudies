@@ -8,11 +8,16 @@ function ClientsPage(){
 
     return( 
     <div>
-        <h1>List of clients!</h1>
+        <h1>List of clients !!!</h1>
         <ul>
             {clients.map((c)=>(
                 <li key={c.id}>
-                    <Link href={`/clients/${c.id}`}>{c.name}</Link>
+                    <Link href={ //you can use an object like this or just use `/clients/${c.id}`
+                        {
+                            pathname: "clients/[id]",
+                            query: {id: c.id}
+                        }
+                    }>{c.name}</Link>
                 </li>
             ))}
         </ul>
