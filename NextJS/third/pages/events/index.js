@@ -1,23 +1,23 @@
-import { getAllEvents} from "../../dummy-data";
-import EventList from "../../components/events/EventList";
-import EventSearch from "../../components/events/EventSearch";
-import { useRouter} from "next/router";
+import { getAllEvents } from "../../dummy-data";
+import EventList from "../../components/events/event-list";
+import EventSearch from "../../components/events/event-search";
+import { useRouter } from "next/router";
 
-function AllEventsPage(){
-    const events = getAllEvents();
-    const router = useRouter();
+function AllEventsPage() {
+  const events = getAllEvents();
+  const router = useRouter();
 
-    function eventSearchHandler(year, month){
-        const fullPath = `/events/${year}/${month}`
-        router.push(fullPath);
-    }
+  function eventSearchHandler(year, month) {
+    const fullPath = `/events/${year}/${month}`;
+    router.push(fullPath);
+  }
 
-    return( 
+  return (
     <div>
-        <EventSearch onSearch={eventSearchHandler} />
-        <EventList events={events}></EventList>
+      <EventSearch onSearch={eventSearchHandler} />
+      <EventList events={events}></EventList>
     </div>
-    );
+  );
 }
 
 export default AllEventsPage;

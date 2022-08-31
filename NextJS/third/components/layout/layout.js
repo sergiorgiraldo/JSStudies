@@ -1,4 +1,4 @@
-import {Fragment} from "React";
+import {Fragment} from "react";
 import MainHeader from "./main-header";
 
 function Layout(props){
