@@ -1,3 +1,6 @@
+import fs from "fs/promises"; //i can use the filesystem if I am accessing from the server
+import path from "path";
+
 function HomePage(props) {
   const { products__ } = props;
   return (
@@ -12,12 +15,13 @@ function HomePage(props) {
 }
 
 export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), "data/dummy-backend.json"); //cwd() points to root folder
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData);
+
   return {
     props: {
-      products__: [
-        { id: "P1", title: "Product 1" },
-        { id: "P2", title: "Product 2" }
-      ],
+      products__: data.products
     },
   };
 }
