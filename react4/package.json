@@ -7,7 +7,7 @@
     "react-scripts": "5.0.1",
     "showdown": "1.9.1",
     "react-split": "2.0.13",
-    "nanoid": "3.1.28",
+    "nanoid": "3.1.31",
     "react-confetti": "6.1.0",
     "cors":"2.8.5"
   },
