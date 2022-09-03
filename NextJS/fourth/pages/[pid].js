@@ -8,6 +8,7 @@ function ProductDetailPage(props) {
 	if (!loadedProduct) {
 		return <p>Loading ...</p>;
 	}
+
 	return (
 		<Fragment>
 			<h1>{loadedProduct.title}</h1>
@@ -16,15 +17,24 @@ function ProductDetailPage(props) {
 	);
 }
 
+async function GetData(){
+	const filePath = path.join(process.cwd(), "data/dummy-backend.json"); //cwd() points to root folder
+	const jsonData = await fs.readFile(filePath);
+	const data = JSON.parse(jsonData);
+	return data;
+}
+
 export async function getStaticProps(context) {
 	const { params } = context;
 	const productId = params.pid;
 
-	const filePath = path.join(process.cwd(), "data/dummy-backend.json"); //cwd() points to root folder
-	const jsonData = await fs.readFile(filePath);
-	const data = JSON.parse(jsonData);
+	const data = await GetData();
 
 	const product = data.products.find((p) => p.id === productId);
+
+	if (!product){
+		return {notFound: true}; //redirects to 404
+	}
 
 	return {
 		props: { loadedProduct: product },
@@ -32,9 +42,12 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
+	const data = await GetData();
+	const ids = data.products.map((p) => p.id);
+	const pathsWithParams = ids.map((id)=> ({ params: { pid:id } }));
 	return {
-		paths: [{ params: { pid: "p1" } }],
-		fallback: true,
+		paths: pathsWithParams,
+		fallback: true
 	};
 }
 
