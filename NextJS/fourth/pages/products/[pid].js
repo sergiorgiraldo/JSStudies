@@ -17,7 +17,7 @@ function ProductDetailPage(props) {
 	);
 }
 
-async function GetData(){
+async function GetData() {
 	const filePath = path.join(process.cwd(), "data/dummy-backend.json"); //cwd() points to root folder
 	const jsonData = await fs.readFile(filePath);
 	const data = JSON.parse(jsonData);
@@ -32,8 +32,8 @@ export async function getStaticProps(context) {
 
 	const product = data.products.find((p) => p.id === productId);
 
-	if (!product){
-		return {notFound: true}; //redirects to 404
+	if (!product) {
+		return { notFound: true }; //redirects to 404
 	}
 
 	return {
@@ -44,10 +44,10 @@ export async function getStaticProps(context) {
 export async function getStaticPaths() {
 	const data = await GetData();
 	const ids = data.products.map((p) => p.id);
-	const pathsWithParams = ids.map((id)=> ({ params: { pid:id } }));
+	const pathsWithParams = ids.map((id) => ({ params: { pid: id } }));
 	return {
 		paths: pathsWithParams,
-		fallback: true
+		fallback: true,
 	};
 }
 
