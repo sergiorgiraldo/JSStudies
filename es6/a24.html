@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>01 - Symbols Intro</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>01 - Symbols Intro</title>
+	</head>
+	<body></body>
 
-<script>
-    let foo = Symbol('name');
-    let bar = Symbol('name');
-    console.log(foo == bar);
+	<script>
+		let foo = Symbol("name");
+		let bar = Symbol("name");
+		console.log(foo == bar);
 
-    class aaa{
-        constructor(){
-            this[foo] = 'fooProperty';
-            this[bar] = 'barProperty';
-        }
-    }
-    var aaa_ = new aaa();
-    console.log(aaa_);
-    console.log(aaa_[foo]);
-    foo = 'surname';
-    console.log(aaa_[foo]);
-    //*******************
+		class aaa {
+			constructor() {
+				this[foo] = "fooProperty";
+				this[bar] = "barProperty";
+			}
+		}
+		var aaa_ = new aaa();
+		console.log(aaa_);
+		console.log(aaa_[foo]);
+		foo = "surname";
+		console.log(aaa_[foo]);
+		//*******************
 
-    let fooSymbolGlobal = Symbol.for('fooGlobal')
-    console.log(fooSymbolGlobal);
-    fooSymbolGlobal = 'barGlobal';
-    console.log(fooSymbolGlobal);
+		let fooSymbolGlobal = Symbol.for("fooGlobal");
+		console.log(fooSymbolGlobal);
+		fooSymbolGlobal = "barGlobal";
+		console.log(fooSymbolGlobal);
 
-    //*******************
-    let obj = {
-        [Symbol('name')]: 'Willian',
-        [Symbol('age')]: 26,
-        name:'fadsfas',
-        city: 'Dublin'
-    };
-    console.log(obj['name']);
-    const symbols = Object.getOwnPropertySymbols(obj);
+		//*******************
+		let obj = {
+			[Symbol("name")]: "Willian",
+			[Symbol("age")]: 26,
+			name: "fadsfas",
+			city: "Dublin",
+		};
+		console.log(obj["name"]);
+		const symbols = Object.getOwnPropertySymbols(obj);
 
-    const data = symbols.map(sym => obj[sym]);
-    console.log(obj);
-    console.log(data);
+		const data = symbols.map((sym) => obj[sym]);
+		console.log(obj);
+		console.log(data);
 
-    console.log(obj[Object.getOwnPropertySymbols(obj)[0]]);
-
-</script>
+		console.log(obj[Object.getOwnPropertySymbols(obj)[0]]);
+	</script>
 </html>

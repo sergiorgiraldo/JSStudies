@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=100, initial-scale=1.0">
-    <title>Scope</title>
-</head>
-<body>
-    <script>
-        const a = 12;
-        console.log(a);
-        //a = 23; //error
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=100, initial-scale=1.0" />
+		<title>Scope</title>
+	</head>
+	<body>
+		<script>
+			const a = 12;
+			console.log(a);
+			//a = 23; //error
 
-        const obj = {
-            name: "John Doe",
-            age: 34
-        };
-        console.log(obj);
-        obj.age = 45;
-        console.log(obj);
-        //const obj = {
-        //    name: "John Doe",
-        //    age: 34
-        //}; 
-        //you can change the value of the object, but you can't change the object itself
-    
+			const obj = {
+				name: "John Doe",
+				age: 34,
+			};
+			console.log(obj);
+			obj.age = 45;
+			console.log(obj);
+			//const obj = {
+			//    name: "John Doe",
+			//    age: 34
+			//};
+			//you can change the value of the object, but you can't change the object itself
 
-        const obj2 = {
-            name: "John Doe",
-            age: 34
-        };        
-        console.log(obj2);
-        Object.freeze(obj2); //freezes the object ie make it immutable
-        obj.age = 45;
-        console.log(obj2); //still the same
-
-</script>
-</body>
+			const obj2 = {
+				name: "John Doe",
+				age: 34,
+			};
+			console.log(obj2);
+			Object.freeze(obj2); //freezes the object ie make it immutable
+			obj.age = 45;
+			console.log(obj2); //still the same
+		</script>
+	</body>
 </html>

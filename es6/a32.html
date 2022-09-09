@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>01 - Maps Intro</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>01 - Maps Intro</title>
+	</head>
+	<body></body>
 
-<script>
-    let m = new Map(); // different from a set, it has key and values
+	<script>
+		let m = new Map(); // different from a set, it has key and values
 
-    m.set('Willian', 26); // key and value
-    m.set('Jonas', 22);
-    m.set('Godoy', 30);
+		m.set("Willian", 26); // key and value
+		m.set("Jonas", 22);
+		m.set("Godoy", 30);
 
-    const it = m.values();
-    let first = it.next();
-    console.log(first);
+		const it = m.values();
+		let first = it.next();
+		console.log(first);
 
-    for (let pair of m) {
-        var [key, value] = pair;
-        console.log(key + " = " + value);
-    }
-    console.log("==========================================================");
-    let obj1 = {
-        name: 'Willian',
-        age: 26
-    };
+		for (let pair of m) {
+			var [key, value] = pair;
+			console.log(key + " = " + value);
+		}
+		console.log(
+			"=========================================================="
+		);
+		let obj1 = {
+			name: "Willian",
+			age: 26,
+		};
 
-    let obj2 = {
-        name: 'Jonas',
-        age: 22
-    };
-    
-    let wm = new WeakMap(); //only receives objects, not primitives. cannot be iterated (cant do for .. of)
+		let obj2 = {
+			name: "Jonas",
+			age: 22,
+		};
 
-    wm.set(obj1, 'Info do Willian');
-    wm.set(obj2, 'Info do Jonas');
+		let wm = new WeakMap(); //only receives objects, not primitives. cannot be iterated (cant do for .. of)
 
-    console.log(wm)
+		wm.set(obj1, "Info do Willian");
+		wm.set(obj2, "Info do Jonas");
 
-    obj1 = null;
-    console.log(wm); // will not show the info of the object because it was deleted, garbage collector removes all references
-</script>
+		console.log(wm);
+
+		obj1 = null;
+		console.log(wm); // will not show the info of the object because it was deleted, garbage collector removes all references
+	</script>
 </html>

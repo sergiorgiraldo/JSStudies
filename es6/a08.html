@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>02 - Template Literal para Html Fragments</title>
-    <meta charset="utf-8"/>
-</head>
-<body>
-</body>
+	<head>
+		<title>02 - Template Literal para Html Fragments</title>
+		<meta charset="utf-8" />
+	</head>
+	<body></body>
 
-<script>
+	<script>
+		const article = {
+			title: "Aprendendo Template Strings",
+			intro: "Uma breve explicação de como se utilizar template strings do ES6 em seu código hoje!",
+			body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, officia, perspiciatis? Architecto, molestias autem. Repellat, laborum deserunt soluta necessitatibus. Tenetur illo, id magnam numquam neque illum temporibus, in qui eos.",
+			tags: ["es6", "js", "template-literal"],
+		};
 
-    const article = {
-        title: 'Aprendendo Template Strings',
-        intro: 'Uma breve explicação de como se utilizar template strings do ES6 em seu código hoje!',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, officia, perspiciatis? Architecto, molestias autem. Repellat, laborum deserunt soluta necessitatibus. Tenetur illo, id magnam numquam neque illum temporibus, in qui eos.',
-        tags: ['es6', 'js', 'template-literal']
-    };
+		function renderAuthor(name) {
+			return name ? name : "unknown";
+		}
 
-    function renderAuthor(name) {
-        return (name) ? name : 'unknown';
-    }
-    
-    const markup = ` 
+		const markup = ` 
         <article>
             <header>
                 <h1>${article.title}</h1>
@@ -30,14 +28,13 @@
             </section>
             <footer>
                 <ul>
-                    ${article.tags.map((tag) => `<li>${tag}</li>`).join('\n')}
+                    ${article.tags.map((tag) => `<li>${tag}</li>`).join("\n")}
                 </ul>
                 <p>Author: ${renderAuthor(article.author)}</p>
             </footer>
         </article>
     `;
 
-    document.body.innerHTML = markup;
-
-</script>
+		document.body.innerHTML = markup;
+	</script>
 </html>

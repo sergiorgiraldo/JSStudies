@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>03 - Tagged Template Literal</title>
-</head>
+	<head>
+		<title>03 - Tagged Template Literal</title>
+	</head>
 
-<style>
-    .green {
-        color: green;
-        font-size: 25px;
-    }
-</style>
-<body>
-</body>
+	<style>
+		.green {
+			color: green;
+			font-size: 25px;
+		}
+	</style>
+	<body></body>
 
-<script>
+	<script>
+		const city = "Dublin";
+		const something = "Guinness";
+		const otherThing = "Leprechaums";
+		const who = "John Doe";
 
-    const city = 'Dublin';
-    const something = 'Guinness';
-    const otherThing = 'Leprechaums';
-    const who = "John Doe";
-
-    function green(template, ...values) { // ...values = array de valores //spread, ver aula 18
-        console.log(template);
-        console.log(values);
-        return template.reduce((accumulator, part, i) => {
-            console.log("i->" + i);
-            console.log(values[i-1]);
-            console.log(values[i]);
-            //notice that we are iterating an array with the values of the template *plus* the template itself
-            //so, the arrays has 4 parts: template, Dublin, Guinness, Leprechaums, John Doe
-            //and the counter starts at 1 (not 0!!!!!!!!) why is that?!
-            //thats why the i-1 
-                return `
+		function green(template, ...values) {
+			// ...values = array de valores //spread, ver aula 18
+			console.log(template);
+			console.log(values);
+			return template.reduce((accumulator, part, i) => {
+				console.log("i->" + i);
+				console.log(values[i - 1]);
+				console.log(values[i]);
+				//notice that we are iterating an array with the values of the template *plus* the template itself
+				//so, the arrays has 4 parts: template, Dublin, Guinness, Leprechaums, John Doe
+				//and the counter starts at 1 (not 0!!!!!!!!) why is that?!
+				//thats why the i-1
+				return `
                 ${accumulator}
-                <span class="green">${values[i-1].toUpperCase()}</span>
+                <span class="green">${values[i - 1].toUpperCase()}</span>
                 ${part}
-            `
-        });
-    }
+            `;
+			});
+		}
 
-    const ireland = green`I live in ${city} the city of ${something} and ${otherThing} ! ${who}`;
+		const ireland = green`I live in ${city} the city of ${something} and ${otherThing} ! ${who}`;
 
-    document.body.innerHTML = ireland;
-
-</script>
+		document.body.innerHTML = ireland;
+	</script>
 </html>

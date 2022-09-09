@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>02 - for...of</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>02 - for...of</title>
+	</head>
+	<body></body>
 
-<script>
-    // iterators
-    // iterable
-    
-    var txt = 'Ireland'; // iterable
-    var it = txt[Symbol.iterator](); // iterator
+	<script>
+		// iterators
+		// iterable
 
-     console.log( it.next() );
-     console.log( it.next() );
-    // console.log( it.next() );
-    // console.log( it.next() );
-    // console.log( it.next() );
-    // console.log( it.next() );
-    // console.log( it.next() );
-    // console.log( it.next() );
+		var txt = "Ireland"; // iterable
+		var it = txt[Symbol.iterator](); // iterator
 
-    for ( letter of txt ) {
-        console.log(letter);
-        if (letter === 'a') break;
-    }
-</script>
+		console.log(it.next());
+		console.log(it.next());
+		// console.log( it.next() );
+		// console.log( it.next() );
+		// console.log( it.next() );
+		// console.log( it.next() );
+		// console.log( it.next() );
+		// console.log( it.next() );
+
+		for (letter of txt) {
+			console.log(letter);
+			if (letter === "a") break;
+		}
+	</script>
 </html>

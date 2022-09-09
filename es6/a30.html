@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>01 - Sets Intro</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>01 - Sets Intro</title>
+	</head>
+	<body></body>
 
-<script>
-    let mySet = new Set(['willian', 'jonas', 'godoy']);
+	<script>
+		let mySet = new Set(["willian", "jonas", "godoy"]);
 
-    mySet.add('marcio');
-    mySet.add('marcio');
-    mySet.add('marcio');
-    mySet.add('willian'); //set has unique values
+		mySet.add("marcio");
+		mySet.add("marcio");
+		mySet.add("marcio");
+		mySet.add("willian"); //set has unique values
 
-    mySet.delete('willian');
+		mySet.delete("willian");
 
-    console.log(mySet.has('willian'));
-    console.log(mySet.has('marcio'));
+		console.log(mySet.has("willian"));
+		console.log(mySet.has("marcio"));
 
-    console.log(mySet[1]); //undefined because it's a set, doesn't have indexes
+		console.log(mySet[1]); //undefined because it's a set, doesn't have indexes
 
-    let it = mySet.values();
-    
-    console.log(it.next());
+		let it = mySet.values();
 
-    for (name of it) {
-        console.log(name);
-    }
+		console.log(it.next());
 
-</script>
+		for (name of it) {
+			console.log(name);
+		}
+	</script>
 </html>

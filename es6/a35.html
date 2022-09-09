@@ -17,27 +17,26 @@ Vantagens de usar async/await
 
  -->
 
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>03 - Async/Await Multiple Promisses</title>
+	</head>
 
- <!DOCTYPE html>
- <html>
- 
- <head>
-     <title>03 - Async/Await Multiple Promisses</title>
- </head>
- 
- <body>
- </body>
- 
- <script>
-     async function getUsers(users) {
-         const promises = users.map(user => fetch(`https://api.github.com/users/${user}`)
-                                                .then(r => r.json()));
- 
-         const people = await Promise.all(promises);
-         console.log(people.map(p => p.company));
-     }
- 
-     getUsers(['sergiorgiraldo', 'guilouro', 'lhbzr']);
- </script>
- 
- </html>
+	<body></body>
+
+	<script>
+		async function getUsers(users) {
+			const promises = users.map((user) =>
+				fetch(`https://api.github.com/users/${user}`).then((r) =>
+					r.json()
+				)
+			);
+
+			const people = await Promise.all(promises);
+			console.log(people.map((p) => p.company));
+		}
+
+		getUsers(["sergiorgiraldo", "guilouro", "lhbzr"]);
+	</script>
+</html>

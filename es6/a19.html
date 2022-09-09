@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>01 - Promises Intro</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>01 - Promises Intro</title>
+	</head>
+	<body></body>
 
-<script>
-    var defer = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (true) { //in this 'true' I could call a service, check some state, etc
-                resolve('Hello! It works!');
-            } 
-            else {
-                reject('Error!');
-            }
-        }, 2000);
-    });
-    
-    defer
-        .then((data) => {
-            console.log(data);
-            return 'foo';
-        })
-        .then((data) => console.log(data))
-        .catch((err) => console.log(err));
+	<script>
+		var defer = new Promise((resolve, reject) => {
+			setTimeout(() => {
+				if (true) {
+					//in this 'true' I could call a service, check some state, etc
+					resolve("Hello! It works!");
+				} else {
+					reject("Error!");
+				}
+			}, 2000);
+		});
 
-</script>
+		defer
+			.then((data) => {
+				console.log(data);
+				return "foo";
+			})
+			.then((data) => console.log(data))
+			.catch((err) => console.log(err));
+	</script>
 </html>
