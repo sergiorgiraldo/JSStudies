@@ -1,48 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>01 - Destructuring Objects</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>01 - Destructuring Objects</title>
+	</head>
+	<body></body>
 
-<script>
-    var data = {
-        name: 'Willian',
-        surname: 'Justen',
-        age: 25,
-        blog: 'https://willianjusten.com.br',
-        social: {
-            twitter: '@Willian_Justen',
-            facebook: '/willianjusten'
-        }
-    };
-    
-    const name_ = data.name;
-    const surname_ = data.surname;
-    const twitter_ = data.social.twitter;
-    console.log(name_);
-    console.log(surname_);
-    console.log(twitter_);
-    
-    
-    const { name, surname } = data;
-    console.log(name);
-    console.log(surname);
+	<script>
+		var data = {
+			name: "Willian",
+			surname: "Justen",
+			age: 25,
+			blog: "https://willianjusten.com.br",
+			social: {
+				twitter: "@Willian_Justen",
+				facebook: "/willianjusten",
+			},
+		};
 
-    const { facebook, twitter } = data.social;
+		const name_ = data.name;
+		const surname_ = data.surname;
+		const twitter_ = data.social.twitter;
+		console.log(name_);
+		console.log(surname_);
+		console.log(twitter_);
 
-    console.log(facebook);
-    console.log(twitter);
+		const { name, surname } = data;
+		console.log(name);
+		console.log(surname);
 
+		const { facebook, twitter } = data.social;
 
-    const { facebook: fb } = data.social; //changed the name of the variable
-    
-    console.log(fb);
+		console.log(facebook);
+		console.log(twitter);
 
-    const { city = 'Dublin' } = data;
-    console.log(city);
-    console.log(city.data);
+		const { facebook: fb } = data.social; //changed the name of the variable
 
-</script>
+		console.log(fb);
+
+		const { city = "Dublin" } = data;
+		console.log(city);
+		console.log(city.data);
+	</script>
 </html>

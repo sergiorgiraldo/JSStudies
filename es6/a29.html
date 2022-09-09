@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>01 - Proxies Intro</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>01 - Proxies Intro</title>
+	</head>
+	<body></body>
 
-<script>
-    let obj = {
-        name: 'Willian',
-        age: 26
-    };
+	<script>
+		let obj = {
+			name: "Willian",
+			age: 26,
+		};
 
-    let proxy = new Proxy(obj, {
-        get(target, name) {
-            console.log('Alguém está o pedindo o nome =D');
-            return target[name];
-        },
-        set(target, name, value) {
-            console.log('Alguém está mudando o nome!');
-            target[name] = value.toUpperCase();
-        }
-    });
+		let proxy = new Proxy(obj, {
+			get(target, name) {
+				console.log("Alguém está o pedindo o nome =D");
+				return target[name];
+			},
+			set(target, name, value) {
+				console.log("Alguém está mudando o nome!");
+				target[name] = value.toUpperCase();
+			},
+		});
 
-    console.log(proxy.name);
-    proxy.name = 'Sergio';
-    console.log('proxy->' + proxy.name);
-    console.log('obj->' + obj.name);
+		console.log(proxy.name);
+		proxy.name = "Sergio";
+		console.log("proxy->" + proxy.name);
+		console.log("obj->" + obj.name);
 
-    //*****************************************************************************************
+		//*****************************************************************************************
 
-    let obj2 = {
-        name: 'Willian',
-        age: 26,
+		let obj2 = {
+			name: "Willian",
+			age: 26,
 
-        get name() {
-            console.log('Alguém está o pedindo o nome na obj2 =D');
-            return name;
-        },
+			get name() {
+				console.log("Alguém está o pedindo o nome na obj2 =D");
+				return name;
+			},
 
-        set name(value) {
-            console.log('Alguém está mudando o nome na obj2!');
-            name = value.toUpperCase();
-        }
-    };
-    obj2.name = 'Sergio da obj2';
-    console.log('obj->' + obj2.name);
-</script>
+			set name(value) {
+				console.log("Alguém está mudando o nome na obj2!");
+				name = value.toUpperCase();
+			},
+		};
+		obj2.name = "Sergio da obj2";
+		console.log("obj->" + obj2.name);
+	</script>
 </html>

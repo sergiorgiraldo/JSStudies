@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>02 - Weakset Intro</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>02 - Weakset Intro</title>
+	</head>
+	<body></body>
 
-<script>
-    let obj1 = {
-        name: 'Willian',
-        age: 26
-    };
+	<script>
+		let obj1 = {
+			name: "Willian",
+			age: 26,
+		};
 
-    let obj2 = {
-        name: 'Jonas',
-        age: 22
-    };
+		let obj2 = {
+			name: "Jonas",
+			age: 22,
+		};
 
-    let ws = new WeakSet([obj1, obj2]); // only objects, not primitives. cannot be iterated (cant do for .. of)
-
-    
-
-</script>
+		let ws = new WeakSet([obj1, obj2]); // only objects, not primitives. cannot be iterated (cant do for .. of)
+	</script>
 </html>

@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>02 - Default Parameters and string functions</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>02 - Default Parameters and string functions</title>
+	</head>
+	<body></body>
 
-<script>
-    let text = 'Lorem ipsum dolor sit amet';
+	<script>
+		let text = "Lorem ipsum dolor sit amet";
 
-    function hello (name = 'Willian', surname = 'Justen') {
-        console.log(`Hello ${name} ${surname}! How are you?`);
-    }
+		function hello(name = "Willian", surname = "Justen") {
+			console.log(`Hello ${name} ${surname}! How are you?`);
+		}
 
-    hello();
+		hello();
 
-    hello('Jonas', 'Mendes');
+		hello("Jonas", "Mendes");
 
-    hello('Jonas');
+		hello("Jonas");
 
-    hello(surname="Doe")
- 
-    console.log(text.startsWith('rem', 2));
-    console.log(text.endsWith('ame', 25));
-    console.log(text.includes('ipsum'));
-    console.log('lol'.repeat(10));
-</script>
+		hello((surname = "Doe"));
 
+		console.log(text.startsWith("rem", 2));
+		console.log(text.endsWith("ame", 25));
+		console.log(text.includes("ipsum"));
+		console.log("lol".repeat(10));
+	</script>
 </html>

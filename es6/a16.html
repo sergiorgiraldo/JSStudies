@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>01 - Spread Operator Intro</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>01 - Spread Operator Intro</title>
+	</head>
+	<body></body>
 
-<script>
-    let front = ['react', 'vue', 'angular'];
-    let back = ['python', 'ruby', 'nodejs'];
+	<script>
+		let front = ["react", "vue", "angular"];
+		let back = ["python", "ruby", "nodejs"];
 
-   
-    let fullStack = [];
-    fullStack = fullStack.concat(front);
-    fullStack.push('RxJS');
-    fullStack = fullStack.concat(back);
-    console.log(fullStack);
+		let fullStack = [];
+		fullStack = fullStack.concat(front);
+		fullStack.push("RxJS");
+		fullStack = fullStack.concat(back);
+		console.log(fullStack);
 
-    let fullStack2 = [...front, 'RxJS', ...back];
-    console.log(fullStack2);
+		let fullStack2 = [...front, "RxJS", ...back];
+		console.log(fullStack2);
 
-    console.log([...'will']);
-    const w = {...'will'};
-    console.log(w);
-    console.log(w[0]);
-    console.log(...front);
-    console.log(front);
-    console.log([...front]); //if spread with [] it will return a copy of the array
-    console.log("+++++++++");
-    const front2=[...front];
-    front2[0] = "NextJS";
-    console.log(front);
-    console.log(front2);
-</script>
+		console.log([..."will"]);
+		const w = { ..."will" };
+		console.log(w);
+		console.log(w[0]);
+		console.log(...front);
+		console.log(front);
+		console.log([...front]); //if spread with [] it will return a copy of the array
+		console.log("+++++++++");
+		const front2 = [...front];
+		front2[0] = "NextJS";
+		console.log(front);
+		console.log(front2);
+	</script>
 </html>

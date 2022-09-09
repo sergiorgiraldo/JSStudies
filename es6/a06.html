@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=100, initial-scale=1.0">
-    <title>This</title>
-</head>
-<body>
-    <button id="btn">Click me</button>
-    <script>
-        const btn = document.getElementById("btn");
-        const sandwich = {
-            bread: "rye",
-            cheese: "cheddar",
-        
-            prepare: function(){
-                alert(`I want a sandwich with ${this.bread} bread and ${this.cheese} cheese`);
-            },
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=100, initial-scale=1.0" />
+		<title>This</title>
+	</head>
+	<body>
+		<button id="btn">Click me</button>
+		<script>
+			const btn = document.getElementById("btn");
+			const sandwich = {
+				bread: "rye",
+				cheese: "cheddar",
 
-            make:function(){
-                window.setTimeout(()=>{
-                    this.prepare();
-                }, 1000);
-            }
-        };
-        btn.addEventListener("click", function(){sandwich.make();});
+				prepare: function () {
+					alert(
+						`I want a sandwich with ${this.bread} bread and ${this.cheese} cheese`
+					);
+				},
 
-    </script>
-</body>
+				make: function () {
+					window.setTimeout(() => {
+						this.prepare();
+					}, 1000);
+				},
+			};
+			btn.addEventListener("click", function () {
+				sandwich.make();
+			});
+		</script>
+	</body>
 </html>

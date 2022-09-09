@@ -1,73 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>02 - Classes Intro</title>
-</head>
-<body>
-</body>
+	<head>
+		<title>02 - Classes Intro</title>
+	</head>
+	<body></body>
 
-<script>
-    
-    class Animal {
-        constructor(name, kind, sound) {
-            this.name = name;
-            this.kind = kind;
-            this.sound = sound;
-        }
+	<script>
+		class Animal {
+			constructor(name, kind, sound) {
+				this.name = name;
+				this.kind = kind;
+				this.sound = sound;
+			}
 
-        hello() {
-            console.log(`${this.sound} I'm ${this.name}, a ${this.kind}! (from Animal class)`);
-        }
+			hello() {
+				console.log(
+					`${this.sound} I'm ${this.name}, a ${this.kind}! (from Animal class)`
+				);
+			}
 
-        static info() {
-            console.log('This is a class to create animals!');
-        }
+			static info() {
+				console.log("This is a class to create animals!");
+			}
 
-        //the name property is changed to _name to avoid the name collision with the getter and setter
+			//the name property is changed to _name to avoid the name collision with the getter and setter
 
-        get name() { 
-            console.log(`${this.sound} (name getter)`);
-            return this._name;
-        }
+			get name() {
+				console.log(`${this.sound} (name getter)`);
+				return this._name;
+			}
 
-        set name(name){
-            this._name = name;
-        }
+			set name(name) {
+				this._name = name;
+			}
 
-        set nickname(nick) {
-            this.nick = nick;
-        }
-    }
+			set nickname(nick) {
+				this.nick = nick;
+			}
+		}
 
-    const dogAnimal = new Animal('kim', 'dog', 'auau');
-    const cat = new Animal('minnie', 'cat', 'meow');
-    console.log(dogAnimal);
-    dogAnimal.hello();
-    console.log(cat);
-    
-    cat.nickname = 'Cat alternative name';
-    console.log(cat.nick);
-    // console.log(cat.nickname); //the setter is nickname but the property is nick
+		const dogAnimal = new Animal("kim", "dog", "auau");
+		const cat = new Animal("minnie", "cat", "meow");
+		console.log(dogAnimal);
+		dogAnimal.hello();
+		console.log(cat);
 
-    class Dog extends Animal {
-        constructor(name, sound) {
-            super(name);
-            super.kind = 'dog';
-            this.sound = sound;
-        }
+		cat.nickname = "Cat alternative name";
+		console.log(cat.nick);
+		// console.log(cat.nickname); //the setter is nickname but the property is nick
 
-        bark() {
-            console.log(`${this.sound} I'm ${this.name}! (from Dog class)`);
-        }
-    }
+		class Dog extends Animal {
+			constructor(name, sound) {
+				super(name);
+				super.kind = "dog";
+				this.sound = sound;
+			}
 
-    const elephant = new Animal('Dumbo','elephant', 'toot');
-    const dogDog = new Dog('shaw', 'auau');
+			bark() {
+				console.log(`${this.sound} I'm ${this.name}! (from Dog class)`);
+			}
+		}
 
-    console.log(elephant);
-    console.log(dogDog);
+		const elephant = new Animal("Dumbo", "elephant", "toot");
+		const dogDog = new Dog("shaw", "auau");
 
-    dogDog.hello();
-    dogDog.bark();
-</script>
+		console.log(elephant);
+		console.log(dogDog);
+
+		dogDog.hello();
+		dogDog.bark();
+	</script>
 </html>
