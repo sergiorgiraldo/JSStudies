@@ -43,8 +43,8 @@ function FilteredEventsPage(props) {
 	);
 }
 
-export async function getServerSideProps(context){
-	const {params} = context;
+export async function getServerSideProps(context) {
+	const { params } = context;
 	const filterData = params.slug;
 	const filteredYear = filterData[0];
 	const filteredMonth = filterData[1];
@@ -61,7 +61,7 @@ export async function getServerSideProps(context){
 		numMonth > 12
 	) {
 		return {
-			props:{ hasError:true}
+			props: { hasError: true },
 		};
 	}
 
@@ -70,12 +70,12 @@ export async function getServerSideProps(context){
 		month: numMonth,
 	});
 
-	return{
-		props:{
-			events:filteredEvents,
+	return {
+		props: {
+			events: filteredEvents,
 			year: numYear,
-			month: numMonth
-		}
+			month: numMonth,
+		},
 	};
 }
 
