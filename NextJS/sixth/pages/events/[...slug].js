@@ -34,13 +34,17 @@ function FilteredEventsPage() {
 
 	let pageHeadData = (
 		<Head>
-			<link rel="author">Sergio</link>
-			<meta name="description" content="All filtered events"></meta>
+			<meta name="description" content="All filtered events" />
 			<title>Filtered Events</title>
 		</Head>);
 
 	if (!loadedEvents) {
-		return <p className="center">Loading...</p>;
+		return (
+			<Fragment>	
+				{pageHeadData}
+				<p className="center">Loading...</p>
+			</Fragment>
+		);
 	}
 	
 	const filteredYear = filterData[0];
@@ -51,8 +55,7 @@ function FilteredEventsPage() {
 	
 	pageHeadData = (
 		<Head>
-			<link rel="author">Sergio</link>
-			<meta name="description" content={`Events from ${numMonth}/${numYear}`}></meta>
+			<meta name="description" content={`Events from ${numMonth}/${numYear}`}/>
 			<title>Filtered Events!!!</title>
 		</Head>);
 
