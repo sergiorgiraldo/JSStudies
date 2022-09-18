@@ -22,14 +22,14 @@ function AllEventsPage(props) {
 	);
 }
 
-export async function getStaticProps(){
+export async function getStaticProps() {
 	const events = await getAllEvents();
 
 	return {
 		props: {
 			events: events,
 		},
-		revalidate:60
+		revalidate: 60,
 	};
 }
 

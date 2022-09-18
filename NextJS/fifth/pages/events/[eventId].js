@@ -37,7 +37,7 @@ export async function getStaticProps(context) {
 
 	const event = await getEventById(eventId);
 
-	if (!event){ 
+	if (!event) {
 		return { notFound: true }; //redirects to 404
 	}
 
