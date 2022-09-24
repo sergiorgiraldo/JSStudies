@@ -45,7 +45,7 @@ export async function getStaticProps(context) {
 			selectedEvent: event,
 		},
 		revalidate: 30,
-		notFound: !event
+		notFound: !event,
 	};
 }
 
