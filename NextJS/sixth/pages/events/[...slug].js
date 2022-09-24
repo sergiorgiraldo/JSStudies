@@ -36,28 +36,33 @@ function FilteredEventsPage() {
 		<Head>
 			<meta name="description" content="All filtered events" />
 			<title>Filtered Events</title>
-		</Head>);
+		</Head>
+	);
 
 	if (!loadedEvents) {
 		return (
-			<Fragment>	
+			<Fragment>
 				{pageHeadData}
 				<p className="center">Loading...</p>
 			</Fragment>
 		);
 	}
-	
+
 	const filteredYear = filterData[0];
 	const filteredMonth = filterData[1];
-	
+
 	const numYear = +filteredYear;
 	const numMonth = +filteredMonth;
-	
+
 	pageHeadData = (
 		<Head>
-			<meta name="description" content={`Events from ${numMonth}/${numYear}`}/>
+			<meta
+				name="description"
+				content={`Events from ${numMonth}/${numYear}`}
+			/>
 			<title>Filtered Events!!!</title>
-		</Head>);
+		</Head>
+	);
 
 	if (
 		isNaN(numYear) ||

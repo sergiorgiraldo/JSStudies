@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
 		<Layout>
 			<Head>
 				<link rel="author" content="Sergio" />
-			</Head>			
+			</Head>
 			<Component {...pageProps} />
 		</Layout>
 	);
