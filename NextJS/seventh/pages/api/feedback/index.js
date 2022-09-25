@@ -1,14 +1,14 @@
 import fs from "fs";
 import path from "path";
 
-function getFeedbackFilePath(){
-    return path.join(process.cwd(), "data", "feedback.json");
+function getFeedbackFilePath() {
+	return path.join(process.cwd(), "data", "feedback.json");
 }
 
-export function getAllFeedback(){
-    const filePath = getFeedbackFilePath();
-    const fileData = fs.readFileSync(filePath);
-    return JSON.parse(fileData);    
+export function getAllFeedback() {
+	const filePath = getFeedbackFilePath();
+	const fileData = fs.readFileSync(filePath);
+	return JSON.parse(fileData);
 }
 
 function handler(req, res) {
@@ -24,21 +24,19 @@ function handler(req, res) {
 
 		const data = getAllFeedback();
 		data.push(newFeedback);
-        const filePath = getFeedbackFilePath();
+		const filePath = getFeedbackFilePath();
 		fs.writeFileSync(filePath, JSON.stringify(data));
 		res.status(201).json({
 			message: "Success, data file updated",
 			newFeedback: newFeedback,
 		});
-	} 
-    else if (req.method == "GET") {
+	} else if (req.method == "GET") {
 		const data = getAllFeedback();
 		res.status(201).json({
 			message: "Success, data file retrieved",
 			allFeedback: data,
-		});    
-    }
-    else {
+		});
+	} else {
 		res.status(200).json({ message: "This works!" });
 	}
 }
