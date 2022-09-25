@@ -25,12 +25,12 @@ function HomePage() {
 	}
 
 	function loadFeedbackHandler() {
-		fetch('/api/feedback')
-		  .then((response) => response.json())
-		  .then((data) => {
-			setFeedbackItems(data.allFeedback);
-		  });
-	  }	
+		fetch("/api/feedback")
+			.then((response) => response.json())
+			.then((data) => {
+				setFeedbackItems(data.allFeedback);
+			});
+	}
 	return (
 		<div>
 			<h1>The Home Page</h1>
@@ -53,9 +53,7 @@ function HomePage() {
 			<button onClick={loadFeedbackHandler}>Load Feedback</button>
 			<ul>
 				{feedbackItems.map((item) => (
-				<li key={item.id}>
-					{item.text}
-				</li>
+					<li key={item.id}>{item.text}</li>
 				))}
 			</ul>
 		</div>
