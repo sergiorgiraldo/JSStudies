@@ -1,18 +1,20 @@
 import { Fragment } from "react";
-import { getAllFeedback } from "../api/feedback/index";
-
-function detailsHandler(id){
-	console.log(id);
-	//document.location.href = `/feedback/${id}`; 
-}
+import { getAllFeedback } from "../api/feedback/helpers";
+import { useRouter} from 'next/router'
 
 function FeedbackPage(props) {
+	const router = useRouter();
+
+	function detailsHandler(id){
+		router.push(`/feedback/${id}`);
+	}
+	
 	return (
 		<Fragment>
 			<ul>
 				{props.feedbackItems.map((item) => (
 					<li key={item.id}>
-                        {item.text} <button onClick={detailsHandler(item.id)}>Get details</button>
+                        {item.text} <button onClick={detailsHandler.bind(null, item.id)}>Get details</button>
                     </li>
 				))}
 			</ul>
@@ -21,7 +23,7 @@ function FeedbackPage(props) {
 }
 
 export async function getStaticProps() {
-	const data = getAllFeedback();
+	const data = await getAllFeedback();
 	return {
 		props: {
 			feedbackItems: data,
