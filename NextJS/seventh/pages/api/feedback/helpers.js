@@ -11,8 +11,8 @@ export function getAllFeedback() {
 	return JSON.parse(fileData);
 }
 
-export function getFeedbackById(id){
-    const data = getAllFeedback();
-    const feedback = data.filter(f=>f.id == id);
-    return feedback[0];
+export function getFeedbackById(id) {
+	const data = getAllFeedback();
+	const feedback = data.filter((f) => f.id == id);
+	return feedback[0];
 }
