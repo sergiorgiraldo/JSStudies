@@ -1,15 +1,5 @@
 import fs from "fs";
-import path from "path";
-
-function getFeedbackFilePath() {
-	return path.join(process.cwd(), "data", "feedback.json");
-}
-
-export function getAllFeedback() {
-	const filePath = getFeedbackFilePath();
-	const fileData = fs.readFileSync(filePath);
-	return JSON.parse(fileData);
-}
+import {getAllFeedback} from "./helpers";
 
 function handler(req, res) {
 	if (req.method == "POST") {
