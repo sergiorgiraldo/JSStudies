@@ -8,10 +8,10 @@ function HomePage() {
 	function submitFormHandler(event) {
 		event.preventDefault();
 
-		const enteredEmail = emailInputRef.current.value;
-		const enteredFeedback = feedbackInputRef.current.value;
+		const formEmail = emailInputRef.current.value;
+		const formFeedback = feedbackInputRef.current.value;
 
-		const reqBody = { email: enteredEmail, text: enteredFeedback };
+		const reqBody = { email: formEmail, text: formFeedback };
 
 		fetch("/api/feedback", {
 			method: "POST",
