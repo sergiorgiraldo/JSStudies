@@ -1,5 +1,5 @@
 import fs from "fs";
-import {getAllFeedback} from "./helpers";
+import { getAllFeedback } from "./helpers";
 
 function handler(req, res) {
 	if (req.method == "POST") {
