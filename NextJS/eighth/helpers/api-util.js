@@ -1,6 +1,6 @@
 export async function getAllEvents() {
 	const response = await fetch(
-		"https://nextjs-course-c81cc-default-rtdb.firebaseio.com/events.json"
+		"https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/events.json"
 	);
 	const data = await response.json();
 
@@ -14,6 +14,39 @@ export async function getAllEvents() {
 	}
 
 	return events;
+}
+
+export async function getAllSignup() {
+	const response = await fetch(
+		"https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/newsletter.json"
+	);
+	const data = await response.json();
+
+	const signup = [];
+
+	for (const key in data) {
+		signup.push({
+			id: key,
+			...data[key],
+		});
+	}
+
+	return signup;
+}
+
+export async function insertSignup(signup) {
+	const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(signup)
+    };
+
+	const response = await fetch(
+		"https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/newsletter.json", requestOptions
+	);
+	const data = await response.json();
+
+	return JSON.stringify(data);
 }
 
 export async function getFeaturedEvents() {
