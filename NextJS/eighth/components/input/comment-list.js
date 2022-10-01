@@ -19,14 +19,14 @@ function CommentList(props) {
 				<p className="center">Loading...</p>
 			</Fragment>
 		);
-	}	
+	}
 
 	return (
 		<ul className={classes.comments}>
 			{comments.map((c) => (
 				<li key={c.id}>
-					Name:: {c.name} <br/>
-					Email:: {c.email} <br/>
+					Name:: {c.name} <br />
+					Email:: {c.email} <br />
 					Comment:: {c.comment}
 				</li>
 			))}
