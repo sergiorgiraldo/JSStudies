@@ -16,6 +16,37 @@ export async function getAllEvents() {
 	return events;
 }
 
+export async function getComments(eventId) {
+	const response = await fetch(
+		`https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/comments/${eventId}.json`
+	);
+	const data = await response.json();
+
+	const comments = [];
+
+	for (const key in data) {
+		comments.push({
+			id: key,
+			...data[key],
+		});
+	}
+
+	return comments;
+}
+
+export async function insertComment(eventId, comment) {
+	const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(comment)
+    };
+
+	const response = await fetch(`https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/comments/${eventId}.json`, requestOptions);
+	const data = await response.json();
+
+	return JSON.stringify(data);
+}
+
 export async function getAllSignup() {
 	const response = await fetch(
 		"https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/newsletter.json"
