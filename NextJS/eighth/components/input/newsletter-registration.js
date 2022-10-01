@@ -38,7 +38,7 @@ function NewsletterRegistration() {
 						ref={emailInputRef}
 						placeholder="Your email"
 						aria-label="Your email"
-						/>
+					/>
 					<button>Register</button>
 				</div>
 			</form>

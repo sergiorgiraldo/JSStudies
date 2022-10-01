@@ -33,7 +33,6 @@ function NewComment(props) {
 			name: enteredName,
 			comment: enteredComment,
 		});
-
 	}
 
 	return (

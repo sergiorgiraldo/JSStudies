@@ -28,7 +28,7 @@ function Comments(props) {
 				console.log(data);
 				setCommentOK(true);
 				toggleCommentsHandler();
-			});	
+			});
 	}
 
 	return (
@@ -38,7 +38,7 @@ function Comments(props) {
 			</button>
 			{showComments && <NewComment onAddComment={addCommentHandler} />}
 			{commentOK && <b>Thanks for the comment!!</b>}
-			{showComments && <CommentList eventId={eventId}/>}
+			{showComments && <CommentList eventId={eventId} />}
 		</section>
 	);
 }

@@ -36,12 +36,15 @@ export async function getComments(eventId) {
 
 export async function insertComment(eventId, comment) {
 	const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(comment)
-    };
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(comment),
+	};
 
-	const response = await fetch(`https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/comments/${eventId}.json`, requestOptions);
+	const response = await fetch(
+		`https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/comments/${eventId}.json`,
+		requestOptions
+	);
 	const data = await response.json();
 
 	return JSON.stringify(data);
@@ -67,13 +70,14 @@ export async function getAllSignup() {
 
 export async function insertSignup(signup) {
 	const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(signup)
-    };
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(signup),
+	};
 
 	const response = await fetch(
-		"https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/newsletter.json", requestOptions
+		"https://nextjs-course-d43b3-default-rtdb.europe-west1.firebasedatabase.app/newsletter.json",
+		requestOptions
 	);
 	const data = await response.json();
 
