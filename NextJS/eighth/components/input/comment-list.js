@@ -23,11 +23,12 @@ function CommentList(props) {
 
 	return (
 		<ul className={classes.comments}>
-			{comments.map((c) => (
-				<li key={c.id}>
-					Name:: {c.name} <br />
-					Email:: {c.email} <br />
-					Comment:: {c.comment}
+			{comments.map((item) => (
+				<li key={item.id}>
+					<p>{item.comment}</p>
+					<div>
+						By <address>{item.name}</address> (<address>{item.email}</address>)
+					</div>
 				</li>
 			))}
 		</ul>
