@@ -9,7 +9,7 @@ export async function getAllEvents() {
 	for (const key in data) {
 		events.push({
 			id: key,
-			...data[key],
+			...data[key]
 		});
 	}
 

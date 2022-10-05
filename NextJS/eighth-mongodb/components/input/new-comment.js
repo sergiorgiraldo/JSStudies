@@ -8,6 +8,18 @@ function NewComment(props) {
 	const nameInputRef = useRef();
 	const commentInputRef = useRef();
 
+	if (!props.commentOK){
+		const elEmail= document.getElementById("email");
+		const elName= document.getElementById("name");
+		const elComment= document.getElementById("comment");
+		if (elEmail && elName && elComment){
+			elEmail.value = "";
+			elName.value = "";
+			elComment.value = "";
+			elEmail.focus();
+		}
+	}
+
 	function sendCommentHandler(event) {
 		event.preventDefault();
 
@@ -31,7 +43,7 @@ function NewComment(props) {
 		props.onAddComment({
 			email: enteredEmail,
 			name: enteredName,
-			text: enteredComment,
+			text: enteredComment
 		});
 	}
 
@@ -52,8 +64,7 @@ function NewComment(props) {
 				<textarea
 					id="comment"
 					rows="5"
-					ref={commentInputRef}
-				></textarea>
+					ref={commentInputRef}></textarea>
 			</div>
 			{isInvalid && (
 				<p>Please enter a valid email address and comment!</p>

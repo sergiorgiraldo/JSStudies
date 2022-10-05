@@ -1,7 +1,7 @@
 import {
 	connectDatabase,
 	insertDocument,
-	getAllDocuments,
+	getAllDocuments
 } from "../../../helpers/db-util";
 
 async function handler(req, res) {
@@ -35,7 +35,7 @@ async function handler(req, res) {
 			email,
 			name,
 			text,
-			eventId,
+			eventId
 		};
 
 		let result;
@@ -45,7 +45,7 @@ async function handler(req, res) {
 			newComment._id = result.insertedId;
 			res.status(201).json({
 				message: "Added comment.",
-				comment: newComment,
+				comment: newComment
 			});
 		} catch (error) {
 			res.status(500).json({ message: "Inserting comment failed!" });
@@ -54,9 +54,16 @@ async function handler(req, res) {
 
 	if (req.method === "GET") {
 		try {
-			const documents = await getAllDocuments(client, "comments", {
-				_id: -1,
-			});
+			const documents = await getAllDocuments(
+				client,
+				"comments",
+				{
+					_id: -1
+				},
+				{
+					eventId: eventId
+				}
+			);
 			res.status(200).json({ comments: documents });
 		} catch (error) {
 			res.status(500).json({ message: "Getting comments failed." });
