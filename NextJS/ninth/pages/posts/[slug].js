@@ -1,4 +1,5 @@
 import PostContent from "../../components/posts/post-detail/post-content";
+import {getPostData, getPostsFiles} from "../../lib/posts-util";
 
 function PostDetailPage(props){
     const { whichPost } = props;
@@ -13,32 +14,26 @@ function PostDetailPage(props){
 }
 
 export async function getStaticProps(context) {
-	const post = {
-		title:"foo content", 
-		image:"i.png", 
-		content:`
-# This is my first post
-* One  
-* Two  
-* Three
-
-**And bold**
-			`, 
-		date:"2022-10-28", 
-		slug:"1"
-	};
+	const { params } = context;
+	const { slug } = params;
+	const post = getPostData(`${slug}.md`);
 
 	return {
 		props: { whichPost: post },
+		revalidate: 600		
 	};
 }
 
 export async function getStaticPaths() {
-	const ids = ["1","2","3"];
-	const pathsWithParams = ids.map((id) => ({ params: { slug: id } }));
+	const postFilenames = getPostsFiles();
+
+	const slugs = postFilenames.map((fileName) =>
+		fileName.replace(/\.md$/, "")
+	);
+
 	return {
-		paths: pathsWithParams,
-		fallback: false,
+		paths: slugs.map((slug) => ({ params: { slug: slug } })),
+		fallback: false
 	};
 }
 
