@@ -1,16 +1,14 @@
 import PostContent from "../../components/posts/post-detail/post-content";
-import {getPostData, getPostsFiles} from "../../lib/posts-util";
+import { getPostData, getPostsFiles } from "../../lib/posts-util";
 
-function PostDetailPage(props){
-    const { whichPost } = props;
+function PostDetailPage(props) {
+	const { whichPost } = props;
 
 	if (!whichPost) {
 		return <p>Loading ...</p>;
-	}    
+	}
 
-	return (
-		<PostContent post={whichPost} />
-	);    
+	return <PostContent post={whichPost} />;
 }
 
 export async function getStaticProps(context) {
@@ -20,7 +18,7 @@ export async function getStaticProps(context) {
 
 	return {
 		props: { whichPost: post },
-		revalidate: 600		
+		revalidate: 600
 	};
 }
 
