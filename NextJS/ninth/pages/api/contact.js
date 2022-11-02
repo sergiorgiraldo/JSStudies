@@ -46,9 +46,11 @@ async function handler(req, res) {
 			client.close();
 			res.status(500).json({ message: "Inserting comment failed!" });
 		}
+		finally{
+			client.close();
+		}
 	}
 
-	client.close();
 }
 
 export default handler;
