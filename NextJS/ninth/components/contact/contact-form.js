@@ -1,5 +1,6 @@
 import classes from "./contact-form.module.css";
 import { useState} from "react";
+import Notification from "../ui/notification";
 
 async function sendContactData(contactDetails) {
 	const response = await fetch("/api/contact", {
@@ -43,7 +44,31 @@ function ContactForm() {
 			setRequestStatus("error");
 		}
 	}
-	
+
+	let notification;
+
+	if (requestStatus === "pending") {
+		notification = {
+			status: "pending",
+			title: "Sending message...",
+			message: "Your message is on its way!"
+		};
+	}
+	else if (requestStatus === "success") {
+		notification = {
+			status: "success",
+			title: "Success!",
+			message: "Message sent successfully!"
+		};
+	}
+	else if (requestStatus === "error") {
+		notification = {
+			status: "error",
+			title: "Error!",
+			message: requestError
+		};
+	}
+
 	return (
 		<section className={classes.contact}>
 			<h1>How can I help you?</h1>
@@ -90,6 +115,13 @@ function ContactForm() {
 					<button>Send Message</button>
 				</div>
 			</form>
+			{notification && (
+				<Notification
+					status={notification.status}
+					title={notification.title}
+					message={notification.message}
+				/>
+			)}
 		</section>
 	);
 }
