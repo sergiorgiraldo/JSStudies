@@ -3,6 +3,10 @@ const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 module.exports = (phase) => {
 	if (phase === PHASE_DEVELOPMENT_SERVER) {
 		return {
+			images: {
+				loader: "akamai",
+				path: "",
+			  },
 			env: {
 				mongodb_username: "sa",
 				mongodb_password: "sa",
@@ -13,6 +17,10 @@ module.exports = (phase) => {
 		};
 	} else {
 		return {
+			images: {
+				loader: "akamai",
+				path: "",
+			  },
 			env: {
 				mongodb_username: "sa",
 				mongodb_password: "sa",
