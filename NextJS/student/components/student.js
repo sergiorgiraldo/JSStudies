@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import StudentList from "../components/student-list"
 
-function Student() {
+function Student(props) {
 	const [newStudent, setStudent] = useState("");
 	const handleInput = (e) => {
 		setStudent(e.target.value);
@@ -25,8 +26,14 @@ function Student() {
 				<p className={styles.semi}>
 					<button onClick={() => HandleSubmit()}>Add Student</button>
 				</p>
+				<hr/>
+				<p>
+					<StudentList list={props.list} />
+				</p>
 			</div>
 		</div>
 	);
 }
+
+
 export default Student;
