@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Student from "../components/Student";
-import { getAllStudents } from "../helpers/api-utils";
+import { connectDatabase, getAllDocuments} from "../helpers/db-util";
 
 export default function Home(props) {
 	return (
@@ -16,12 +16,13 @@ export default function Home(props) {
 }
 
 
-export const getServerSideProps = async (ctx) => {
-	const list = await getAllStudents();
+export async function getServerSideProps(){
+	const client = await connectDatabase();
+	const list = await getAllDocuments(client, "students",{_id: -1},{});
+	console.log(list);
+	client.close();
 
 	return {
-		props:{
-			list:list
-		}
+		props:{"list":list}
 	}
 }

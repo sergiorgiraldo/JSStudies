@@ -1,14 +1,23 @@
-import { React, useEffect, useState } from "react";
+import { React, useRef } from "react";
 import styles from "../styles/Home.module.css";
 import StudentList from "../components/student-list"
 
 function Student(props) {
-	const [newStudent, setStudent] = useState("");
-	const handleInput = (e) => {
-		setStudent(e.target.value);
-	};
-	const HandleSubmit = (e) => {
-		console.log(newStudent);
+	const studentRef = useRef();
+
+	function handleSubmit(event){
+		event.preventDefault();
+		const newStudent = 	studentRef.current.value;
+		fetch("/api/student", {
+			method: "POST",
+			body: JSON.stringify({ student: newStudent }),
+			headers: {
+			  "Content-Type": "application/json",
+			}
+		  })
+		  .catch((error) => {
+			console.log(error);
+		  });		  
 	};
 
 	return (
@@ -16,20 +25,23 @@ function Student(props) {
 			<h1>Student</h1>
 			<div className={styles.newstudent}>
 				<h3>Add new Student</h3>
-				<p className={styles.semi}>
-					<input
-						type="text"
-						value={newStudent}
-						onChange={(e) => handleInput(e)}
-					/>
-				</p>
-				<p className={styles.semi}>
-					<button onClick={() => HandleSubmit()}>Add Student</button>
-				</p>
+				<form onSubmit={handleSubmit}>
+					<div className={styles.semi}>
+						<input
+							type="text"
+							id="student"
+							placeholder="new student"
+							ref={studentRef}
+						/>
+					</div>
+					<div className={styles.semi}>
+						<button>Add Student</button>
+					</div>
+				</form>
 				<hr/>
-				<p>
+				<div>
 					<StudentList list={props.list} />
-				</p>
+				</div>
 			</div>
 		</div>
 	);
