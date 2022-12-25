@@ -1,4 +1,4 @@
-import { connectDatabase, getAllDocuments, insertDocument } from "../../helpers/db-util";
+import { connectDatabase, getAllDocuments, insertDocument, deleteDocument } from "../../helpers/db-util";
 
 async function handler(req, res) {
 	let client;
@@ -34,6 +34,14 @@ async function handler(req, res) {
 			res.status(500).json({ message: "Getting students failed." });
 		}
 	}
+	else if (req.method === "DELETE") {
+		try {
+			await deleteDocument(client, "students", req.body.student);
+			res.status(200).json({ message: "Student deleted" });
+			client.close();
+		} catch (error) {
+			res.status(500).json({ message: "Deleting student failed." });
+		}
+	}
 }
-
 export default handler;

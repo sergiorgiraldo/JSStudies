@@ -19,7 +19,6 @@ export default function Home(props) {
 export async function getServerSideProps(){
 	const client = await connectDatabase();
 	const list = await getAllDocuments(client, "students",{_id: -1},{});
-	console.log(list);
 	client.close();
 
 	return {
