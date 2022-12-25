@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectID } from "mongodb";
 
 export async function connectDatabase() {
 	const client = await MongoClient.connect(
@@ -12,6 +12,16 @@ export async function insertDocument(client, collection, document) {
 	const db = client.db("school");
 
 	const result = await db.collection(collection).insertOne(document);
+
+	return result;
+}
+
+export async function deleteDocument(client, collection, student) {
+	const db = client.db("school");
+
+    const query = { "_id": new ObjectID(student) };
+
+	const result = await db.collection(collection).deleteOne(query);
 
 	return result;
 }
