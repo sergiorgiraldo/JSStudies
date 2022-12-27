@@ -24,6 +24,7 @@ With inline elements:
 With table cells:
 
 {% capture example %}
+
 <table style="height: 100px;">
   <tbody>
     <tr>

@@ -7,7 +7,7 @@ async function handler(req, res) {
 	if (req.method !== "PATCH") {
 		return;
 	}
-  console.log("Changing password.");
+	console.log("Changing password.");
 	const session = await getSession({ req: req });
 
 	if (!session) {
@@ -39,7 +39,7 @@ async function handler(req, res) {
 	);
 
 	if (!passwordsAreEqual) {
-    console.log("Invalid password.");
+		console.log("Invalid password.");
 		res.status(403).json({ message: "Invalid password." });
 		client.close();
 		return;
@@ -53,7 +53,7 @@ async function handler(req, res) {
 	);
 
 	client.close();
-  console.log("Password updated!");
+	console.log("Password updated!");
 	res.status(200).json({ message: "Password updated!" });
 }
 

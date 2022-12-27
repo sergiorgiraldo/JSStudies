@@ -27,7 +27,8 @@ function CommentList(props) {
 				<li key={item.id}>
 					<p>{item.comment}</p>
 					<div>
-						By <address>{item.name}</address> (<address>{item.email}</address>)
+						By <address>{item.name}</address> (
+						<address>{item.email}</address>)
 					</div>
 				</li>
 			))}

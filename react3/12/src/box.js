@@ -1,19 +1,19 @@
-import React from "react"
+import React from "react";
 
 export default function Box(props) {
-    const [onOff, setOnOff] = React.useState(props.box.on);
-    
-    const styles = {
-        backgroundColor: onOff ? "cyan":"white"
-    }
+	const [onOff, setOnOff] = React.useState(props.box.on);
 
-    function toggle(){
-        setOnOff(prevOnOff => !prevOnOff);
-    }
+	const styles = {
+		backgroundColor: onOff ? "cyan" : "white"
+	};
 
-    return (
-        <div className="box" style={styles} onClick={toggle}>
-            <span>{props.box.id}</span> 
-        </div>
-    )
+	function toggle() {
+		setOnOff((prevOnOff) => !prevOnOff);
+	}
+
+	return (
+		<div className="box" style={styles} onClick={toggle}>
+			<span>{props.box.id}</span>
+		</div>
+	);
 }

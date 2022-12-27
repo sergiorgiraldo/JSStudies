@@ -1,10 +1,10 @@
 const command = {
-  name: 'mycli-with-gluegun',
-  run: async (toolbox) => {
-    const { print } = toolbox
+	name: "mycli-with-gluegun",
+	run: async (toolbox) => {
+		const { print } = toolbox;
 
-    print.info('Welcome to your CLI')
-  },
-}
+		print.info("Welcome to your CLI");
+	}
+};
 
-module.exports = command
+module.exports = command;

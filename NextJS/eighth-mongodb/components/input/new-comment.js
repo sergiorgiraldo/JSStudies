@@ -8,11 +8,11 @@ function NewComment(props) {
 	const nameInputRef = useRef();
 	const commentInputRef = useRef();
 
-	if (!props.commentOK){
-		const elEmail= document.getElementById("email");
-		const elName= document.getElementById("name");
-		const elComment= document.getElementById("comment");
-		if (elEmail && elName && elComment){
+	if (!props.commentOK) {
+		const elEmail = document.getElementById("email");
+		const elName = document.getElementById("name");
+		const elComment = document.getElementById("comment");
+		if (elEmail && elName && elComment) {
 			elEmail.value = "";
 			elName.value = "";
 			elComment.value = "";

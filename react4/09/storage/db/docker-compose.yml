@@ -1,11 +1,11 @@
 version: "3.9"
 services:
-  dbstorage:
-    build:
-      context: .
-      dockerfile: DockerfileDebianSqlite
-    volumes:
-      - db:/db
-    command: tail -F anything
+    dbstorage:
+        build:
+            context: .
+            dockerfile: DockerfileDebianSqlite
+        volumes:
+            - db:/db
+        command: tail -F anything
 volumes:
-  db:
+    db:

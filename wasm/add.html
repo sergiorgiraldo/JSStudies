@@ -1,21 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Simple add example</title>
+	</head>
 
-  <head>
-    <meta charset="utf-8">
-    <title>Simple add example</title>
-  </head>
-
-  <body>
-    <script>
-
-    WebAssembly.instantiateStreaming(fetch('add.wasm'))
-    .then(obj => {
-       console.log(obj.instance.exports.add(1, 2));  // "3"
-       console.log(obj.instance.exports.add(101, 87));  // "188"
-    });
-    </script>
-  </body>
-
+	<body>
+		<script>
+			WebAssembly.instantiateStreaming(fetch("add.wasm")).then((obj) => {
+				console.log(obj.instance.exports.add(1, 2)); // "3"
+				console.log(obj.instance.exports.add(101, 87)); // "188"
+			});
+		</script>
+	</body>
 </html>

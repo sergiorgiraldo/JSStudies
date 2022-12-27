@@ -12,6 +12,7 @@ Cards have `position: relative` by default in Bootstrap, so in this case you can
 Multiple links and tap targets are not recommended with stretched links. However, some `position` and `z-index` styles can help should this be required.
 
 {% capture example %}
+
 <div class="card" style="width: 18rem;">
   {% include icons/placeholder.svg width="100%" height="180" class="card-img-top" text=" " title="Card image cap" %}
   <div class="card-body">
@@ -26,6 +27,7 @@ Multiple links and tap targets are not recommended with stretched links. However
 Media objects do not have `position: relative` by default, so we need to add the `.position-relative` here to prevent the link from stretching outside the media object.
 
 {% capture example %}
+
 <div class="media position-relative">
   {% include icons/placeholder.svg width="144" height="144" class="mr-3" text=" " title="Generic placeholder image" %}
   <div class="media-body">
@@ -40,6 +42,7 @@ Media objects do not have `position: relative` by default, so we need to add the
 Columns are `position: relative` by default, so clickable columns only require the `.stretched-link` class on a link. However, stretching a link over an entire `.row` requires `.position-static` on the column and `.position-relative` on the row.
 
 {% capture example %}
+
 <div class="row no-gutters bg-light position-relative">
   <div class="col-md-6 mb-md-0 p-md-4">
     {% include icons/placeholder.svg width="100%" height="200" class="w-100" text=" " title="Generic placeholder image" %}
@@ -57,12 +60,13 @@ Columns are `position: relative` by default, so clickable columns only require t
 
 If the stretched link doesn't seem to work, the [containing block](https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#Identifying_the_containing_block) will probably be the cause. The following CSS properties will make an element the containing block:
 
-- A `position` value other than `static`
-- A `transform` or `perspective` value other than `none`
-- A `will-change` value of `transform` or `perspective`
-- A `filter` value other than `none` or a `will-change` value of `filter` (only works on Firefox)
+-   A `position` value other than `static`
+-   A `transform` or `perspective` value other than `none`
+-   A `will-change` value of `transform` or `perspective`
+-   A `filter` value other than `none` or a `will-change` value of `filter` (only works on Firefox)
 
 {% capture example %}
+
 <div class="card" style="width: 18rem;">
   {% include icons/placeholder.svg width="100%" height="180" class="card-img-top" text=" " title="Card image cap" %}
   <div class="card-body">

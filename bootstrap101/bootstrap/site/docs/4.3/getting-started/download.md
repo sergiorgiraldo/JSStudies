@@ -10,8 +10,8 @@ toc: true
 
 Download ready-to-use compiled code for **Bootstrap v{{ site.current_version}}** to easily drop into your project, which includes:
 
-- Compiled and minified CSS bundles (see [CSS files comparison]({{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/contents/#css-files))
-- Compiled and minified JavaScript plugins
+-   Compiled and minified CSS bundles (see [CSS files comparison]({{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/contents/#css-files))
+-   Compiled and minified JavaScript plugins
 
 This doesn't include documentation, source files, or any optional JavaScript dependencies (jQuery and Popper.js).
 
@@ -21,8 +21,8 @@ This doesn't include documentation, source files, or any optional JavaScript dep
 
 Compile Bootstrap with your own asset pipeline by downloading our source Sass, JavaScript, and documentation files. This option requires some additional tooling:
 
-- Sass compiler (Libsass or Ruby Sass is supported) for compiling your CSS.
-- [Autoprefixer](https://github.com/postcss/autoprefixer) for CSS vendor prefixing
+-   Sass compiler (Libsass or Ruby Sass is supported) for compiling your CSS.
+-   [Autoprefixer](https://github.com/postcss/autoprefixer) for CSS vendor prefixing
 
 Should you require [build tools]({{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/build-tools/#tooling-setup), they are included for developing Bootstrap and its docs, but they're likely unsuitable for your own purposes.
 
@@ -33,6 +33,7 @@ Should you require [build tools]({{ site.baseurl }}/docs/{{ site.docs_version }}
 Skip the download with [BootstrapCDN](https://www.bootstrapcdn.com/) to deliver cached version of Bootstrap's compiled CSS and JS to your project.
 
 {% highlight html %}
+
 <link rel="stylesheet" href="{{ site.cdn.css }}" integrity="{{ site.cdn.css_hash }}" crossorigin="anonymous">
 <script src="{{ site.cdn.js }}" integrity="{{ site.cdn.js_hash }}" crossorigin="anonymous"></script>
 {% endhighlight %}
@@ -40,8 +41,10 @@ Skip the download with [BootstrapCDN](https://www.bootstrapcdn.com/) to deliver 
 If you're using our compiled JavaScript, don't forget to include CDN versions of jQuery and Popper.js before it.
 
 {% highlight html %}
+
 <script src="{{ site.cdn.jquery }}" integrity="{{ site.cdn.jquery_hash }}" crossorigin="anonymous"></script>
 <script src="{{ site.cdn.popper }}" integrity="{{ site.cdn.popper_hash }}" crossorigin="anonymous"></script>
+
 {% endhighlight %}
 
 ## Package managers
@@ -60,8 +63,8 @@ npm install bootstrap
 
 Bootstrap's `package.json` contains some additional metadata under the following keys:
 
-- `sass` - path to Bootstrap's main [Sass](https://sass-lang.com/) source file
-- `style` - path to Bootstrap's non-minified CSS that's been precompiled using the default settings (no customization)
+-   `sass` - path to Bootstrap's main [Sass](https://sass-lang.com/) source file
+-   `style` - path to Bootstrap's non-minified CSS that's been precompiled using the default settings (no customization)
 
 ### yarn
 

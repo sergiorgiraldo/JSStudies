@@ -14,12 +14,12 @@ See something that doesn't sound right, or perhaps could be done better? [Open a
 
 We'll dive into each of these more throughout, but at a high level, here's what guides our approach.
 
-- Components should be responsive and mobile-first
-- Components should be built with a base class and extended via modifier classes
-- Component states should obey a common z-index scale
-- Whenever possible, prefer a HTML and CSS implementation over JavaScript
-- Whenever possible, use utilities over custom styles
-- Whenever possible, avoid enforcing strict HTML requirements (children selectors)
+-   Components should be responsive and mobile-first
+-   Components should be built with a base class and extended via modifier classes
+-   Component states should obey a common z-index scale
+-   Whenever possible, prefer a HTML and CSS implementation over JavaScript
+-   Whenever possible, use utilities over custom styles
+-   Whenever possible, avoid enforcing strict HTML requirements (children selectors)
 
 ## Responsive
 
@@ -43,10 +43,10 @@ There are two `z-index` scales in Bootstrap—elements within a component and ov
 
 ### Component elements
 
-- Some components in Bootstrap are built with overlapping elements to prevent double borders without modifying the `border` property. For example, button groups, input groups, and pagination.
-- These components share a standard `z-index` scale of `0` through `3`.
-- `0` is default (initial), `1` is `:hover`, `2` is `:active`/`.active`, and `3` is `:focus`.
-- This approach matches our expectations of highest user priority. If an element is focused, it's in view and at the user's attention. Active elements are second highest because they indicate state. Hover is third highest because it indicates user intent, but nearly _anything_ can be hovered.
+-   Some components in Bootstrap are built with overlapping elements to prevent double borders without modifying the `border` property. For example, button groups, input groups, and pagination.
+-   These components share a standard `z-index` scale of `0` through `3`.
+-   `0` is default (initial), `1` is `:hover`, `2` is `:active`/`.active`, and `3` is `:focus`.
+-   This approach matches our expectations of highest user priority. If an element is focused, it's in view and at the user's attention. Active elements are second highest because they indicate state. Hover is third highest because it indicates user intent, but nearly _anything_ can be hovered.
 
 ### Overlay components
 
@@ -64,7 +64,7 @@ This principle is our first-class JavaScript API is `data` attributes. You don't
 
 Lastly, our styles build on the fundamental behaviors of common web elements. Whenever possible, we prefer to use what the browser provides. For example, you can put a `.btn` class on nearly any element, but most elements don't provide any semantic value or browser functionality. So instead, we use `<button>`s and `<a>`s.
 
-The same goes for more complex components. While we *could* write our own form validation plugin to add classes to a parent element based on an input's state, thereby allowing us to style the text say red, we prefer using the `:valid`/`:invalid` pseudo-elements every browser provides us.
+The same goes for more complex components. While we _could_ write our own form validation plugin to add classes to a parent element based on an input's state, thereby allowing us to style the text say red, we prefer using the `:valid`/`:invalid` pseudo-elements every browser provides us.
 
 ## Utilities
 

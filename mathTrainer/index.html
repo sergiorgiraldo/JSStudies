@@ -1,54 +1,80 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Math Trainer</title>
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-        <script type="text/javascript" src="trainer.js"></script>
-        <script type="text/javascript" src="timer.js"></script>
-    </head>
-    <body>
-        <div id="question" style="display: none">
-            <div id="question_math"></div>
-            <div id="progress"></div>
-            <div id="timer"></div>
-        </div>
-        <div id="user" style="display: none">
-            <input type="text" class="nb" id="result" autofocus /> 
-            <p>Hit <i>space</i> to skip a question.</p>
-            <input type="submit" value="Back" id="quit_to_options" />
-        </div>
-        <div id="score" style="display: none">
-            <h1>Time's up</h1>
-            In <span id="score_time">a certain time</span>, you have solved
-            <span id="score_total">n</span> problems (skipped
-            <span id="score_skipped">k</span>).
-        </div>
-        <div id="options">
-            <h1>Secrets of Mental Math</h1>
-            <div id="error_wrapper" style="display: none"><span id="options_error"></span></div>
-            <br />Run for <input type="number" name="timer length" min="1" max="99" id="timer_length" value="3" /> minutes.
-            <br />Create problems with numbers in the following range:
-            <br />Min: <input type="number" id="min" class="nb" value="1" />
-            &nbsp; Max: <input type="number" id="max" class="nb" value="100" />
-            <br />
-            <i>note that, for divisions, the <b>result</b> will be in this range</i>
-            <br />
-            <br /><label for="avoid_negative">Avoid negative results for subtraction?</label>
-            <input type="checkbox" id="avoid_negative" checked="checked" />
-            <span style="font-size: 0.9em">Only applicable if min and max aren't negative.</span>
-            <div id="op_wrapper">Include: 
-                <input type="checkbox" id="op_add" checked="unchecked" /> <label for="op_add">Addition</label>
-                <input type="checkbox" id="op_sub" checked="unchecked" /> <label for="op_sub">Subtraction</label>
-                <input type="checkbox" id="op_mul" checked="checked" /> <label for="op_mul">Multiplication</label>
-                <input type="checkbox" id="op_div" checked="unchecked" /> <label for="op_div">Division</label>
-            </div>
-            <br /><input type="submit" id="start" value="Run" style="display: none" />
-        </div>
-        <noscript>
-            <h1>Javascript Required</h1>
-            <p>Enable javascript in your browser.</p>
-        </noscript>
-    </body>
+	<head>
+		<meta charset="utf-8" />
+		<title>Math Trainer</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="trainer.js"></script>
+		<script type="text/javascript" src="timer.js"></script>
+	</head>
+	<body>
+		<div id="question" style="display: none">
+			<div id="question_math"></div>
+			<div id="progress"></div>
+			<div id="timer"></div>
+		</div>
+		<div id="user" style="display: none">
+			<input type="text" class="nb" id="result" autofocus />
+			<p>Hit <i>space</i> to skip a question.</p>
+			<input type="submit" value="Back" id="quit_to_options" />
+		</div>
+		<div id="score" style="display: none">
+			<h1>Time's up</h1>
+			In <span id="score_time">a certain time</span>, you have solved
+			<span id="score_total">n</span> problems (skipped
+			<span id="score_skipped">k</span>).
+		</div>
+		<div id="options">
+			<h1>Secrets of Mental Math</h1>
+			<div id="error_wrapper" style="display: none">
+				<span id="options_error"></span>
+			</div>
+			<br />Run for
+			<input
+				type="number"
+				name="timer length"
+				min="1"
+				max="99"
+				id="timer_length"
+				value="3" />
+			minutes. <br />Create problems with numbers in the following range:
+			<br />Min:
+			<input type="number" id="min" class="nb" value="1" /> &nbsp; Max:
+			<input type="number" id="max" class="nb" value="100" />
+			<br />
+			<i
+				>note that, for divisions, the <b>result</b> will be in this
+				range</i
+			>
+			<br />
+			<br /><label for="avoid_negative"
+				>Avoid negative results for subtraction?</label
+			>
+			<input type="checkbox" id="avoid_negative" checked="checked" />
+			<span style="font-size: 0.9em"
+				>Only applicable if min and max aren't negative.</span
+			>
+			<div id="op_wrapper">
+				Include:
+				<input type="checkbox" id="op_add" checked="unchecked" />
+				<label for="op_add">Addition</label>
+				<input type="checkbox" id="op_sub" checked="unchecked" />
+				<label for="op_sub">Subtraction</label>
+				<input type="checkbox" id="op_mul" checked="checked" />
+				<label for="op_mul">Multiplication</label>
+				<input type="checkbox" id="op_div" checked="unchecked" />
+				<label for="op_div">Division</label>
+			</div>
+			<br /><input
+				type="submit"
+				id="start"
+				value="Run"
+				style="display: none" />
+		</div>
+		<noscript>
+			<h1>Javascript Required</h1>
+			<p>Enable javascript in your browser.</p>
+		</noscript>
+	</body>
 </html>

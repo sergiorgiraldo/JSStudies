@@ -5,8 +5,8 @@ module.exports = (phase) => {
 		return {
 			images: {
 				loader: "akamai",
-				path: "",
-			  },
+				path: ""
+			},
 			env: {
 				mongodb_username: "sa",
 				mongodb_password: "sa",
@@ -19,8 +19,8 @@ module.exports = (phase) => {
 		return {
 			images: {
 				loader: "akamai",
-				path: "",
-			  },
+				path: ""
+			},
 			env: {
 				mongodb_username: "sa",
 				mongodb_password: "sa",

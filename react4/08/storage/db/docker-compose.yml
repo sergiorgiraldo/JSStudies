@@ -1,10 +1,10 @@
 version: "3.9"
 services:
-  dbstorage:
-    build:
-      context: .
-      dockerfile: DockerfileDebianSqlite
-    volumes:
-      - db:/db
+    dbstorage:
+        build:
+            context: .
+            dockerfile: DockerfileDebianSqlite
+        volumes:
+            - db:/db
 volumes:
-  db:
+    db:

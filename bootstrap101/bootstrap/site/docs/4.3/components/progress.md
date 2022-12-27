@@ -10,14 +10,15 @@ toc: true
 
 Progress components are built with two HTML elements, some CSS to set the width, and a few attributes. We don't use [the HTML5 `<progress>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress), ensuring you can stack progress bars, animate them, and place text labels over them.
 
-- We use the `.progress` as a wrapper to indicate the max value of the progress bar.
-- We use the inner `.progress-bar` to indicate the progress so far.
-- The `.progress-bar` requires an inline style, utility class, or custom CSS to set their width.
-- The `.progress-bar` also requires some `role` and `aria` attributes to make it accessible.
+-   We use the `.progress` as a wrapper to indicate the max value of the progress bar.
+-   We use the inner `.progress-bar` to indicate the progress so far.
+-   The `.progress-bar` requires an inline style, utility class, or custom CSS to set their width.
+-   The `.progress-bar` also requires some `role` and `aria` attributes to make it accessible.
 
 Put that all together, and you have the following examples.
 
 {% capture example %}
+
 <div class="progress">
   <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -39,6 +40,7 @@ Put that all together, and you have the following examples.
 Bootstrap provides a handful of [utilities for setting width]({{ site.baseurl }}/docs/{{ site.docs_version }}/utilities/sizing/). Depending on your needs, these may help with quickly configuring progress.
 
 {% capture example %}
+
 <div class="progress">
   <div class="progress-bar w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -50,6 +52,7 @@ Bootstrap provides a handful of [utilities for setting width]({{ site.baseurl }}
 Add labels to your progress bars by placing text within the `.progress-bar`.
 
 {% capture example %}
+
 <div class="progress">
   <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 </div>
@@ -61,6 +64,7 @@ Add labels to your progress bars by placing text within the `.progress-bar`.
 We only set a `height` value on the `.progress`, so if you change that value the inner `.progress-bar` will automatically resize accordingly.
 
 {% capture example %}
+
 <div class="progress" style="height: 1px;">
   <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -75,6 +79,7 @@ We only set a `height` value on the `.progress`, so if you change that value the
 Use background utility classes to change the appearance of individual progress bars.
 
 {% capture example %}
+
 <div class="progress">
   <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -95,6 +100,7 @@ Use background utility classes to change the appearance of individual progress b
 Include multiple progress bars in a progress component if you need.
 
 {% capture example %}
+
 <div class="progress">
   <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
   <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
@@ -108,6 +114,7 @@ Include multiple progress bars in a progress component if you need.
 Add `.progress-bar-striped` to any `.progress-bar` to apply a stripe via CSS gradient over the progress bar's background color.
 
 {% capture example %}
+
 <div class="progress">
   <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
@@ -140,6 +147,7 @@ The striped gradient can also be animated. Add `.progress-bar-animated` to `.pro
 </div>
 
 {% highlight html %}
+
 <div class="progress">
   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
 </div>

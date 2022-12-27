@@ -1,23 +1,22 @@
 <template>
-  <div id="app">
+	<div id="app">
 		<InitializeData />
-		<ConversationContainer 
+		<ConversationContainer
 			v-for="id in convoIds"
 			:conversation="conversations[id]"
-	 		:id="id"
-	 		:key="id"
-		/>
-  </div>
+			:id="id"
+			:key="id" />
+	</div>
 </template>
 
 <script>
-import InitializeData from './components/InitializeData.vue'
-import ConversationContainer from './components/ConversationContainer.vue'
+import InitializeData from "./components/InitializeData.vue";
+import ConversationContainer from "./components/ConversationContainer.vue";
 
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
-  name: 'app',
+	name: "app",
 	components: {
 		InitializeData,
 		ConversationContainer
@@ -25,12 +24,11 @@ export default {
 
 	computed: {
 		...mapState({
-			conversations: state => state.conversations.all,
-			convoIds: state => state.conversations.allIds
+			conversations: (state) => state.conversations.all,
+			convoIds: (state) => state.conversations.allIds
 		})
-	},
-}
+	}
+};
 </script>
 
-<style>
-</style>
+<style></style>

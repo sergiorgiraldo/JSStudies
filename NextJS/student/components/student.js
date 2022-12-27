@@ -1,24 +1,23 @@
 import { React, useRef } from "react";
 import styles from "../styles/Home.module.css";
-import StudentList from "../components/student-list"
+import StudentList from "../components/student-list";
 
 function Student(props) {
 	const studentRef = useRef();
 
-	function handleSubmit(event){
+	function handleSubmit(event) {
 		event.preventDefault();
-		const newStudent = 	studentRef.current.value;
+		const newStudent = studentRef.current.value;
 		fetch("/api/student", {
 			method: "POST",
 			body: JSON.stringify({ student: newStudent }),
 			headers: {
-			  "Content-Type": "application/json",
+				"Content-Type": "application/json"
 			}
-		  })
-		  .catch((error) => {
+		}).catch((error) => {
 			console.log(error);
-		  });		  
-	};
+		});
+	}
 
 	return (
 		<div className={styles.maincont}>
@@ -38,7 +37,7 @@ function Student(props) {
 						<button>Add Student</button>
 					</div>
 				</form>
-				<hr/>
+				<hr />
 				<div>
 					<StudentList list={props.list} />
 				</div>
@@ -46,6 +45,5 @@ function Student(props) {
 		</div>
 	);
 }
-
 
 export default Student;

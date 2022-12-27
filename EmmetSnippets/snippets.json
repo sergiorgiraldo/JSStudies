@@ -1,13 +1,11 @@
 {
-    "html": {
-      "snippets": {
-        "elbyid": "{const ${1}= document.getElementById('${2}');}",
-        "log":"{console.log(${1});}"
-      }
-    },
-    "css": {
-      "snippets": {
-      }
-    }
-  }
-  
+	"html": {
+		"snippets": {
+			"elbyid": "{const ${1}= document.getElementById('${2}');}",
+			"log": "{console.log(${1});}"
+		}
+	},
+	"css": {
+		"snippets": {}
+	}
+}

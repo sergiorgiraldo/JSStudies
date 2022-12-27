@@ -11,7 +11,7 @@ toc: true
 
 Containers are the most basic layout element in Bootstrap and are **required when using our default grid system**. Choose from a responsive, fixed-width container (meaning its `max-width` changes at each breakpoint) or fluid-width (meaning it's `100%` wide all the time).
 
-While containers *can* be nested, most layouts do not require a nested container.
+While containers _can_ be nested, most layouts do not require a nested container.
 
 <div class="bd-example">
   <div class="bd-example-container">
@@ -22,6 +22,7 @@ While containers *can* be nested, most layouts do not require a nested container
 </div>
 
 {% highlight html %}
+
 <div class="container">
   <!-- Content here -->
 </div>
@@ -38,11 +39,11 @@ Use `.container-fluid` for a full width container, spanning the entire width of 
 </div>
 
 {% highlight html %}
+
 <div class="container-fluid">
   ...
 </div>
 {% endhighlight %}
-
 
 ## Responsive breakpoints
 
@@ -78,16 +79,16 @@ Since we write our source CSS in Sass, all our media queries are available via S
 
 // Example: Hide starting at `min-width: 0`, and then show at the `sm` breakpoint
 .custom-class {
-  display: none;
+display: none;
 }
 @include media-breakpoint-up(sm) {
-  .custom-class {
-    display: block;
-  }
+.custom-class {
+display: block;
+}
 }
 {% endhighlight %}
 
-We occasionally use media queries that go in the other direction (the given screen size *or smaller*):
+We occasionally use media queries that go in the other direction (the given screen size _or smaller_):
 
 {% highlight scss %}
 // Extra small devices (portrait phones, less than 576px)
@@ -119,9 +120,9 @@ Once again, these media queries are also available via Sass mixins:
 
 // Example: Style from medium breakpoint and down
 @include media-breakpoint-down(md) {
-  .custom-class {
-    display: block;
-  }
+.custom-class {
+display: block;
+}
 }
 {% endhighlight %}
 
@@ -178,12 +179,12 @@ We don't encourage customization of these individual values; should you change o
 
 {% highlight scss %}
 $zindex-dropdown:          1000 !default;
-$zindex-sticky:            1020 !default;
+$zindex-sticky: 1020 !default;
 $zindex-fixed:             1030 !default;
-$zindex-modal-backdrop:    1040 !default;
+$zindex-modal-backdrop: 1040 !default;
 $zindex-modal:             1050 !default;
-$zindex-popover:           1060 !default;
-$zindex-tooltip:           1070 !default;
+$zindex-popover: 1060 !default;
+$zindex-tooltip: 1070 !default;
 {% endhighlight %}
 
 To handle overlapping borders within components (e.g., buttons and inputs in input groups), we use low single digit `z-index` values of `1`, `2`, and `3` for default, hover, and active states. On hover/focus/active, we bring a particular element to the forefront with a higher `z-index` value to show their border over the sibling elements.

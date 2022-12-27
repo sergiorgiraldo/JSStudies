@@ -17,6 +17,7 @@ Barebones `overflow` functionality is provided for two values by default, and th
 </div>
 
 {% highlight html %}
+
 <div class="overflow-auto">...</div>
 <div class="overflow-hidden">...</div>
 {% endhighlight %}
