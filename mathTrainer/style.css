@@ -1,50 +1,50 @@
 body {
-    font-family: Verdana;
-    font-size: 14pt;
-    margin: 30px;
+	font-family: Verdana;
+	font-size: 14pt;
+	margin: 30px;
 }
 input {
-    border: 1px solid #ccc;
-    padding: 0.5em 1em;
-    font-size: 1em;
-    display: inline-block;
-    background-color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 1em;
-    width: 30px;
+	border: 1px solid #ccc;
+	padding: 0.5em 1em;
+	font-size: 1em;
+	display: inline-block;
+	background-color: rgba(255, 255, 255, 0.75);
+	margin-bottom: 1em;
+	width: 30px;
 }
 input:focus {
-    border-color: #3964fc;
+	border-color: #3964fc;
 }
-input.nb{
-    width: 70px;
+input.nb {
+	width: 70px;
 }
 input[type="submit"] {
-    border: 2px inset #666;
-    cursor: pointer;
-    width: 100px;
+	border: 2px inset #666;
+	cursor: pointer;
+	width: 100px;
 }
 input[type="submit"]:hover {
-    border-style: inset;
+	border-style: inset;
 }
 #question_math {
-    color: #559;
-    font-size: 2em;
-    padding: 1em;
+	color: #559;
+	font-size: 2em;
+	padding: 1em;
 }
 .optionerror {
-    border: 1px solid #f00;
+	border: 1px solid #f00;
 }
 #options_error {
-    color: #c30;
+	color: #c30;
 }
 #op_wrapper {
-    display: table-cell;
-    padding: 0.2em 1em;
+	display: table-cell;
+	padding: 0.2em 1em;
 }
-div#score{
-    color: navy;
-    font-weight: bold;
+div#score {
+	color: navy;
+	font-weight: bold;
 }
-div#score>h1{
-    color: black;
+div#score > h1 {
+	color: black;
 }

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Student from "../components/Student";
-import { connectDatabase, getAllDocuments} from "../helpers/db-util";
+import { connectDatabase, getAllDocuments } from "../helpers/db-util";
 
 export default function Home(props) {
 	return (
@@ -10,18 +10,17 @@ export default function Home(props) {
 				<title>New Student</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Student list={props.list}/>
+			<Student list={props.list} />
 		</div>
 	);
 }
 
-
-export async function getServerSideProps(){
+export async function getServerSideProps() {
 	const client = await connectDatabase();
-	const list = await getAllDocuments(client, "students",{_id: -1},{});
+	const list = await getAllDocuments(client, "students", { _id: -1 }, {});
 	client.close();
 
 	return {
-		props:{"list":list}
-	}
+		props: { list: list }
+	};
 }

@@ -25,20 +25,16 @@ Create a navbar in JSX:
     - Don't worry about styling yet - it'll just be plain-looking HTML for now
 */
 const navbar = (
-    <nav>
-        <h1>Sergio Giraldo website</h1>
-        <div>
-            <ul>
-                <li>Pricing</li>
-                <li>About</li>
-                <li>Contact</li>
-            </ul>
-        </div>
-    </nav>   
-
+	<nav>
+		<h1>Sergio Giraldo website</h1>
+		<div>
+			<ul>
+				<li>Pricing</li>
+				<li>About</li>
+				<li>Contact</li>
+			</ul>
+		</div>
+	</nav>
 );
 
-ReactDOM.render(
-    navbar,
-    document.getElementById("root")
-);
+ReactDOM.render(navbar, document.getElementById("root"));

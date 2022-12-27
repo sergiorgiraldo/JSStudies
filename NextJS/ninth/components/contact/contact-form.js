@@ -1,5 +1,5 @@
 import classes from "./contact-form.module.css";
-import { useState} from "react";
+import { useState } from "react";
 import Notification from "../ui/notification";
 
 async function sendContactData(contactDetails) {
@@ -28,7 +28,7 @@ function ContactForm() {
 	async function sendMessageHandler(event) {
 		event.preventDefault();
 		setRequestStatus("pending");
-	
+
 		try {
 			await sendContactData({
 				email: enteredEmail,
@@ -53,15 +53,13 @@ function ContactForm() {
 			title: "Sending message...",
 			message: "Your message is on its way!"
 		};
-	}
-	else if (requestStatus === "success") {
+	} else if (requestStatus === "success") {
 		notification = {
 			status: "success",
 			title: "Success!",
 			message: "Message sent successfully!"
 		};
-	}
-	else if (requestStatus === "error") {
+	} else if (requestStatus === "error") {
 		notification = {
 			status: "error",
 			title: "Error!",

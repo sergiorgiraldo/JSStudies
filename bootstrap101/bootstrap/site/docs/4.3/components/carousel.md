@@ -29,6 +29,7 @@ Carousels don't automatically normalize slide dimensions. As such, you may need 
 Here's a carousel with slides only. Note the presence of the `.d-block` and `.w-100` on carousel images to prevent browser default image alignment.
 
 {% capture example %}
+
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -50,6 +51,7 @@ Here's a carousel with slides only. Note the presence of the `.d-block` and `.w-
 Adding in the previous and next controls:
 
 {% capture example %}
+
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -79,6 +81,7 @@ Adding in the previous and next controls:
 You can also add the indicators to the carousel, alongside the controls, too.
 
 {% capture example %}
+
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -113,6 +116,7 @@ You can also add the indicators to the carousel, alongside the controls, too.
 Add captions to your slides easily with the `.carousel-caption` element within any `.carousel-item`. They can be easily hidden on smaller viewports, as shown below, with optional [display utilities]({{ site.baseurl }}/docs/{{ site.docs_version }}/utilities/display/). We hide them initially with `.d-none` and bring them back on medium-sized devices with `.d-md-block`.
 
 {% capture example %}
+
 <div class="bd-example">
   <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -161,6 +165,7 @@ Add captions to your slides easily with the `.carousel-caption` element within a
 Add `.carousel-fade` to your carousel to animate slides with a fade transition instead of a slide.
 
 {% capture example %}
+
 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -190,6 +195,7 @@ Add `.carousel-fade` to your carousel to animate slides with a fade transition i
 Add `data-interval=""` to a `.carousel-item` to change the amount of time to delay between automatically cycling to the next item.
 
 {% capture example %}
+
 <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active" data-interval="10000">
@@ -213,7 +219,6 @@ Add `data-interval=""` to a `.carousel-item` to change the amount of time to del
 </div>
 {% endcapture %}
 {% include example.html content=example %}
-
 
 ## Usage
 
@@ -295,7 +300,7 @@ Initializes the carousel with an optional options `object` and starts cycling th
 
 {% highlight js %}
 $('.carousel').carousel({
-  interval: 2000
+interval: 2000
 })
 {% endhighlight %}
 
@@ -327,10 +332,10 @@ Destroys an element's carousel.
 
 Bootstrap's carousel class exposes two events for hooking into carousel functionality. Both events have the following additional properties:
 
-- `direction`: The direction in which the carousel is sliding (either `"left"` or `"right"`).
-- `relatedTarget`: The DOM element that is being slid into place as the active item.
-- `from`: The index of the current item
-- `to`: The index of the next item
+-   `direction`: The direction in which the carousel is sliding (either `"left"` or `"right"`).
+-   `relatedTarget`: The DOM element that is being slid into place as the active item.
+-   `from`: The index of the current item
+-   `to`: The index of the next item
 
 All carousel events are fired at the carousel itself (i.e. at the `<div class="carousel">`).
 
@@ -355,7 +360,7 @@ All carousel events are fired at the carousel itself (i.e. at the `<div class="c
 
 {% highlight js %}
 $('#myCarousel').on('slide.bs.carousel', function () {
-  // do something...
+// do something...
 })
 {% endhighlight %}
 

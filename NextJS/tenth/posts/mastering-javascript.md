@@ -8,4 +8,4 @@ isFeatured: false
 
 # Lia !!!!
 
-Este eh um *exemplo*
+Este eh um _exemplo_

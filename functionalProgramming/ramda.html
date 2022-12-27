@@ -1,129 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ramda with javascript</title>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript">
-        function readTextFile(file){
-            var rawtext;
-            var rawFile = new XMLHttpRequest();
-            rawFile.open("GET", file, false);
-            rawFile.onreadystatechange = function () {
-                if (rawFile.readyState === 4) {
-                    if (rawFile.status === 200 || rawFile.status == 0) {
-                        var allText = JSON.parse(rawFile.responseText);
-                        rawtext = allText;
-                    }
-                }
-            }
-            rawFile.send(null);
-            return rawtext;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Ramda with javascript</title>
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js"></script>
+		<script
+			type="text/javascript"
+			src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript">
+			function readTextFile(file) {
+				var rawtext;
+				var rawFile = new XMLHttpRequest();
+				rawFile.open("GET", file, false);
+				rawFile.onreadystatechange = function () {
+					if (rawFile.readyState === 4) {
+						if (rawFile.status === 200 || rawFile.status == 0) {
+							var allText = JSON.parse(rawFile.responseText);
+							rawtext = allText;
+						}
+					}
+				};
+				rawFile.send(null);
+				return rawtext;
+			}
 
-        function array2Table(arr){
-            var html = "<table border='1'>";
+			function array2Table(arr) {
+				var html = "<table border='1'>";
 
-            for (var i=0; i<arr.length; i++) {
-                html += "<tr>";
-                for (var j=0; j<arr[i].length; j++) {
-                    html += "<td>" + arr[i][j] + "</td>";
-                }
-                html += "</tr>";
-            }    
-            html += "</table>";
+				for (var i = 0; i < arr.length; i++) {
+					html += "<tr>";
+					for (var j = 0; j < arr[i].length; j++) {
+						html += "<td>" + arr[i][j] + "</td>";
+					}
+					html += "</tr>";
+				}
+				html += "</table>";
 
-            return html;
-        }
+				return html;
+			}
 
-        $(document).ready(function(){
-            var cities = readTextFile("https://raw.githubusercontent.com/knowthen/ramdatutorial/master/cities.json");
-            
-            const percentile = (array, value) => {
-                const length = R.length(array);
-                const eqVal = R.equals(value);
-                const alen = !R.any(eqVal, array)
-                    ? R.range(0, length + 1)
-                    : R.range(0, length);
-                const sortedArray = R.sort((a, b) => a - b, array);
-                const idx = R.map(eqVal, sortedArray);
-                const alenTrue = R.filter((v, i) => {
-                    return idx[alen.indexOf(v)] === true;
-                }, alen);
-                const mean = R.mean(alenTrue);
-                const percent = mean / length;
-                return percent;
-                };
+			$(document).ready(function () {
+				var cities = readTextFile(
+					"https://raw.githubusercontent.com/knowthen/ramdatutorial/master/cities.json"
+				);
 
-            const KelvinToFahrenheit = k => k * 9 / 5 - 459.67;
-            
-            const updateTemperature = R.curry((convertFn, city) => {
-                const temp = Math.round(convertFn(city.temp));
-                return R.merge(city, { temp });
-            });
-            
-            const filterByWeather = city => {
-                const { temp = 0, humidity = 0 } = city;
-                return temp > 68 && temp < 85 && humidity > 30 && humidity < 70;
-            };
-            
-            const groupByPropReducer = (acc, city) => {
-                const { cost = [], internetSpeed = [] } = acc;
-                return R.merge(acc, {
-                cost: R.append(city.cost, cost),
-                internetSpeed: R.append(city.internetSpeed, internetSpeed),
-                });
-            }
-  
-            const groupedByProp = R.reduce(groupByPropReducer, {}, cities);
+				const percentile = (array, value) => {
+					const length = R.length(array);
+					const eqVal = R.equals(value);
+					const alen = !R.any(eqVal, array)
+						? R.range(0, length + 1)
+						: R.range(0, length);
+					const sortedArray = R.sort((a, b) => a - b, array);
+					const idx = R.map(eqVal, sortedArray);
+					const alenTrue = R.filter((v, i) => {
+						return idx[alen.indexOf(v)] === true;
+					}, alen);
+					const mean = R.mean(alenTrue);
+					const percent = mean / length;
+					return percent;
+				};
 
-            const calcScore = city => {
-                const { cost = 0, internetSpeed = 0 } = city;
-                const costPercentile = percentile(groupedByProp.cost, cost);
-                const internetSpeedPercentile = percentile(
-                    groupedByProp.internetSpeed,
-                    internetSpeed,
-                );
-                const score =
-                    100 * (1.0 - costPercentile) +
-                    20 * internetSpeedPercentile; 
-                return R.merge(city, { score });
-            }
-            
-            const cityToArray = city => {
-                const { name, country, score, cost, temp, internetSpeed } = city;
-                return [name, country, score, cost, temp, internetSpeed];
-            };
-            
-            const interestingProps = [
-                'Name',
-                'Country',
-                'Score',
-                'Cost',
-                'Temp',
-                'Internet'
-            ];
+				const KelvinToFahrenheit = (k) => (k * 9) / 5 - 459.67;
 
-            const topCities = R.pipe(
-                R.map(updateTemperature(KelvinToFahrenheit)),
-                R.filter(filterByWeather),
-                R.map(calcScore),
-                R.sortWith([R.descend(city => city.score)]),
-                R.take(20),
-                R.map(cityToArray),
-                R.prepend(interestingProps)
-                )(cities);
-            
-            const html = array2Table(topCities);
-                
-            $("#firstCity").html(html);
-        });
-    </script>
-</head>
-<body>
-    <p id="firstCity"></p>
-</body>
+				const updateTemperature = R.curry((convertFn, city) => {
+					const temp = Math.round(convertFn(city.temp));
+					return R.merge(city, { temp });
+				});
+
+				const filterByWeather = (city) => {
+					const { temp = 0, humidity = 0 } = city;
+					return (
+						temp > 68 && temp < 85 && humidity > 30 && humidity < 70
+					);
+				};
+
+				const groupByPropReducer = (acc, city) => {
+					const { cost = [], internetSpeed = [] } = acc;
+					return R.merge(acc, {
+						cost: R.append(city.cost, cost),
+						internetSpeed: R.append(
+							city.internetSpeed,
+							internetSpeed
+						)
+					});
+				};
+
+				const groupedByProp = R.reduce(groupByPropReducer, {}, cities);
+
+				const calcScore = (city) => {
+					const { cost = 0, internetSpeed = 0 } = city;
+					const costPercentile = percentile(groupedByProp.cost, cost);
+					const internetSpeedPercentile = percentile(
+						groupedByProp.internetSpeed,
+						internetSpeed
+					);
+					const score =
+						100 * (1.0 - costPercentile) +
+						20 * internetSpeedPercentile;
+					return R.merge(city, { score });
+				};
+
+				const cityToArray = (city) => {
+					const { name, country, score, cost, temp, internetSpeed } =
+						city;
+					return [name, country, score, cost, temp, internetSpeed];
+				};
+
+				const interestingProps = [
+					"Name",
+					"Country",
+					"Score",
+					"Cost",
+					"Temp",
+					"Internet"
+				];
+
+				const topCities = R.pipe(
+					R.map(updateTemperature(KelvinToFahrenheit)),
+					R.filter(filterByWeather),
+					R.map(calcScore),
+					R.sortWith([R.descend((city) => city.score)]),
+					R.take(20),
+					R.map(cityToArray),
+					R.prepend(interestingProps)
+				)(cities);
+
+				const html = array2Table(topCities);
+
+				$("#firstCity").html(html);
+			});
+		</script>
+	</head>
+	<body>
+		<p id="firstCity"></p>
+	</body>
 </html>

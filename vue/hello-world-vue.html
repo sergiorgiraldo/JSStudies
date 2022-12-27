@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hello World - Vue.js 2</title>
-    <script src="https://unpkg.com/vue"></script></head>
-<body>
-    <div id="app">
-        Static: <b id="app">{{ announce }}</b>
-        <br />
-        This is the value from the field: {{ message }}
-        <br />
-        <input v-model="message" placeholder="Edite-me"/>
-    </div>
-    
-    <script type="text/javascript">
-        new Vue({
-            el: "#app",
-            data: {
-                announce: "Hello Vue!",
-                message: ""
-            }
-        });
-    </script>    
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Hello World - Vue.js 2</title>
+		<script src="https://unpkg.com/vue"></script>
+	</head>
+	<body>
+		<div id="app">
+			Static: <b id="app">{{ announce }}</b>
+			<br />
+			This is the value from the field: {{ message }}
+			<br />
+			<input v-model="message" placeholder="Edite-me" />
+		</div>
+
+		<script type="text/javascript">
+			new Vue({
+				el: "#app",
+				data: {
+					announce: "Hello Vue!",
+					message: ""
+				}
+			});
+		</script>
+	</body>
 </html>

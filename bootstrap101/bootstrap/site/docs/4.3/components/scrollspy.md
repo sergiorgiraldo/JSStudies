@@ -10,11 +10,11 @@ toc: true
 
 Scrollspy has a few requirements to function properly:
 
-- If you're building our JavaScript from source, it [requires `util.js`]({{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/javascript/#util).
-- It must be used on a Bootstrap [nav component]({{ site.baseurl }}/docs/{{ site.docs_version }}/components/navs/) or [list group]({{ site.baseurl }}/docs/{{ site.docs_version }}/components/list-group/).
-- Scrollspy requires `position: relative;` on the element you're spying on, usually the `<body>`.
-- When spying on elements other than the `<body>`, be sure to have a `height` set and `overflow-y: scroll;` applied.
-- Anchors (`<a>`) are required and must point to an element with that `id`.
+-   If you're building our JavaScript from source, it [requires `util.js`]({{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/javascript/#util).
+-   It must be used on a Bootstrap [nav component]({{ site.baseurl }}/docs/{{ site.docs_version }}/components/navs/) or [list group]({{ site.baseurl }}/docs/{{ site.docs_version }}/components/list-group/).
+-   Scrollspy requires `position: relative;` on the element you're spying on, usually the `<body>`.
+-   When spying on elements other than the `<body>`, be sure to have a `height` set and `overflow-y: scroll;` applied.
+-   Anchors (`<a>`) are required and must point to an element with that `id`.
 
 When successfully implemented, your nav or list group will update accordingly, moving the `.active` class from one item to the next based on their associated targets.
 
@@ -60,6 +60,7 @@ Scroll the area below the navbar and watch the active class change. The dropdown
 </div>
 
 {% highlight html %}
+
 <nav id="navbar-example2" class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <ul class="nav nav-pills">
@@ -140,6 +141,7 @@ Scrollspy also works with nested `.nav`s. If a nested `.nav` is `.active`, its p
 </div>
 
 {% highlight html %}
+
 <nav id="navbar-example3" class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <nav class="nav nav-pills flex-column">
@@ -205,6 +207,7 @@ Scrollspy also works with `.list-group`s. Scroll the area next to the list group
 </div>
 
 {% highlight html %}
+
 <div id="list-example" class="list-group">
   <a class="list-group-item list-group-item-action" href="#list-item-1">Item 1</a>
   <a class="list-group-item list-group-item-action" href="#list-item-2">Item 2</a>
@@ -223,7 +226,6 @@ Scrollspy also works with `.list-group`s. Scroll the area next to the list group
 </div>
 {% endhighlight %}
 
-
 ## Usage
 
 ### Via data attributes
@@ -232,11 +234,12 @@ To easily add scrollspy behavior to your topbar navigation, add `data-spy="scrol
 
 {% highlight css %}
 body {
-  position: relative;
+position: relative;
 }
 {% endhighlight %}
 
 {% highlight html %}
+
 <body data-spy="scroll" data-target="#navbar-example">
   ...
   <div id="navbar-example">
@@ -257,6 +260,7 @@ $('body').scrollspy({ target: '#navbar-example' })
 {% endhighlight %}
 
 {% capture callout %}
+
 #### Resolvable ID targets required
 
 Navbar links must have resolvable id targets. For example, a `<a href="#home">home</a>` must correspond to something in the DOM like `<div id="home"></div>`.
@@ -264,6 +268,7 @@ Navbar links must have resolvable id targets. For example, a `<a href="#home">ho
 {% include callout.html content=callout type="danger" %}
 
 {% capture callout %}
+
 #### Non-`:visible` target elements ignored
 
 Target elements that are not [`:visible` according to jQuery](https://api.jquery.com/visible-selector/) will be ignored and their corresponding nav items will never be highlighted.
@@ -278,7 +283,7 @@ When using scrollspy in conjunction with adding or removing of elements from the
 
 {% highlight js %}
 $('[data-spy="scroll"]').each(function () {
-  var $spy = $(this).scrollspy('refresh')
+var $spy = $(this).scrollspy('refresh')
 })
 {% endhighlight %}
 
@@ -340,6 +345,6 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
 
 {% highlight js %}
 $('[data-spy="scroll"]').on('activate.bs.scrollspy', function () {
-  // do something...
+// do something...
 })
 {% endhighlight %}

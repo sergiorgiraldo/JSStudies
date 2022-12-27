@@ -1,22 +1,22 @@
-import 'babel-polyfill'
+import "babel-polyfill";
 
-import Vue from 'vue'
-import Vuex from 'vuex'
-import firebase from 'firebase'
-import 'firebase/firestore'
+import Vue from "vue";
+import Vuex from "vuex";
+import firebase from "firebase";
+import "firebase/firestore";
 
-import users from './users'
-import conversations from './conversations'
+import users from "./users";
+import conversations from "./conversations";
 
-import config from '../config'
+import config from "../config";
 
-firebase.initializeApp(config)
+firebase.initializeApp(config);
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const state = {
 	db: firebase.firestore()
-}
+};
 
 export default new Vuex.Store({
 	state,
@@ -24,4 +24,4 @@ export default new Vuex.Store({
 		users,
 		conversations
 	}
-})
+});

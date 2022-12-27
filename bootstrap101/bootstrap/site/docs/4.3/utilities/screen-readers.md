@@ -19,7 +19,7 @@ Necessary for following [accessibility best practices]({{ site.baseurl }}/docs/{
 {% highlight scss %}
 // Usage as a mixin
 .skip-navigation {
-  @include sr-only;
-  @include sr-only-focusable;
+@include sr-only;
+@include sr-only-focusable;
 }
 {% endhighlight %}

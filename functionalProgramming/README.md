@@ -12,10 +12,10 @@ Ramda is a Functional Programming library for JavaScript, that is simlar to Loda
 
 Ramda follows many Functional Principles such as:
 
-* Functional Purity
-* Immutability
-* Currying
-* Composition
+-   Functional Purity
+-   Immutability
+-   Currying
+-   Composition
 
 **"Ok, big deal! Why should I care?"**
 

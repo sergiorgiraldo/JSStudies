@@ -37,7 +37,7 @@ export default function Home() {
 			.catch((error) => {
 				console.log(error);
 			});
-    }
+	}
 
 	function handlePost() {
 		fetch("/api/users", {
@@ -53,8 +53,8 @@ export default function Home() {
 			})
 			.catch((error) => {
 				console.log(error);
-			});    
-  }
+			});
+	}
 
 	function handlePut() {
 		fetch("/api/users/2", {
@@ -70,8 +70,8 @@ export default function Home() {
 			})
 			.catch((error) => {
 				console.log(error);
-			});    
-  }
+			});
+	}
 
 	function handleDelete() {
 		fetch("/api/users/2", {
@@ -87,7 +87,8 @@ export default function Home() {
 			})
 			.catch((error) => {
 				console.log(error);
-			});      }
+			});
+	}
 
 	return (
 		<>

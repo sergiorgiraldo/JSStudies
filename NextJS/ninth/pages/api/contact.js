@@ -1,13 +1,14 @@
-import {connectDatabase, insertDocument} from "../../lib/db-util";
+import { connectDatabase, insertDocument } from "../../lib/db-util";
 
 async function handler(req, res) {
 	let client;
 
 	try {
 		client = await connectDatabase();
-	} 
-	catch (error) {
-		res.status(500).json({ message: "Connecting to the database failed! " + error });
+	} catch (error) {
+		res.status(500).json({
+			message: "Connecting to the database failed! " + error
+		});
 		return;
 	}
 
@@ -41,16 +42,13 @@ async function handler(req, res) {
 				message: "Added comment.",
 				comment: newComment
 			});
-		} 
-		catch (error) {
+		} catch (error) {
 			client.close();
 			res.status(500).json({ message: "Inserting comment failed!" });
-		}
-		finally{
+		} finally {
 			client.close();
 		}
 	}
-
 }
 
 export default handler;

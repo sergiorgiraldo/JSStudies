@@ -10,17 +10,17 @@ toc: true
 
 Things to know when using the popover plugin:
 
-- Popovers rely on the 3rd party library [Popper.js](https://popper.js.org/) for positioning. You must include [popper.min.js]({{ site.cdn.popper }}) before bootstrap.js or use `bootstrap.bundle.min.js` / `bootstrap.bundle.js` which contains Popper.js in order for popovers to work!
-- Popovers require the [tooltip plugin]({{ site.baseurl }}/docs/{{ site.docs_version }}/components/tooltips/) as a dependency.
-- If you're building our JavaScript from source, it [requires `util.js`]({{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/javascript/#util).
-- Popovers are opt-in for performance reasons, so **you must initialize them yourself**.
-- Zero-length `title` and `content` values will never show a popover.
-- Specify `container: 'body'` to avoid rendering problems in more complex components (like our input groups, button groups, etc).
-- Triggering popovers on hidden elements will not work.
-- Popovers for `.disabled` or `disabled` elements must be triggered on a wrapper element.
-- When triggered from anchors that wrap across multiple lines, popovers will be centered between the anchors' overall width. Use `.text-nowrap` on your `<a>`s to avoid this behavior.
-- Popovers must be hidden before their corresponding elements have been removed from the DOM.
-- Popovers can be triggered thanks to an element inside a shadow DOM.
+-   Popovers rely on the 3rd party library [Popper.js](https://popper.js.org/) for positioning. You must include [popper.min.js]({{ site.cdn.popper }}) before bootstrap.js or use `bootstrap.bundle.min.js` / `bootstrap.bundle.js` which contains Popper.js in order for popovers to work!
+-   Popovers require the [tooltip plugin]({{ site.baseurl }}/docs/{{ site.docs_version }}/components/tooltips/) as a dependency.
+-   If you're building our JavaScript from source, it [requires `util.js`]({{ site.baseurl }}/docs/{{ site.docs_version }}/getting-started/javascript/#util).
+-   Popovers are opt-in for performance reasons, so **you must initialize them yourself**.
+-   Zero-length `title` and `content` values will never show a popover.
+-   Specify `container: 'body'` to avoid rendering problems in more complex components (like our input groups, button groups, etc).
+-   Triggering popovers on hidden elements will not work.
+-   Popovers for `.disabled` or `disabled` elements must be triggered on a wrapper element.
+-   When triggered from anchors that wrap across multiple lines, popovers will be centered between the anchors' overall width. Use `.text-nowrap` on your `<a>`s to avoid this behavior.
+-   Popovers must be hidden before their corresponding elements have been removed from the DOM.
+-   Popovers can be triggered thanks to an element inside a shadow DOM.
 
 {% include callout-info-prefersreducedmotion.md %}
 
@@ -32,7 +32,7 @@ One way to initialize all popovers on a page would be to select them by their `d
 
 {% highlight js %}
 $(function () {
-  $('[data-toggle="popover"]').popover()
+$('[data-toggle="popover"]').popover()
 })
 {% endhighlight %}
 
@@ -42,9 +42,9 @@ When you have some styles on a parent element that interfere with a popover, you
 
 {% highlight js %}
 $(function () {
-  $('.example-popover').popover({
-    container: 'body'
-  })
+$('.example-popover').popover({
+container: 'body'
+})
 })
 {% endhighlight %}
 
@@ -78,7 +78,7 @@ Four options are available: top, right, bottom, and left aligned.
 
 {% highlight html %}
 <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-  Popover on top
+Popover on top
 </button>
 
 <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
@@ -87,7 +87,7 @@ Four options are available: top, right, bottom, and left aligned.
 
 <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
 sagittis lacus vel augue laoreet rutrum faucibus.">
-  Popover on bottom
+Popover on bottom
 </button>
 
 <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
@@ -100,6 +100,7 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
 Use the `focus` trigger to dismiss popovers on the user's next click of a different element than the toggle element.
 
 {% capture callout %}
+
 #### Specific markup required for dismiss-on-next-click
 
 For proper cross-browser and cross-platform behavior, you must use the `<a>` tag, _not_ the `<button>` tag, and you also must include a [`tabindex`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) attribute.
@@ -113,7 +114,7 @@ For proper cross-browser and cross-platform behavior, you must use the `<a>` tag
 
 {% highlight js %}
 $('.popover-dismiss').popover({
-  trigger: 'focus'
+trigger: 'focus'
 })
 {% endhighlight %}
 
@@ -125,7 +126,7 @@ For disabled popover triggers, you may also prefer `data-trigger="hover"` so tha
 
 {% capture example %}
 <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
-  <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
+<button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
 </span>
 {% endcapture %}
 {% include example.html content=example %}
@@ -277,6 +278,7 @@ Note that for security reasons the `sanitize`, `sanitizeFn` and `whiteList` opti
 </table>
 
 {% capture callout %}
+
 #### Data attributes for individual popovers
 
 Options for individual popovers can alternatively be specified through the use of data attributes, as explained above.
@@ -374,6 +376,6 @@ Updates the position of an element's popover.
 
 {% highlight js %}
 $('#myPopover').on('hidden.bs.popover', function () {
-  // do something...
+// do something...
 })
 {% endhighlight %}

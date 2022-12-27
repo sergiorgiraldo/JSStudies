@@ -48,23 +48,23 @@ For Bootstrap to compile, make sure you install and use the required loaders: [s
 {% highlight js %}
 ...
 {
-  test: /\.(scss)$/,
-  use: [{
-    loader: 'style-loader', // inject CSS to page
-  }, {
-    loader: 'css-loader', // translates CSS into CommonJS modules
-  }, {
-    loader: 'postcss-loader', // Run postcss actions
-    options: {
-      plugins: function () { // postcss plugins, can be exported to postcss.config.js
-        return [
-          require('autoprefixer')
-        ];
-      }
-    }
-  }, {
-    loader: 'sass-loader' // compiles Sass to CSS
-  }]
+test: /\.(scss)$/,
+use: [{
+loader: 'style-loader', // inject CSS to page
+}, {
+loader: 'css-loader', // translates CSS into CommonJS modules
+}, {
+loader: 'postcss-loader', // Run postcss actions
+options: {
+plugins: function () { // postcss plugins, can be exported to postcss.config.js
+return [
+require('autoprefixer')
+];
+}
+}
+}, {
+loader: 'sass-loader' // compiles Sass to CSS
+}]
 },
 ...
 {% endhighlight %}
@@ -82,12 +82,12 @@ In this case you may use your existing rule for `css` without any special modifi
 {% highlight js %}
 ...
 module: {
-  rules: [
-    {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    }
-  ]
+rules: [
+{
+test: /\.css$/,
+use: ['style-loader', 'css-loader']
+}
+]
 }
 ...
 {% endhighlight %}

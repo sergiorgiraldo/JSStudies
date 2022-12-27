@@ -1,105 +1,113 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-	<title>Backbone validation tests</title> 
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Backbone validation tests</title>
 
-	<style type="text/css"> 
-	
-		.invalid{ 
-			border: 1px solid red; 
-		} 
-		span.err{ 
-			color: red; 
-			font-style: italic; 
-			font-weight: bold; 
-		} 
-	</style> 
+		<style type="text/css">
+			.invalid {
+				border: 1px solid red;
+			}
+			span.err {
+				color: red;
+				font-style: italic;
+				font-weight: bold;
+			}
+		</style>
 
-	<script type="text/javascript" src="lib/jquery-2.1.3.min.js"></script> 
-	<script type="text/javascript" src="lib/underscore-min.js"></script> 
-	<script type="text/javascript" src="lib/backbone-min.js"></script> 
-	<script type="text/javascript" src="lib/backbone-validation-min.js"></script> 
+		<script type="text/javascript" src="lib/jquery-2.1.3.min.js"></script>
+		<script type="text/javascript" src="lib/underscore-min.js"></script>
+		<script type="text/javascript" src="lib/backbone-min.js"></script>
+		<script
+			type="text/javascript"
+			src="lib/backbone-validation-min.js"></script>
 
-	<script type="text/javascript"> 
-		_.extend(Backbone.Validation.callbacks, { //this actually shows errors 
-			valid: function (view, attr, selector) { 
-				var $el = view.$("#" + attr); 
-				$el.removeClass("invalid"); 
+		<script type="text/javascript">
+			_.extend(Backbone.Validation.callbacks, {
+				//this actually shows errors
+				valid: function (view, attr, selector) {
+					var $el = view.$("#" + attr);
+					$el.removeClass("invalid");
 
-				var $elErr = view.$("#" + attr + "Err"); 
-				$elErr.html(""); 
-			}, 
-			invalid: function (view, attr, error, selector) { 
-				var $el = view.$("#" + attr); 
-				$el.addClass("invalid"); 
+					var $elErr = view.$("#" + attr + "Err");
+					$elErr.html("");
+				},
+				invalid: function (view, attr, error, selector) {
+					var $el = view.$("#" + attr);
+					$el.addClass("invalid");
 
-				var $elErr = view.$("#" + attr + "Err"); 
-				$elErr.html(error); 
-			} 
-		}); 
+					var $elErr = view.$("#" + attr + "Err");
+					$elErr.html(error);
+				}
+			});
 
-		var CustomerModel = Backbone.Model.extend({ 
-			defaults: { 
-			name: "", 
-			age: "" 
-		}, 
+			var CustomerModel = Backbone.Model.extend({
+				defaults: {
+					name: "",
+					age: ""
+				},
 
-		validation: { 
-			name: { 
-				required: true, 
-			 	msg: "need to know you" 
-			}, 
-			age: { 
-				min: 18, 
-			 	msg: "must be adult" 
-			} 
-		} 
-		}); 
+				validation: {
+					name: {
+						required: true,
+						msg: "need to know you"
+					},
+					age: {
+						min: 18,
+						msg: "must be adult"
+					}
+				}
+			});
 
-		var CustomerView = Backbone.View.extend({ 
-			el:"#main", 
+			var CustomerView = Backbone.View.extend({
+				el: "#main",
 
-			initialize: function(){ 
-				Backbone.Validation.bind(this); 
-			}, 
+				initialize: function () {
+					Backbone.Validation.bind(this);
+				},
 
-			events: { 
-				"click #save": "save" 
-			}, 
+				events: {
+					"click #save": "save"
+				},
 
-			save: function(e){ 
-				e.preventDefault(); 
+				save: function (e) {
+					e.preventDefault();
 
-				this.model.set({ 
-					name: $("#name").val(), 
-					age: $("#age").val() 
-				}); 
+					this.model.set({
+						name: $("#name").val(),
+						age: $("#age").val()
+					});
 
-				if(this.model.isValid(true)){ 
-					alert("Success!"); 
-				} 
-			} 
-		}); 
+					if (this.model.isValid(true)) {
+						alert("Success!");
+					}
+				}
+			});
 
-		$(document).ready(function (){ 
-			new CustomerView({ 
-				model: new CustomerModel() 
-			}); 
-		}); 
- 	</script> 
-</head> 
-<body> 
-	<form id="main"> 
-		<p>
-			Enter name: 
-			<input id="name" name="name" type="text" />&nbsp;<span id="nameErr" class="err"></span><br /> 
-		</p>
-		<p>
-			Enter age: 
-			<input id="age" name="age" type="text" />&nbsp;<span id="ageErr" class="err"></span><br /> 
-		</p>
+			$(document).ready(function () {
+				new CustomerView({
+					model: new CustomerModel()
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<form id="main">
+			<p>
+				Enter name:
+				<input id="name" name="name" type="text" />&nbsp;<span
+					id="nameErr"
+					class="err"></span
+				><br />
+			</p>
+			<p>
+				Enter age:
+				<input id="age" name="age" type="text" />&nbsp;<span
+					id="ageErr"
+					class="err"></span
+				><br />
+			</p>
 
-		<input type="button" id="save" name="save" value="Save" /> 
-	</form> 
-</body> 
+			<input type="button" id="save" name="save" value="Save" />
+		</form>
+	</body>
 </html>

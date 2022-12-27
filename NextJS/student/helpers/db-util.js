@@ -19,7 +19,7 @@ export async function insertDocument(client, collection, document) {
 export async function deleteDocument(client, collection, student) {
 	const db = client.db("school");
 
-    const query = { "_id": new ObjectID(student) };
+	const query = { _id: new ObjectID(student) };
 
 	const result = await db.collection(collection).deleteOne(query);
 
@@ -35,10 +35,12 @@ export async function getAllDocuments(client, collection, sort, filter = {}) {
 		.sort(sort)
 		.toArray();
 
-	var list = documents.map((d) => {return {
-		"_id": d._id.toString(),
-		"student": d.student
-	}});
+	var list = documents.map((d) => {
+		return {
+			_id: d._id.toString(),
+			student: d.student
+		};
+	});
 
 	return list;
 }

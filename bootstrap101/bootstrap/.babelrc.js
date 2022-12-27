@@ -1,20 +1,18 @@
 module.exports = {
-  presets: [
-    [
-      '@babel/env',
-      {
-        loose: true,
-        modules: false,
-        exclude: ['transform-typeof-symbol']
-      }
-    ]
-  ],
-  plugins: [
-    '@babel/plugin-proposal-object-rest-spread'
-  ],
-  env: {
-    test: {
-      plugins: [ 'istanbul' ]
-    }
-  }
+	presets: [
+		[
+			"@babel/env",
+			{
+				loose: true,
+				modules: false,
+				exclude: ["transform-typeof-symbol"]
+			}
+		]
+	],
+	plugins: ["@babel/plugin-proposal-object-rest-spread"],
+	env: {
+		test: {
+			plugins: ["istanbul"]
+		}
+	}
 };

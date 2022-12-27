@@ -6,23 +6,21 @@ import classes from "./comments.module.css";
 import NotificationContext from "../../store/notification-context";
 
 function Comments(props) {
-
-	function getComments(showNotification){
-		if (showNotification){
-		notificationContext.showNotification({
-			title: "Comments",
-			message: "Loading ...",
-			status: "pending",
-		  });
+	function getComments(showNotification) {
+		if (showNotification) {
+			notificationContext.showNotification({
+				title: "Comments",
+				message: "Loading ...",
+				status: "pending"
+			});
 		}
 
 		fetch("/api/comments/" + eventId)
 			.then((response) => response.json())
 			.then((data) => {
 				setComments(data.comments);
-				if (showNotification) notificationContext.hideNotification();	
+				if (showNotification) notificationContext.hideNotification();
 			});
-
 	}
 
 	const { eventId } = props;
@@ -33,12 +31,11 @@ function Comments(props) {
 
 	const notificationContext = useContext(NotificationContext);
 
-	useEffect(()=> {
+	useEffect(() => {
 		if (commentOK) {
 			getComments(false);
 		}
-	},
-	[commentOK]);
+	}, [commentOK]);
 
 	useEffect(() => {
 		if (showComments) {
@@ -54,9 +51,9 @@ function Comments(props) {
 		notificationContext.showNotification({
 			title: "Comments",
 			message: "Saving ...",
-			status: "pending",
-		  });
-		  
+			status: "pending"
+		});
+
 		fetch("/api/comments/" + eventId, {
 			method: "POST",
 			body: JSON.stringify(commentData),
@@ -64,39 +61,44 @@ function Comments(props) {
 				"Content-Type": "application/json"
 			}
 		})
-		.then((response) => {
-			if (response.ok) {
-			  return response.json();
-			}
-	
-			return response.json().then((data) => {
-			  throw new Error(data.message || "Something went wrong!");
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				}
+
+				return response.json().then((data) => {
+					throw new Error(data.message || "Something went wrong!");
+				});
+			})
+			.then((data) => {
+				setCommentOK(true);
+				notificationContext.showNotification({
+					title: "Success!",
+					message: "Thanks for interacting!",
+					status: "success"
+				});
+				setCommentOK(false);
+			})
+			.catch((error) => {
+				notificationContext.showNotification({
+					title: "Error!",
+					message: error.message || "Something went wrong!",
+					status: "error"
+				});
 			});
-		  })
-		  .then((data) => {
-			setCommentOK(true);
-			notificationContext.showNotification({
-			  title: "Success!",
-			  message: "Thanks for interacting!",
-			  status: "success",
-			});
-			setCommentOK(false);
-		  })
-		  .catch((error) => {
-			notificationContext.showNotification({
-			  title: "Error!",
-			  message: error.message || "Something went wrong!",
-			  status: "error",
-			});
-		  });
-		}
+	}
 
 	return (
 		<section className={classes.comments}>
 			<button onClick={toggleCommentsHandler}>
 				{showComments ? "Hide" : "Show"} Comments
 			</button>
-			{showComments && <NewComment onAddComment={addCommentHandler} commentOK={commentOK} />}
+			{showComments && (
+				<NewComment
+					onAddComment={addCommentHandler}
+					commentOK={commentOK}
+				/>
+			)}
 			{showComments && <CommentList items={comments} />}
 		</section>
 	);

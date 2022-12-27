@@ -9,7 +9,7 @@ group: utilities
 
 {% capture example %}
 <button type="button" class="close" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
+<span aria-hidden="true">&times;</span>
 </button>
 {% endcapture %}
 {% include example.html content=example %}

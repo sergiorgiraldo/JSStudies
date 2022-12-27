@@ -10,11 +10,11 @@ toc: true
 
 Bootstrap sets basic global display, typography, and link styles. When more control is needed, check out the [textual utility classes]({{ site.baseurl }}/docs/{{ site.docs_version }}/utilities/text/).
 
-- Use a [native font stack]({{ site.baseurl }}/docs/{{ site.docs_version }}/content/reboot/#native-font-stack) that selects the best `font-family` for each OS and device.
-- For a more inclusive and accessible type scale, we assume the browser default root `font-size` (typically 16px) so visitors can customize their browser defaults as needed.
-- Use the `$font-family-base`, `$font-size-base`, and `$line-height-base` attributes as our typographic base applied to the `<body>`.
-- Set the global link color via `$link-color` and apply link underlines only on `:hover`.
-- Use `$body-bg` to set a `background-color` on the `<body>` (`#fff` by default).
+-   Use a [native font stack]({{ site.baseurl }}/docs/{{ site.docs_version }}/content/reboot/#native-font-stack) that selects the best `font-family` for each OS and device.
+-   For a more inclusive and accessible type scale, we assume the browser default root `font-size` (typically 16px) so visitors can customize their browser defaults as needed.
+-   Use the `$font-family-base`, `$font-size-base`, and `$line-height-base` attributes as our typographic base applied to the `<body>`.
+-   Set the global link color via `$link-color` and apply link underlines only on `:hover`.
+-   Use `$body-bg` to set a `background-color` on the `<body>` (`#fff` by default).
 
 These styles can be found within `_reboot.scss`, and the global variables are defined in `_variables.scss`. Make sure to set `$font-size-base` in `rem`.
 
@@ -70,6 +70,7 @@ All HTML headings, `<h1>` through `<h6>`, are available.
 </table>
 
 {% highlight html %}
+
 <h1>h1. Bootstrap heading</h1>
 <h2>h2. Bootstrap heading</h2>
 <h3>h3. Bootstrap heading</h3>
@@ -81,6 +82,7 @@ All HTML headings, `<h1>` through `<h6>`, are available.
 `.h1` through `.h6` classes are also available, for when you want to match the font styling of a heading but cannot use the associated HTML element.
 
 {% capture example %}
+
 <p class="h1">h1. Bootstrap heading</p>
 <p class="h2">h2. Bootstrap heading</p>
 <p class="h3">h3. Bootstrap heading</p>
@@ -95,6 +97,7 @@ All HTML headings, `<h1>` through `<h6>`, are available.
 Use the included utility classes to recreate the small secondary heading text from Bootstrap 3.
 
 {% capture example %}
+
 <h3>
   Fancy display heading
   <small class="text-muted">With faded secondary text</small>
@@ -126,6 +129,7 @@ Traditional heading elements are designed to work best in the meat of your page 
 </div>
 
 {% highlight html %}
+
 <h1 class="display-1">Display 1</h1>
 <h1 class="display-2">Display 2</h1>
 <h1 class="display-3">Display 3</h1>
@@ -137,6 +141,7 @@ Traditional heading elements are designed to work best in the meat of your page 
 Make a paragraph stand out by adding `.lead`.
 
 {% capture example %}
+
 <p class="lead">
   Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
 </p>
@@ -148,6 +153,7 @@ Make a paragraph stand out by adding `.lead`.
 Styling for common inline HTML5 elements.
 
 {% capture example %}
+
 <p>You can use the mark tag to <mark>highlight</mark> text.</p>
 <p><del>This line of text is meant to be treated as deleted text.</del></p>
 <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
@@ -174,6 +180,7 @@ Stylized implementation of HTML's `<abbr>` element for abbreviations and acronym
 Add `.initialism` to an abbreviation for a slightly smaller font-size.
 
 {% capture example %}
+
 <p><abbr title="attribute">attr</abbr></p>
 <p><abbr title="HyperText Markup Language" class="initialism">HTML</abbr></p>
 {% endcapture %}
@@ -184,6 +191,7 @@ Add `.initialism` to an abbreviation for a slightly smaller font-size.
 For quoting blocks of content from another source within your document. Wrap `<blockquote class="blockquote">` around any <abbr title="HyperText Markup Language">HTML</abbr> as the quote.
 
 {% capture example %}
+
 <blockquote class="blockquote">
   <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
 </blockquote>
@@ -195,6 +203,7 @@ For quoting blocks of content from another source within your document. Wrap `<b
 Add a `<footer class="blockquote-footer">` for identifying the source. Wrap the name of the source work in `<cite>`.
 
 {% capture example %}
+
 <blockquote class="blockquote">
   <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
   <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
@@ -207,6 +216,7 @@ Add a `<footer class="blockquote-footer">` for identifying the source. Wrap the 
 Use text utilities as needed to change the alignment of your blockquote.
 
 {% capture example %}
+
 <blockquote class="blockquote text-center">
   <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
   <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
@@ -215,6 +225,7 @@ Use text utilities as needed to change the alignment of your blockquote.
 {% include example.html content=example %}
 
 {% capture example %}
+
 <blockquote class="blockquote text-right">
   <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
   <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
@@ -229,6 +240,7 @@ Use text utilities as needed to change the alignment of your blockquote.
 Remove the default `list-style` and left margin on list items (immediate children only). **This only applies to immediate children list items**, meaning you will need to add the class for any nested lists as well.
 
 {% capture example %}
+
 <ul class="list-unstyled">
   <li>Lorem ipsum dolor sit amet</li>
   <li>Consectetur adipiscing elit</li>
@@ -254,6 +266,7 @@ Remove the default `list-style` and left margin on list items (immediate childre
 Remove a list's bullets and apply some light `margin` with a combination of two classes, `.list-inline` and `.list-inline-item`.
 
 {% capture example %}
+
 <ul class="list-inline">
   <li class="list-inline-item">Lorem ipsum</li>
   <li class="list-inline-item">Phasellus iaculis</li>
@@ -267,6 +280,7 @@ Remove a list's bullets and apply some light `margin` with a combination of two 
 Align terms and descriptions horizontally by using our grid system's predefined classes (or semantic mixins). For longer terms, you can optionally add a `.text-truncate` class to truncate the text with an ellipsis.
 
 {% capture example %}
+
 <dl class="row">
   <dt class="col-sm-3">Description lists</dt>
   <dd class="col-sm-9">A description list is perfect for defining terms.</dd>

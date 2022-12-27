@@ -35,16 +35,16 @@ The above example creates three equal-width columns on small, medium, large, and
 
 Breaking it down, here's how it works:
 
-- Containers provide a means to center and horizontally pad your site's contents. Use `.container` for a responsive pixel width or `.container-fluid` for `width: 100%` across all viewport and device sizes.
-- Rows are wrappers for columns. Each column has horizontal `padding` (called a gutter) for controlling the space between them. This `padding` is then counteracted on the rows with negative margins. This way, all the content in your columns is visually aligned down the left side.
-- In a grid layout, content must be placed within columns and only columns may be immediate children of rows.
-- Thanks to flexbox, grid columns without a specified `width` will automatically layout as equal width columns. For example, four instances of `.col-sm` will each automatically be 25% wide from the small breakpoint and up. See the [auto-layout columns](#auto-layout-columns) section for more examples.
-- Column classes indicate the number of columns you'd like to use out of the possible 12 per row. So, if you want three equal-width columns across, you can use `.col-4`.
-- Column `width`s are set in percentages, so they're always fluid and sized relative to their parent element.
-- Columns have horizontal `padding` to create the gutters between individual columns, however, you can remove the `margin` from rows and `padding` from columns with `.no-gutters` on the `.row`.
-- To make the grid responsive, there are five grid breakpoints, one for each [responsive breakpoint]({{ site.baseurl }}/docs/{{ site.docs_version }}/layout/overview/#responsive-breakpoints): all breakpoints (extra small), small, medium, large, and extra large.
-- Grid breakpoints are based on minimum width media queries, meaning **they apply to that one breakpoint and all those above it** (e.g., `.col-sm-4` applies to small, medium, large, and extra large devices, but not the first `xs` breakpoint).
-- You can use predefined grid classes (like `.col-4`) or [Sass mixins](#sass-mixins) for more semantic markup.
+-   Containers provide a means to center and horizontally pad your site's contents. Use `.container` for a responsive pixel width or `.container-fluid` for `width: 100%` across all viewport and device sizes.
+-   Rows are wrappers for columns. Each column has horizontal `padding` (called a gutter) for controlling the space between them. This `padding` is then counteracted on the rows with negative margins. This way, all the content in your columns is visually aligned down the left side.
+-   In a grid layout, content must be placed within columns and only columns may be immediate children of rows.
+-   Thanks to flexbox, grid columns without a specified `width` will automatically layout as equal width columns. For example, four instances of `.col-sm` will each automatically be 25% wide from the small breakpoint and up. See the [auto-layout columns](#auto-layout-columns) section for more examples.
+-   Column classes indicate the number of columns you'd like to use out of the possible 12 per row. So, if you want three equal-width columns across, you can use `.col-4`.
+-   Column `width`s are set in percentages, so they're always fluid and sized relative to their parent element.
+-   Columns have horizontal `padding` to create the gutters between individual columns, however, you can remove the `margin` from rows and `padding` from columns with `.no-gutters` on the `.row`.
+-   To make the grid responsive, there are five grid breakpoints, one for each [responsive breakpoint]({{ site.baseurl }}/docs/{{ site.docs_version }}/layout/overview/#responsive-breakpoints): all breakpoints (extra small), small, medium, large, and extra large.
+-   Grid breakpoints are based on minimum width media queries, meaning **they apply to that one breakpoint and all those above it** (e.g., `.col-sm-4` applies to small, medium, large, and extra large devices, but not the first `xs` breakpoint).
+-   You can use predefined grid classes (like `.col-4`) or [Sass mixins](#sass-mixins) for more semantic markup.
 
 Be aware of the limitations and [bugs around flexbox](https://github.com/philipwalton/flexbugs), like the [inability to use some HTML elements as flex containers](https://github.com/philipwalton/flexbugs#flexbug-9).
 
@@ -339,6 +339,7 @@ Gutters can be responsively adjusted by breakpoint-specific padding and negative
 Here's an example of customizing the Bootstrap grid at the large (`lg`) breakpoint and above. We've increased the `.col` padding with `.px-lg-5`, counteracted that with `.mx-lg-n5` on the parent `.row` and then adjusted the `.container` wrapper with `.px-lg-5`.
 
 {% capture example %}
+
 <div class="container px-lg-5">
   <div class="row mx-lg-n5">
     <div class="col py-3 px-lg-5 border bg-light">Custom column padding</div>
@@ -474,14 +475,16 @@ Here's the source code for creating these styles. Note that column overrides are
 
 {% highlight sass %}
 .no-gutters {
-  margin-right: 0;
-  margin-left: 0;
+margin-right: 0;
+margin-left: 0;
 
-  > .col,
-  > [class*="col-"] {
+> .col,
+> [class*="col-"] {
+
     padding-right: 0;
     padding-left: 0;
-  }
+
+}
 }
 {% endhighlight %}
 
@@ -530,6 +533,7 @@ Breaking columns to a new line in flexbox requires a small hack: add an element 
 
     <div class="col-6 col-sm-3">.col-6 .col-sm-3</div>
     <div class="col-6 col-sm-3">.col-6 .col-sm-3</div>
+
   </div>
 </div>
 {% endcapture %}
@@ -550,6 +554,7 @@ You may also apply this break at specific breakpoints with our [responsive displ
 
     <div class="col-6 col-sm-4">.col-6 .col-sm-4</div>
     <div class="col-6 col-sm-4">.col-6 .col-sm-4</div>
+
   </div>
 </div>
 {% endcapture %}
@@ -709,23 +714,23 @@ $grid-columns:      12;
 $grid-gutter-width: 30px;
 
 $grid-breakpoints: (
-  // Extra small screen / phone
-  xs: 0,
-  // Small screen / phone
-  sm: 576px,
-  // Medium screen / tablet
-  md: 768px,
-  // Large screen / desktop
-  lg: 992px,
-  // Extra large screen / wide desktop
-  xl: 1200px
+// Extra small screen / phone
+xs: 0,
+// Small screen / phone
+sm: 576px,
+// Medium screen / tablet
+md: 768px,
+// Large screen / desktop
+lg: 992px,
+// Extra large screen / wide desktop
+xl: 1200px
 );
 
 $container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px
+sm: 540px,
+md: 720px,
+lg: 960px,
+xl: 1140px
 );
 {% endhighlight %}
 
@@ -751,38 +756,39 @@ You can modify the variables to your own custom values, or just use the mixins w
 
 {% highlight scss %}
 .example-container {
-  width: 800px;
-  @include make-container();
+width: 800px;
+@include make-container();
 }
 
 .example-row {
-  @include make-row();
+@include make-row();
 }
 
 .example-content-main {
-  @include make-col-ready();
+@include make-col-ready();
 
-  @include media-breakpoint-up(sm) {
-    @include make-col(6);
-  }
-  @include media-breakpoint-up(lg) {
-    @include make-col(8);
-  }
+@include media-breakpoint-up(sm) {
+@include make-col(6);
+}
+@include media-breakpoint-up(lg) {
+@include make-col(8);
+}
 }
 
 .example-content-secondary {
-  @include make-col-ready();
+@include make-col-ready();
 
-  @include media-breakpoint-up(sm) {
-    @include make-col(6);
-  }
-  @include media-breakpoint-up(lg) {
-    @include make-col(4);
-  }
+@include media-breakpoint-up(sm) {
+@include make-col(6);
+}
+@include media-breakpoint-up(lg) {
+@include make-col(4);
+}
 }
 {% endhighlight %}
 
 {% capture example %}
+
 <div class="example-container">
   <div class="example-row">
     <div class="example-content-main">Main content</div>
@@ -811,16 +817,16 @@ Moving beyond the columns themselves, you may also customize the number of grid 
 
 {% highlight scss %}
 $grid-breakpoints: (
-  xs: 0,
-  sm: 480px,
-  md: 768px,
-  lg: 1024px
+xs: 0,
+sm: 480px,
+md: 768px,
+lg: 1024px
 );
 
 $container-max-widths: (
-  sm: 420px,
-  md: 720px,
-  lg: 960px
+sm: 420px,
+md: 720px,
+lg: 960px
 );
 {% endhighlight %}
 

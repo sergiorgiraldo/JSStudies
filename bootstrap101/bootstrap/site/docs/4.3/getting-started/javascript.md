@@ -35,6 +35,7 @@ $(document).off('.alert.data-api')
 {% endhighlight %}
 
 {% capture callout %}
+
 ## Selectors
 
 Currently to query DOM elements we use the native methods `querySelector` and `querySelectorAll` for performance reasons, so you have to use [valid selectors](https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier).
@@ -50,9 +51,9 @@ All infinitive events provide [`preventDefault()`](https://developer.mozilla.org
 
 {% highlight js %}
 $('#myModal').on('show.bs.modal', function (e) {
-  if (!data) {
-    return e.preventDefault() // stops modal from being shown
-  }
+if (!data) {
+return e.preventDefault() // stops modal from being shown
+}
 })
 {% endhighlight %}
 
@@ -82,7 +83,7 @@ In order to execute an action once the transition is complete, you can listen to
 
 {% highlight js %}
 $('#myCollapse').on('shown.bs.collapse', function (e) {
-  // Action to execute once the collapsible area is expanded
+// Action to execute once the collapsible area is expanded
 })
 {% endhighlight %}
 
@@ -90,7 +91,7 @@ In addition a method call on a **transitioning component will be ignored**.
 
 {% highlight js %}
 $('#myCarousel').on('slid.bs.carousel', function (e) {
-  $('#myCarousel').carousel('2') // Will slide to the slide 2 as soon as the transition to slide 1 is finished
+$('#myCarousel').carousel('2') // Will slide to the slide 2 as soon as the transition to slide 1 is finished
 })
 
 $('#myCarousel').carousel('1') // Will start sliding to the slide 1 and returns to the caller
@@ -128,6 +129,7 @@ $.fn.tooltip.Constructor.VERSION // => "{{ site.current_version }}"
 Bootstrap's plugins don't fall back particularly gracefully when JavaScript is disabled. If you care about the user experience in this case, use [`<noscript>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/noscript) to explain the situation (and how to re-enable JavaScript) to your users, and/or add your own custom fallbacks.
 
 {% capture callout %}
+
 ##### Third-party libraries
 
 **Bootstrap does not officially support third-party JavaScript libraries** like Prototype or jQuery UI. Despite `.noConflict` and namespaced events, there may be compatibility problems that you need to fix on your own.
@@ -147,39 +149,39 @@ Tooltips and Popovers use our built-in sanitizer to sanitize options which accep
 The default `whiteList` value is the following:
 
 {% highlight js %}
-var ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i
+var ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]_$/i
 var DefaultWhitelist = {
-  // Global attributes allowed on any supplied element below.
-  '*': ['class', 'dir', 'id', 'lang', 'role', ARIA_ATTRIBUTE_PATTERN],
-  a: ['target', 'href', 'title', 'rel'],
-  area: [],
-  b: [],
-  br: [],
-  col: [],
-  code: [],
-  div: [],
-  em: [],
-  hr: [],
-  h1: [],
-  h2: [],
-  h3: [],
-  h4: [],
-  h5: [],
-  h6: [],
-  i: [],
-  img: ['src', 'alt', 'title', 'width', 'height'],
-  li: [],
-  ol: [],
-  p: [],
-  pre: [],
-  s: [],
-  small: [],
-  span: [],
-  sub: [],
-  sup: [],
-  strong: [],
-  u: [],
-  ul: []
+// Global attributes allowed on any supplied element below.
+'_': ['class', 'dir', 'id', 'lang', 'role', ARIA_ATTRIBUTE_PATTERN],
+a: ['target', 'href', 'title', 'rel'],
+area: [],
+b: [],
+br: [],
+col: [],
+code: [],
+div: [],
+em: [],
+hr: [],
+h1: [],
+h2: [],
+h3: [],
+h4: [],
+h5: [],
+h6: [],
+i: [],
+img: ['src', 'alt', 'title', 'width', 'height'],
+li: [],
+ol: [],
+p: [],
+pre: [],
+s: [],
+small: [],
+span: [],
+sub: [],
+sup: [],
+strong: [],
+u: [],
+ul: []
 }
 {% endhighlight %}
 
@@ -204,8 +206,8 @@ If you want to bypass our sanitizer because you prefer to use a dedicated librar
 
 {% highlight js %}
 $('#yourTooltip').tooltip({
-  sanitizeFn: function (content) {
-    return DOMPurify.sanitize(content)
-  }
+sanitizeFn: function (content) {
+return DOMPurify.sanitize(content)
+}
 })
 {% endhighlight %}

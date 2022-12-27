@@ -1,4 +1,9 @@
-import { connectDatabase, getAllDocuments, insertDocument, deleteDocument } from "../../helpers/db-util";
+import {
+	connectDatabase,
+	getAllDocuments,
+	insertDocument,
+	deleteDocument
+} from "../../helpers/db-util";
 
 async function handler(req, res) {
 	let client;
@@ -24,17 +29,20 @@ async function handler(req, res) {
 		}
 
 		res.status(201).json({ message: "New student enrolled!" });
-	}
-	else if (req.method === "GET") {
+	} else if (req.method === "GET") {
 		try {
-			const documents = await getAllDocuments(client, "students",{_id: -1},{});
+			const documents = await getAllDocuments(
+				client,
+				"students",
+				{ _id: -1 },
+				{}
+			);
 			res.status(200).json({ list: documents });
 			client.close();
 		} catch (error) {
 			res.status(500).json({ message: "Getting students failed." });
 		}
-	}
-	else if (req.method === "DELETE") {
+	} else if (req.method === "DELETE") {
 		try {
 			await deleteDocument(client, "students", req.body.student);
 			res.status(200).json({ message: "Student deleted" });

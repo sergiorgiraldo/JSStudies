@@ -1,24 +1,26 @@
 <template>
-  <div>
-		<input v-model="messageText" @keyup.enter="send" placeholder="Enter a message" />
-  </div>
+	<div>
+		<input
+			v-model="messageText"
+			@keyup.enter="send"
+			placeholder="Enter a message" />
+	</div>
 </template>
 
 <script>
-  export default {
-    name: 'MessageForm',
+export default {
+	name: "MessageForm",
 
-		data () {
-			return {
-				messageText: ''
-			}
-		},
+	data() {
+		return {
+			messageText: ""
+		};
+	},
 
-		send () {
-			this.$emit('send')
-		}
-  }
+	send() {
+		this.$emit("send");
+	}
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
