@@ -1,9 +1,10 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 export default function Home() {
 	const [response, setResponse] = useState("");
+	const [userId, _] = useState(2);
 
 	function handleGetAll() {
 		fetch("/api/users", {
@@ -14,7 +15,6 @@ export default function Home() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				setResponse(JSON.stringify(data));
 			})
 			.catch((error) => {
@@ -23,7 +23,7 @@ export default function Home() {
 	}
 
 	function handleGetSingle() {
-		fetch("/api/users/2", {
+		fetch(`/api/users/${userId}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json"
@@ -31,7 +31,6 @@ export default function Home() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				setResponse(JSON.stringify(data));
 			})
 			.catch((error) => {
@@ -48,7 +47,6 @@ export default function Home() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				setResponse(JSON.stringify(data));
 			})
 			.catch((error) => {
@@ -57,7 +55,7 @@ export default function Home() {
 	}
 
 	function handlePut() {
-		fetch("/api/users/2", {
+		fetch(`/api/users/${userId}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -65,7 +63,6 @@ export default function Home() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				setResponse(JSON.stringify(data));
 			})
 			.catch((error) => {
@@ -74,7 +71,7 @@ export default function Home() {
 	}
 
 	function handleDelete() {
-		fetch("/api/users/2", {
+		fetch(`/api/users/${userId}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
@@ -82,7 +79,6 @@ export default function Home() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				setResponse(JSON.stringify(data));
 			})
 			.catch((error) => {
@@ -107,7 +103,7 @@ export default function Home() {
 			<main className={styles.main}>
 				<div className={styles.description}>
 					<h2>Testing API routes</h2>
-					<p>
+					<p className={styles.card}>
 						<b>Result</b> <br />
 						{response}
 					</p>
