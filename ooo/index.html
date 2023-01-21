@@ -1,0 +1,254 @@
+
+<html>
+<head>
+	<meta name="robots" content="noindex">
+	<meta charset="ISO-8859-1">
+	<link rel="icon" href="ooo.ico" />
+	<title>Out of the Office</title>
+
+	<!-- Tangle -->	
+    <script type="text/JavaScript" src="http://www.giral.do/stuff/lib/Tangle.js?v1"></script>	
+    <script type="text/JavaScript" src="http://www.giral.do/stuff/lib/TangleKit.js?v2"></script>	
+	<script type="text/JavaScript" src="http://www.giral.do/stuff/lib/mootools.js?v1"></script>
+	<script type="text/JavaScript" src="http://www.giral.do/stuff/lib/sprintf.js?v1"></script>
+	<script type="text/JavaScript" src="http://www.giral.do/stuff/lib/BVTouchable.js?v1"></script>	
+	<script type="text/JavaScript" src="http://www.giral.do/stuff/lib/jquery-2.1.3.min.js"></script>	  
+	
+	<script type="text/JavaScript">
+	var en_names = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+	var pt_names = new Array("Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez");
+	var es_names = new Array("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic");
+	var du_names = new Array("Jan", "Feb", "Maa", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+	var nl_names = new Array("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec");
+	
+	
+	var curr_date,curr_month,curr_year;
+	$(document).ready(
+		function(){
+			setUpTangle();
+		});
+
+    function toggleSection(which){
+        if (which == "limited"){
+            $("#no-section").hide();
+            $("#limited-section").show();
+        }
+        else{
+            $("#no-section").show();
+            $("#limited-section").hide();
+        }
+    }    
+
+    function toggleLang(which){
+        var found = false;
+        $.each($("input[name='langToCopy']:checked"), function(){
+			if ($(this).val() == which){
+                found = true;
+            };
+		});		
+        if (found){
+            $("#" + which + "Limited").show();
+            $("#" + which + "NoAcc").show();
+        }
+        else{
+            $("#" + which + "Limited").hide();
+            $("#" + which + "NoAcc").hide();
+        }
+    }   
+
+	function ToClip() {
+		var whatToCopy = $("input[type=radio][name=whatToCopy]:checked").val();
+
+		$("#output").val("");
+
+		$.each($("input[name='langToCopy']:checked"), function(){
+			var el = "#" + $(this).val() + whatToCopy;
+			
+			$("#output").val($("#output").val() + $(el).text() + "\n\n");
+		});		
+
+		$("#output").select();
+		document.execCommand("copy");
+	}
+
+	function pad(num) {
+		var s = "0" + num;
+		return s.substr(s.length-2);
+	}	
+	
+	function doDate(nb, arr){
+		var d = new Date();
+		d.setDate(d.getDate() + nb); 
+		
+		var curr_date = pad(d.getDate());
+		var curr_month = d.getMonth();
+		var curr_year = d.getFullYear();
+		return curr_date + "/" + arr[curr_month] 	+ "/" + curr_year;	
+	}
+
+	function doDateEn(nb){
+		return doDate(nb, en_names);
+	}
+	
+	function doDateEs(nb){
+		return doDate(nb, es_names);
+	}
+
+	function doDatePt(nb){
+		return doDate(nb, pt_names);
+	}
+
+	function doDateDu(nb){
+		return doDate(nb, du_names);
+	}
+
+	function doDateNl(nb){
+		return doDate(nb, nl_names);
+	}
+
+	function setUpTangle () {
+		var tangle = new Tangle (document.getElementById("root"), {
+			initialize: function () {
+				this.who = "John Doe";
+				this.whypt = "pt";
+				this.whyen = "en";
+				this.whyes = "es";
+				this.whydu = "du";
+				this.whynl = "nl";
+				this.dt = 10;
+			},
+			update: function () {
+				this.p1 = this.who;
+				this.p2en = doDateEn(parseInt(this.dt, 10));
+				this.p2pt = doDatePt(parseInt(this.dt, 10));
+				this.p2es = doDateEs(parseInt(this.dt, 10));
+				this.p2du = doDateDu(parseInt(this.dt, 10));
+				this.p2nl = doDateNl(parseInt(this.dt, 10));
+				this.m1 = this.whypt;
+				this.m2 = this.whyen;
+				this.m3 = this.whyes;
+				this.m4 = this.whydu;
+				this.m5 = this.whynl;
+			}
+		});
+
+		$(".TKTextFieldInput").first().select().focus();	
+	}
+	</script>	
+
+    <link rel="stylesheet" type="text/css" href="lib/TangleKit.css">	
+	<style type="text/css">
+		p, label,span {
+			font-family:courier;
+			font-size: large;
+		}
+		label{
+			font-weight:bold;
+		}
+		input{
+			font-family:courier;
+			font-size: medium;
+		}
+		.TKTextFieldInput{width:230px;}
+		span.Desc>input{width:500px;}
+		.TKNumberFieldInput{width:50px;}
+	</style>
+</head>
+<body id="root">
+	    <table>
+			<tr>
+				<td><label>Substituto</label></td>
+				<td><span class="TKTextField" id="who" data-var="who"></span></td>
+			</tr>
+			<tr>
+				<td valign="top"><label>Prop&oacute;sito</label></td>
+				<td>
+					<span class="TKTextField Desc" id="whypt" data-var="whypt"></span>
+					<br />
+					<span class="TKTextField Desc" id="whyen" data-var="whyen"></span>
+					<br />
+					<span class="TKTextField Desc" id="whyes" data-var="whyes"></span>
+					<br />
+					<span class="TKTextField Desc" id="whydu" data-var="whydu"></span>
+					<br />
+					<span class="TKTextField Desc" id="whynl" data-var="whynl"></span>
+			    </td>
+		    </tr>
+            <tr>	
+                <td><label>Dias fora</label></td>
+                <td><span class="TKNumberField" id="dt" data-var="dt"></span></td>
+            </tr>
+            <tr>	
+                <td valign="top"><label>Options</label></td>
+                <td>
+                    <p>
+                        <input type="radio" name="whatToCopy" value="Limited" checked="checked" onclick="toggleSection('limited')" />Limited <input type="radio" name="whatToCopy" value="NoAcc"  onclick="toggleSection('no')" />No access
+                    </p>
+                    <p>
+                        <input type="checkbox" name="langToCopy" value="pt" onclick="toggleLang('pt')" checked="checked" />pt 
+                        <input type="checkbox" name="langToCopy" value="en" onclick="toggleLang('en')" checked="checked" />en 
+                        <input type="checkbox" name="langToCopy" value="es" onclick="toggleLang('es')" checked="checked" />es 
+                        <input type="checkbox" name="langToCopy" value="du" onclick="toggleLang('du')" checked="checked" />du 
+                        <input type="checkbox" name="langToCopy" value="nl" onclick="toggleLang('nl')" checked="checked" />nl 
+                    </p>
+                    <p>
+                        <input type="button" name="btnToCopy" id="btnToCopy" value="To Clipboard" onclick="javascript:ToClip();" />
+                    </p>
+                </td>
+		    </tr>
+	    </table>
+	
+        <div id="limited-section">
+            <p>
+            ------------------------------
+            </p>
+            <p id="ptLimited">
+                <span data-var="m1"></span><br />
+                Estarei fora do escrit&oacute;rio com acesso limitado &agrave;s minhas mensagens ou &agrave;s minhas liga&ccedil;&otilde;es. Contate <b data-var="p1"></b> se necess&aacute;rio ou aguarde meu retorno (<b data-var="p2pt"></b>). </p>
+            
+            <p id="enLimited">
+                <span data-var="m2"></span><br />
+                I will be out of the office with limited access to my messages or phone calls. Contact <b data-var="p1"></b> if necessary or wait for my return (<b data-var="p2en"></b>).</p>
+            
+            <p id="esLimited">
+                <span data-var="m3"></span><br />
+                Estar&eacute; fuera de la oficina con acceso limitado a mis mensajes o llamadas telef&oacute;nicas. P&oacute;ngase en contacto con <b data-var="p1"></b> si es necesario o espera a mi regreso (<b data-var="p2es"></b>).</p>
+            
+            <p id="duLimited">
+                <span data-var="m4"></span><br />
+                Ik ben niet op kantoor met beperkte toegang tot mijn berichten of telefoontjes. Neem indien nodig contact op met <b data-var="p1"></b> of wacht op mijn terugkeer (<b data-var="p2du"></b>).</p>
+            
+            <p id="nlLimited">
+                <span data-var="m5"></span><br />
+                Ik zal niet op kantoor zijn met beperkte toegang tot mijn berichten of telefoontjes. Neem indien nodig contact op met <b data-var="p1"></b> of wacht op mijn terugkeer (<b data-var="p2nl"></b>).</p>
+        </div>
+
+        <div id="no-section" style="display: none;">
+            <p>
+                ------------------------------
+            </p>
+            
+            <p id="ptNoAcc">
+                <span data-var="m1"></span><br />
+                Estarei fora do escrit&oacute;rio sem acesso &agrave;s minhas mensagens ou &agrave;s minhas liga&ccedil;&otilde;es. Contate <b data-var="p1"></b> se necess&aacute;rio ou aguarde meu retorno (<b data-var="p2pt"></b>).</p>
+            
+            <p id="enNoAcc">
+                <span data-var="m2"></span><br />
+                I will be out of the office without access to my messages or phone calls. Contact <b data-var="p1"></b> if necessary or wait for my return (<b data-var="p2en"></b>).</p>
+            
+            <p id="esNoAcc">
+                <span data-var="m3"></span><br />
+                Estar&eacute; fuera de la oficina sin acceso a mis mensajes o llamadas telef&oacute;nicas. P&oacute;ngase en contacto con <b data-var="p1"></b> si es necesario o espera a mi regreso (<b data-var="p2es"></b>).</p>
+            
+            <p id="duNoAcc">
+                <span data-var="m4"></span><br />
+                Ik ben niet op kantoor zonder toegang tot mijn berichten of telefoontjes. Neem indien nodig contact op met <b data-var="p1"></b> of wacht op mijn terugkeer (<b data-var="p2du"></b>).</p>
+            
+            <p id="nlNoAcc">
+                <span data-var="m5"></span><br />
+                Ik zal niet op kantoor zijn zonder toegang tot mijn berichten of telefoontjes. Neem indien nodig contact op met <b data-var="p1"></b> of wacht op mijn terugkeer (<b data-var="p2nl"></b>).</p>
+            
+        </div>
+        <textarea class="output" id="output" style="width: 1px;color:white;"></textarea>
+    </body>
+</html>
