@@ -1,22 +1,28 @@
 // components/DeleteItem.js
+import { useState } from "react";
 import axios from "axios";
 
-const DeleteItem = ({ item, mutate }) => {
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`/api/inventory/${item._id}`);
-      mutate();
-    } catch (error) {
-      console.error("Error deleting item:", error);
-    }
-  };
+const DeleteItem = ({ item, onMutate }) => {
+	const [id, _] = useState(item.id);
+	
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			await axios.delete("/api/inventory/", { data: { id } });
+			onMutate();
+		} catch (error) {
+			console.error("Error deleting item:", error);
+		}
+	};
 
-  return (
-    <div>
-      <h2>Delete Item</h2>
-      <button onClick={handleDelete}>Delete</button>
-    </div>
-  );
+	return (
+		<div>
+			<h2>Delete Item</h2>
+			<form onSubmit={handleSubmit}>
+				<button type="submit">Delete</button>
+			</form>
+		</div>
+	);
 };
 
 export default DeleteItem;
