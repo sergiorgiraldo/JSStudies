@@ -24,15 +24,20 @@ export default function Home() {
     setSelectedItem(null);
   };
 
+  const handleMutate = async () => {
+    await mutate();
+    setSelectedItem(null);
+  };
+
   return (
     <div>
       <h1>Inventory Management</h1>
-      <AddItem onMutate={mutate} />
+      <AddItem onMutate={handleMutate} />
       <InventoryList items={data} onItemSelect={handleItemSelect} />
       {selectedItem && (
         <div>
-          <EditItem item={selectedItem} onMutate={mutate} onCancel={handleCancelEdit} />
-          <DeleteItem item={selectedItem} onMutate={mutate} onCancel={handleCancelEdit} />
+          <EditItem item={selectedItem} onMutate={handleMutate} onCancel={handleCancelEdit} />
+          <DeleteItem item={selectedItem} onMutate={handleMutate} onCancel={handleCancelEdit} />
         </div>
       )}
     </div>
