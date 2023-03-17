@@ -12,21 +12,23 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 export default function Home() {
   const { data, error, mutate } = useSWR("/api/inventory", fetcher);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [mode, setMode] = useState("");
 
   if (error) return <div>Failed to load inventory</div>;
   if (!data) return <div>Loading...</div>;
 
-  const handleItemSelect = (item) => {
+  const handleItemSelect = (item, mode) => {
     setSelectedItem(item);
+    setMode(mode);
   };
 
   const handleCancelEdit = () => {
-    setSelectedItem(null);
+    setSelectedItem(null, "");
   };
 
   const handleMutate = async () => {
     await mutate();
-    setSelectedItem(null);
+    setSelectedItem(null, "");
   };
 
   return (
@@ -34,9 +36,13 @@ export default function Home() {
       <h1>Inventory Management</h1>
       <AddItem onMutate={handleMutate} />
       <InventoryList items={data} onItemSelect={handleItemSelect} />
-      {selectedItem && (
+      {selectedItem && mode =="E" && (
         <div>
           <EditItem item={selectedItem} onMutate={handleMutate} onCancel={handleCancelEdit} />
+        </div>
+      )}
+      {selectedItem && mode == "D" &&(
+        <div>
           <DeleteItem item={selectedItem} onMutate={handleMutate} onCancel={handleCancelEdit} />
         </div>
       )}
