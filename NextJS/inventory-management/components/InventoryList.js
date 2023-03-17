@@ -19,8 +19,13 @@ const InventoryList = ({ items, onItemSelect }) => {
 							<td>{item.name}</td>
 							<td>{item.quantity}</td>
 							<td>
-								<button onClick={() => onItemSelect(item)}>
-									Edit/Delete
+								<button onClick={() => onItemSelect(item, "E")}>
+									Edit
+								</button>
+							</td>
+							<td>
+								<button onClick={() => onItemSelect(item, "D")}>
+									Delete
 								</button>
 							</td>
 						</tr>
