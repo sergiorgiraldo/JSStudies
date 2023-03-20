@@ -6,6 +6,7 @@ import InventoryList from "../components/InventoryList";
 import AddItem from "../components/AddItem";
 import EditItem from "../components/EditItem";
 import DeleteItem from "../components/DeleteItem";
+import styles from "../styles/Home.module.css";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -32,20 +33,22 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <h1>Inventory Management</h1>
-      <AddItem onMutate={handleMutate} />
-      <InventoryList items={data} onItemSelect={handleItemSelect} />
-      {selectedItem && mode =="E" && (
-        <div>
-          <EditItem item={selectedItem} onMutate={handleMutate} onCancel={handleCancelEdit} />
-        </div>
-      )}
-      {selectedItem && mode == "D" &&(
-        <div>
-          <DeleteItem item={selectedItem} onMutate={handleMutate} onCancel={handleCancelEdit} />
-        </div>
-      )}
-    </div>
+    <section className={styles.center}>
+      <div className={styles.stack}>
+        <h1>Inventory Management</h1>
+        <AddItem onMutate={handleMutate} />
+        <InventoryList items={data} onItemSelect={handleItemSelect} />
+        {selectedItem && mode =="E" && (
+          <div>
+            <EditItem item={selectedItem} onMutate={handleMutate} onCancel={handleCancelEdit} />
+          </div>
+        )}
+        {selectedItem && mode == "D" &&(
+          <div>
+            <DeleteItem item={selectedItem} onMutate={handleMutate} onCancel={handleCancelEdit} />
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
