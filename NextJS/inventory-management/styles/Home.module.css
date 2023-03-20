@@ -2,6 +2,17 @@
 	padding: 0 2rem;
 }
 
+.center {
+	display: flex;
+	justify-content: center;
+}
+
+.stack {
+	display: flex;
+	flex-direction: column;
+}
+
+
 .main {
 	min-height: 100vh;
 	padding: 4rem 0;
