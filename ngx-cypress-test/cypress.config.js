@@ -7,7 +7,7 @@ module.exports = defineConfig({
   viewportWidth: 1920,
   video: false,
   defaultCommandTimeout: 10000,
-  projectId: 'soeotu',
+  projectId: 'p1x2u9',
   experimentalWebKitSupport: true,
   env: {
     'cypress-plugin-snapshots': {
