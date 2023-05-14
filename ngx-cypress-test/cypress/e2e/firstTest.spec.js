@@ -229,18 +229,18 @@ describe('Our first suite', () => {
         })
     })
 
-    it.only('Web tables', () => {
+    it('Web tables', () => {
         cy.visit('/');
         cy.contains('Tables & Data').click();
         cy.contains('Smart Table').click();
 
         //1
-        // cy.get('tbody').contains('tr', 'Larry').then( tableRow => {
-        //     cy.wrap(tableRow).find('.nb-edit').click();
-        //     cy.wrap(tableRow).find('[placeholder="Age"]').clear().type('25');
-        //     cy.wrap(tableRow).find('.nb-checkmark').click();
-        //     cy.wrap(tableRow).find('td').eq(6).should('contain', '25');
-        // });
+        cy.get('tbody').contains('tr', 'Larry').then( tableRow => {
+            cy.wrap(tableRow).find('.nb-edit').click();
+            cy.wrap(tableRow).find('[placeholder="Age"]').clear().type('25');
+            cy.wrap(tableRow).find('.nb-checkmark').click();
+            cy.wrap(tableRow).find('td').eq(6).should('contain', '25');
+        });
 
         //2
         cy.get('thead').then( head => {
@@ -285,4 +285,13 @@ describe('Our first suite', () => {
         })
     })
 
+    it.only('tooltip' , () => {
+        cy.visit('/')
+        cy.contains('Modal & Overlays').click()
+        cy.contains('Tooltip').click()
+
+        cy.contains('nb-card', 'Colored Tooltips')
+            .contains('Default').click()
+        cy.get('nb-tooltip').should('contain', 'This is a tooltip')
+    })
 })
