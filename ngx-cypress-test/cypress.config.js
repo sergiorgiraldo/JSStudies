@@ -9,6 +9,9 @@ module.exports = defineConfig({
 	projectId: "p1x2u9",
 	experimentalWebKitSupport: true,
 	env: {
+		"username": 'cytest@test.com', 
+		"password": 'Welcome123',
+		"apiUrl": 'https://api.realworld.io',
 		"cypress-plugin-snapshots": {
 			imageConfig: {
 				threshold: 0.01
