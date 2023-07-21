@@ -1,0 +1,73 @@
+{
+  "name": "@sorry-cypress/api",
+  "version": "2.5.8",
+  "author": {
+    "name": "Andrew Goldis",
+    "email": "agoldis@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agoldis/sorry-cypress.git"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/typings",
+  "scripts": {
+    "dev": "run-p generate:watch nodemon types:watch",
+    "nodemon": "nodemon",
+    "generate": "graphql-codegen",
+    "generate:watch": "graphql-codegen --watch",
+    "build": "npm run generate && npm run build:types && npm run build:js",
+    "build:types": "tsc",
+    "types:watch": "tsc --watch --preserveWatchOutput",
+    "build:js": "babel src --out-dir dist --extensions \".ts\" --source-maps inline --copy-files",
+    "start": "node ./dist/",
+    "clean": "rimraf ./dist",
+    "test": "jest",
+    "lint": "eslint ./ --ext ts",
+    "release": "yarn version --no-git-tag-version"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.2",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@graphql-codegen/cli": "^2.4.0",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-resolvers": "^2.4.3",
+    "@shelf/jest-mongodb": "^2.2.1",
+    "@types/graphql-iso-date": "^3.4.0",
+    "@types/lodash": "^4.14.161",
+    "@types/mongodb": "^3.5.32",
+    "@types/node": "^14.11.2",
+    "@types/serve-static": "^1.13.10",
+    "@types/supertest": "^2.0.12",
+    "@types/uuid": "^8.3.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.5",
+    "npm-run-all": "^4.1.5",
+    "pretty-quick": "^2.0.1",
+    "supertest": "^6.3.3",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "@graphql-tools/load-files": "^6.3.2",
+    "@graphql-tools/merge": "^6.2.11",
+    "@sorry-cypress/common": "1.0.0",
+    "@sorry-cypress/logger": "1.0.0",
+    "@sorry-cypress/mongo": "1.0.0",
+    "apollo-server": "^3.0.0",
+    "apollo-server-express": "^3.0.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.18.1",
+    "graphql": "^15.3.0",
+    "graphql-iso-date": "^3.6.1",
+    "lodash": "^4.17.21",
+    "plur": "^4.0.0",
+    "source-map-support": "^0.5.20",
+    "stoppable": "^1.1.0",
+    "uuid": "^3.3.2"
+  }
+}

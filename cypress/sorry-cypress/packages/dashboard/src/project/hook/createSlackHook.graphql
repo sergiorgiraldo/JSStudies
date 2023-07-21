@@ -1,0 +1,10 @@
+mutation createSlackHook($input: CreateSlackHookInput!) {
+  createSlackHook(input: $input) {
+    hookId
+    hookType
+    url
+    hookEvents
+    slackResultFilter
+    slackBranchFilter
+  }
+}

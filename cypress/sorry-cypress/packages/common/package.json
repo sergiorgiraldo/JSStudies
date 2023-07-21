@@ -1,0 +1,33 @@
+{
+  "name": "@sorry-cypress/common",
+  "version": "1.0.0",
+  "author": {
+    "name": "Andrew Goldis",
+    "email": "agoldis@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agoldis/sorry-cypress.git"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/typings",
+  "scripts": {
+    "dev": "run-p types:watch build:js:watch",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc",
+    "types:watch": "yarn build:types --watch --preserveWatchOutput",
+    "build:js": "babel src --out-dir dist --extensions \".ts\" --source-maps inline",
+    "build:js:watch": "yarn run build:js --watch",
+    "lint": "eslint ./ --ext ts,tsx",
+    "release": "echo \"skipping release\"",
+    "test": "jest --passWithNoTests"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7"
+  },
+  "dependencies": {
+    "date-fns": "^2.21.3",
+    "lodash": "^4.17.21"
+  }
+}

@@ -1,31 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
-import { ArticleListConfig, Profile } from '../core';
+import { ArticleListConfig, Profile } from "../core";
 
 @Component({
-  selector: 'app-profile-favorites',
-  templateUrl: './profile-favorites.component.html'
+	selector: "app-profile-favorites",
+	templateUrl: "./profile-favorites.component.html"
 })
 export class ProfileFavoritesComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router
+	) {}
 
-  profile: Profile;
-  favoritesConfig: ArticleListConfig = {
-    type: 'all',
-    filters: {}
-  };
+	profile: Profile;
+	favoritesConfig: ArticleListConfig = {
+		type: "all",
+		filters: {}
+	};
 
-  ngOnInit() {
-    this.route.parent.data.subscribe(
-      (data: {profile: Profile}) => {
-        this.profile = data.profile;
-        this.favoritesConfig.filters.favorited = this.profile.username;
-      }
-    );
-  }
-
+	ngOnInit() {
+		this.route.parent.data.subscribe((data: { profile: Profile }) => {
+			this.profile = data.profile;
+			this.favoritesConfig.filters.favorited = this.profile.username;
+		});
+	}
 }
