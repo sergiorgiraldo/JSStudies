@@ -1,0 +1,279 @@
+### Queries
+type Query {
+  projects(
+    orderDirection: OrderingOptions = DESC
+    filters: [Filters] = null
+  ): [Project!]!
+  project(id: ID!): Project
+  runs(
+    orderDirection: OrderingOptions = DESC
+    cursor: String = null
+    filters: [Filters] = null
+  ): [Run]!
+  ciBuilds(filters: [Filters] = null): [CiBuild]!
+  runFeed(cursor: String, filters: [Filters] = null): RunFeed!
+  run(id: ID!): Run
+  instance(id: ID!): Instance
+  specStats(spec: String!, filters: [Filters] = null): SpecStats
+}
+
+### Mutations
+type Mutation {
+  deleteRun(runId: ID!): DeleteRunResponse!
+  deleteRuns(runIds: [ID]!): DeleteRunResponse!
+  deleteRunsInDateRange(
+    startDate: DateTime!
+    endDate: DateTime!
+  ): DeleteRunResponse!
+  resetInstance(instanceId: ID!): ResetInstanceResponse!
+  deleteProject(projectId: ID!): DeleteProjectResponse!
+  createProject(project: CreateProjectInput!): Project!
+  updateProject(input: UpdateProjectInput!): Project!
+}
+
+type DeleteRunResponse {
+  success: Boolean!
+  message: String!
+  runIds: [ID]!
+}
+
+### SpecStats
+type SpecStats {
+  spec: String!
+  avgWallClockDuration: Int!
+  count: Int!
+}
+
+### Project
+
+type Project {
+  projectId: ID!
+  hooks: [Hook!]!
+  inactivityTimeoutSeconds: Int
+  projectColor: String
+}
+
+input CreateProjectInput {
+  projectId: ID!
+  inactivityTimeoutSeconds: Int!
+  projectColor: String
+}
+
+input UpdateProjectInput {
+  projectId: ID!
+  inactivityTimeoutSeconds: Int!
+  projectColor: String
+}
+
+input ProjectInput {
+  projectId: String!
+  inactivityTimeoutSeconds: Int
+  projectColor: String
+  hooks: [HookInput]
+}
+
+type DeleteProjectResponse {
+  success: Boolean!
+  message: String!
+  projectIds: [ID]!
+}
+
+### Run - full representation of a run
+type Run {
+  runId: ID!
+  createdAt: DateTime!
+  meta: RunMeta!
+  specs: [RunSpec!]!
+  completion: RunCompletion
+  progress: RunProgress
+}
+
+type CiBuild {
+  ciBuildId: String!
+  runs: [Run!]!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type RunCompletion {
+  completed: Boolean!
+  inactivityTimeoutMs: Int
+}
+
+type RunSpec {
+  spec: String!
+  instanceId: String!
+  claimedAt: String
+  completedAt: String
+  machineId: String
+  groupId: String
+  results: RunSpecResults
+}
+
+type RunSpecResults {
+  error: String
+  flaky: Int
+  stats: InstanceStats!
+}
+
+type RunProgress {
+  updatedAt: DateTime
+  groups: [RunGroupProgress!]!
+}
+
+type RunGroupProgress {
+  groupId: String!
+  instances: RunGroupProgressInstances!
+  tests: RunGroupProgressTests!
+}
+
+type RunGroupProgressInstances {
+  overall: Int!
+  claimed: Int!
+  complete: Int!
+  passes: Int!
+  failures: Int!
+}
+type RunGroupProgressTests {
+  overall: Int!
+  passes: Int!
+  failures: Int!
+  skipped: Int!
+  pending: Int!
+  flaky: Int!
+}
+
+type Commit {
+  sha: String
+  branch: String
+  authorName: String
+  authorEmail: String
+  message: String
+  remoteOrigin: String
+}
+
+type RunMeta {
+  ciBuildId: String!
+  projectId: String!
+  commit: Commit
+}
+
+type ResetInstanceResponse {
+  instanceId: ID!
+  message: String!
+  success: Boolean
+}
+
+### RunFeed - runs representation for the landing page
+type RunFeed {
+  cursor: String!
+  hasMore: Boolean!
+  runs: [Run!]!
+}
+
+### Instance - a claimed spec that's being executed
+type Instance {
+  runId: ID!
+  run: Run!
+  spec: String!
+  groupId: String!
+  projectId: String!
+  instanceId: ID!
+  results: InstanceResults
+}
+
+# Execution results of a single instance
+type InstanceResults {
+  stats: InstanceStats!
+  tests: [InstanceTest!]
+  error: String
+  stdout: String
+  screenshots: [InstanceScreeshot!]!
+  cypressConfig: CypressConfig
+  reporterStats: ReporterStats
+  videoUrl: String
+}
+
+# Aggregated stats for instance
+type InstanceStats {
+  suites: Int!
+  tests: Int!
+  passes: Int!
+  pending: Int!
+  skipped: Int!
+  failures: Int!
+  wallClockStartedAt: String!
+  wallClockEndedAt: String!
+  wallClockDuration: Int!
+}
+
+type CypressConfig {
+  video: Boolean!
+  videoUploadOnPasses: Boolean!
+}
+
+type InstanceScreeshot {
+  screenshotId: String!
+  name: String
+  testId: String!
+  takenAt: String!
+  height: Int!
+  width: Int!
+  screenshotURL: String
+}
+
+type ReporterStats {
+  suites: Int
+  tests: Int
+  passes: Int
+  pending: Int
+  failures: Int
+  start: String
+  end: String
+  duration: Int
+}
+
+### InstanceTest - specific test within a suite / instance
+enum TestState {
+  failed
+  passed
+  pending
+  skipped
+}
+
+type InstanceTest {
+  testId: String!
+  title: [String!]!
+  state: TestState!
+  body: String
+  displayError: String
+  attempts: [TestAttempt!]!
+}
+
+type TestError {
+  name: String!
+  message: String!
+  stack: String!
+}
+
+type TestAttempt {
+  state: String
+  error: TestError
+  # timings: ignore
+  wallClockStartedAt: String
+  wallClockDuration: Int
+}
+
+### Misc
+scalar DateTime
+
+enum OrderingOptions {
+  DESC
+  ASC
+}
+
+input Filters {
+  key: String
+  value: String
+  like: String
+}

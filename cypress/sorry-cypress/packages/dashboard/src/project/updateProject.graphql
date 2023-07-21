@@ -1,0 +1,7 @@
+mutation updateProject($input: UpdateProjectInput!) {
+  updateProject(input: $input) {
+    projectId
+    inactivityTimeoutSeconds
+    projectColor
+  }
+}

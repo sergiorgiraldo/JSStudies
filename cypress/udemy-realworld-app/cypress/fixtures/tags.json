@@ -1,7 +1,3 @@
 {
-    "tags": [
-        "cypress",
-        "automation",
-        "testing"
-    ]
+	"tags": ["cypress", "automation", "testing"]
 }

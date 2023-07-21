@@ -1,0 +1,6 @@
+{
+  "context": "testGithubContext: ciBuildId",
+  "description": "failed:0 skipped:0 passed:1 pending:0 flaky:undefined",
+  "state": "pending",
+  "target_url": "http://localhost:8080/run/testRunId"
+}

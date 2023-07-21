@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "./src/**/__test__/*.test.ts", "dist"],
+  "compilerOptions": {
+    "strict": true,
+    "skipLibCheck": true,
+    "module": "commonjs",
+    "jsx": "react",
+    "lib": ["DOM"],
+    "target": "esnext",
+    "outDir": "lib",
+    "types": ["jest"],
+    "typeRoots": ["./src/", "./node_modules/@types"]
+  }
+}

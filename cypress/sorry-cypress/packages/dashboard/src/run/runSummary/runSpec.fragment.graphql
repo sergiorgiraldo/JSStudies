@@ -1,0 +1,8 @@
+fragment RunSummarySpec on RunSpec {
+  claimedAt
+  results {
+    stats {
+      ...AllInstanceStats
+    }
+  }
+}

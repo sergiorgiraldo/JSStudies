@@ -1,8 +1,8 @@
-import { Profile } from './profile.model';
+import { Profile } from "./profile.model";
 
 export interface Comment {
-  id: number;
-  body: string;
-  createdAt: string;
-  author: Profile;
+	id: number;
+	body: string;
+	createdAt: string;
+	author: Profile;
 }
