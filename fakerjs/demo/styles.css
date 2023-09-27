@@ -1,5 +1,5 @@
 .card {
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border-radius: 4px;
   width: 256px;
   height:600px;
@@ -20,12 +20,12 @@
 .card__image {
   padding-bottom: 100%;
   position: relative;
-  border-bottom: 1px solid #888888;
+  border-bottom: 2px solid #888888;
 }
 
 .card__image img {
-  height: 275px;
-  width: 256px;
+  width: 100%;
+  height: 100%;
   position: absolute;
   left: 0;
   top: 0;
