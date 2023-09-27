@@ -1,0 +1,17 @@
+{
+  "name": "faker-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.1.0"
+  },
+  "devDependencies": {
+    "vite": "^4.4.9"
+  }
+}
