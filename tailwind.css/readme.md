@@ -1,5 +1,9 @@
 # Tailwind CSS
 
+0. Install the extension in vscode
+
+`https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss`
+
 1. Install 
 
 `npm install -D tailwindcss`
