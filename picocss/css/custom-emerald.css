@@ -1,35 +1,35 @@
 /**
  * Custom theme
  */
- 
+
 /* Emerald Light scheme (Default) */
 /* Can be forced with data-theme="light" */
-[data-theme="light"],
-:root:not([data-theme="dark"]) {
-  --primary: #50C878;
-  --primary-hover: #0C7C31;
+[data-theme='light'],
+:root:not([data-theme='dark']) {
+  --primary: #50c878;
+  --primary-hover: #0c7c31;
   --primary-focus: rgba(216, 27, 96, 0.125);
-  --primary-inverse: #FFF;
+  --primary-inverse: #fff;
 }
 
 /* Emerald Dark scheme (Auto) */
 /* Automatically enabled if user has Dark mode enabled */
 @media only screen and (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --primary: #50C878;
-    --primary-hover: #0C7C31;
+    --primary: #50c878;
+    --primary-hover: #0c7c31;
     --primary-focus: rgba(216, 27, 96, 0.25);
-    --primary-inverse: #FFF;
+    --primary-inverse: #fff;
   }
 }
 
 /* Emerald Dark scheme (Forced) */
 /* Enabled if forced with data-theme="dark" */
-[data-theme="dark"] {
-  --primary: #50C878;
-  --primary-hover: #0C7C31;
+[data-theme='dark'] {
+  --primary: #50c878;
+  --primary-hover: #0c7c31;
   --primary-focus: rgba(216, 27, 96, 0.25);
-  --primary-inverse: #FFF;
+  --primary-inverse: #fff;
 }
 
 /* Emerald (Common styles) */
