@@ -1,0 +1,83 @@
+/**
+ * Custom theme
+ */
+ :root {
+   --font-family: "Courier", sans-serif;
+   --border-radius: 0;
+   --form-element-spacing-vertical: 1rem;
+   --form-element-spacing-horizontal: 1.25rem;
+ }
+ 
+/* Pink Light scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --primary: #d81b60;
+  --primary-hover: #c2185b;
+  --primary-focus: rgba(216, 27, 96, 0.125);
+  --primary-inverse: #FFF;
+}
+
+/* Pink Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --primary: #d81b60;
+    --primary-hover: #e91e63;
+    --primary-focus: rgba(216, 27, 96, 0.25);
+    --primary-inverse: #FFF;
+  }
+}
+
+/* Pink Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+  --primary: #d81b60;
+  --primary-hover: #e91e63;
+  --primary-focus: rgba(216, 27, 96, 0.25);
+  --primary-inverse: #FFF;
+}
+
+/* Pink (Common styles) */
+:root {
+  --form-element-active-border-color: var(--primary);
+  --form-element-focus-color: var(--primary-focus);
+  --switch-color: var(--primary-inverse);
+  --switch-checked-background-color: var(--primary);
+}
+
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6 {
+   --font-family: "Courier", sans-serif;
+   --font-weight: 800;
+ }
+ 
+ h1 {
+   --font-size: 2.5rem;
+   --typography-spacing-vertical: 2.5rem;
+ }
+ 
+ h2 {
+   --font-size: 2rem;
+   --typography-spacing-vertical: 2rem;
+ }
+ 
+ h3 {
+   --font-size: 1.75rem;
+   --typography-spacing-vertical: 1.75rem;
+ }
+ 
+ h4 {
+   --font-size: 1.5rem;
+   --typography-spacing-vertical: 1.5rem;
+ }
+ 
+ h5 {
+   --font-size: 1.25rem;
+   --typography-spacing-vertical: 1.25rem;
+ }
+ 
