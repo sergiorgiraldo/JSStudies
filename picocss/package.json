@@ -1,24 +1,24 @@
 {
-  "name": "picocss",
-  "version": "1.0.0",
-  "description": "1. link from jsdeliver CDN",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "be-pretty": "^1.1.1"
-  },
-  "devDependencies": {
-    "husky": "^8.0.3",
-    "prettier": "^3.0.3",
-    "pretty-quick": "^3.1.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  }
+	"name": "picocss",
+	"version": "1.0.0",
+	"description": "1. link from jsdeliver CDN",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"be-pretty": "^1.1.1"
+	},
+	"devDependencies": {
+		"husky": "^8.0.3",
+		"prettier": "^3.0.3",
+		"pretty-quick": "^3.1.3"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "pretty-quick --staged"
+		}
+	}
 }
