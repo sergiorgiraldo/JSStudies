@@ -2,7 +2,9 @@
 	import ContactCard from "./ContactCard.svelte";
 
 	export let name;
+
 	let age = 10;
+	let title, description, random;
 
 	$: uppercaseName = name.toUpperCase();
 
@@ -22,6 +24,7 @@
 
 	function supplyName(event){
 		name = event.target.value;
+		random = Math.floor(Math.random() * 90000000) + 10000000;
 	}
 
 </script>
@@ -36,7 +39,18 @@
 <button on:click={incrementAge}>Change age</button>
 <!-- <button on:click={changeName}>Change name</button> -->
 <br/>
-<!-- <input type="text" value={name} on:input={supplyName}/> -->
-<input type="text" bind:value={name} />
+<!-- <input type="text" id="inputName" bind:value={name} /> -->
+<label for="inputName">Name: </label> 
+<input type="text" id="inputName" value={name} on:input={supplyName}/>
 <br/>
-<ContactCard />
+<label for="inputTitle">Job title: </label> 
+<input type="text" id="inputTitle" bind:value={title} />
+<br/>
+<label for="inputDesc">Description: </label> 
+<input type="text" id="inputDesc" bind:value={description} />
+
+<ContactCard 
+	userName="{name}" 
+	jobTitle="{title}" 
+	shortDescription="{description}" 
+	randomImage="{random}" />
