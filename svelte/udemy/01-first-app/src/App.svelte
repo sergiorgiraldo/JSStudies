@@ -4,7 +4,9 @@
 	export let name;
 
 	let age = 10;
-	let title, description, random;
+	let title = "";
+	let description = "";
+	let random;
 
 	$: uppercaseName = name.toUpperCase();
 

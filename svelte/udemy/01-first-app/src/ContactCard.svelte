@@ -25,6 +25,10 @@
     height: 100%;
   }
 
+  .thumb-placeholder{
+    background-color: #ccc;
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -60,7 +64,8 @@
 
 <div class="contact-card">
   <header>
-    <div class="thumb">
+    <div class="thumb" class:thumb-placeholder="{!randomImage}">
+    <!-- <div class="{randomImage? 'thumb': 'thumb thumb-placeholder'}"> -->
       <img src="https://avatars.githubusercontent.com/u/{randomImage}" alt="{userName}" />
     </div>
     <div class="user-data">
@@ -70,5 +75,6 @@
   </header>
   <div class="description">
     <p>{shortDescription}</p>
+    <!-- <p>{@html shortDescription}</p> -->
   </div>
 </div>
