@@ -34,4 +34,7 @@ yarn-error.log*
 # vercel
 .vercel
 
+# svelte
+.svelte*
+
 .prettierrc
