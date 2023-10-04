@@ -1,0 +1,52 @@
+#form.svelte-pd4ajg {
+	width: 30rem;
+	max-width: 100%;
+}
+.contact-card.svelte-p7z0xn {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+	max-width: 30rem;
+	border-radius: 5px;
+	margin: 1rem 0;
+	background: white;
+}
+header.svelte-p7z0xn {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 7rem;
+}
+.thumb.svelte-p7z0xn {
+	width: 33%;
+	height: 100%;
+}
+.thumb-placeholder.svelte-p7z0xn {
+	background: #ccc;
+}
+img.svelte-p7z0xn {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.user-data.svelte-p7z0xn {
+	width: 67%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-left: 1rem;
+}
+h1.svelte-p7z0xn {
+	font-size: 1.25rem;
+	font-family: "Roboto Slab", sans-serif;
+	margin: 0.5rem 0;
+}
+h2.svelte-p7z0xn {
+	font-size: 1rem;
+	font-weight: normal;
+	color: #5a5a5a;
+	margin: 0;
+	margin-bottom: 0.5rem;
+}
+.description.svelte-p7z0xn {
+	border-top: 1px solid #ccc;
+	padding: 1rem;
+}
