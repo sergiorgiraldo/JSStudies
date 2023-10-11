@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from "../UI/Button.svelte";
 	export let title: string;
 	export let subtitle: string;
 	export let imageUrl: string;
@@ -12,20 +13,19 @@
 	<header>
 		<h1>{title}</h1>
 		<h2>{subtitle}</h2>
-    <address>{address}</address>
+		<address>{address}</address>
 	</header>
 	<div class="image">
 		<img src={imageUrl} alt={title} />
 	</div>
 	<div class="content">
 		<p>{description}</p>
-    <p class="availability">{capacity} seats available</p>
+		<p class="availability">{capacity} seats available</p>
 	</div>
 	<footer>
-		<a href="mailto:{email}">Contact</a>
-		<br />
-		<button>Show details</button>
-		<button>Favorite</button>
+		<Button type="button" href="mailto:{email}" caption="Contact" />
+		<Button type="button" caption="Show details" />
+		<Button type="button" caption="Favorite" />
 	</footer>
 </article>
 
@@ -82,9 +82,13 @@
 		text-align: right;
 	}
 
-  .availability{
-    font-style: italic;
-    color:cadetblue;
-    padding-top: 1rem;
-  }
+	.content{
+		height: 4rem;
+	}
+
+	.availability {
+		font-style: italic;
+		color: cadetblue;
+		padding-top: 1rem;
+	}
 </style>
