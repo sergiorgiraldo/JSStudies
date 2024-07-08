@@ -10,5 +10,9 @@
 			"js": ["content.js"]
 		}
 	],
+ 	"icons": {
+    	"16": "clock16.png",
+    	"32": "clock32.png"
+  	},
 	"options_page": "options.html"
 }
