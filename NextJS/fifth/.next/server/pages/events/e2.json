@@ -1,0 +1,14 @@
+{
+	"pageProps": {
+		"selectedEvent": {
+			"id": "e2",
+			"date": "2021-05-30",
+			"description": "We know: Networking is no fun if you are an introvert person. That's why we came up with this event - it'll be so much easier. Promised!",
+			"image": "images/introvert-event.jpg",
+			"isFeatured": true,
+			"location": "New Wall Street 5, 98765 New Work",
+			"title": "Networking for introverts"
+		}
+	},
+	"__N_SSG": true
+}

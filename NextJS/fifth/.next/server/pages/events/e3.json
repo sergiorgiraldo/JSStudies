@@ -1,0 +1,14 @@
+{
+	"pageProps": {
+		"selectedEvent": {
+			"id": "e3",
+			"date": "2022-04-10",
+			"description": "You probably need no help with networking in general. But focusing your energy correctly - that is something where most people can improve.",
+			"image": "images/extrovert-event.jpg",
+			"isFeatured": true,
+			"location": "My Street 12, 10115 Broke City",
+			"title": "Networking for extroverts"
+		}
+	},
+	"__N_SSG": true
+}

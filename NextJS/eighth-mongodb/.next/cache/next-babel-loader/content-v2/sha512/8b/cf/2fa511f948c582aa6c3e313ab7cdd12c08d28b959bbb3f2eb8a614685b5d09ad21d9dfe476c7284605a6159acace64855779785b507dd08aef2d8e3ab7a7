@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default function NotificationContext() {}","map":{"version":3,"sources":["/Users/GK47LX/source/JSStudies/NextJS/eighth-mongodb/store/notification-context.js"],"names":["NotificationContext"],"mappings":"AACA,eAAe,SAASA,mBAAT,GAA8B,CAE5C","sourcesContent":["\nexport default function NotificationContext(){\n\n}"]},"metadata":{},"sourceType":"module"}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"function AllPostsPage() {}\n\nexport default AllPostsPage;","map":{"version":3,"sources":["/Users/GK47LX/source/JSStudies/NextJS/ninth/pages/posts/index.js"],"names":["AllPostsPage"],"mappings":"AAAA,SAASA,YAAT,GAAuB,CAEtB;;AAED,eAAeA,YAAf","sourcesContent":["function AllPostsPage(){\n\n}\n\nexport default AllPostsPage;"]},"metadata":{},"sourceType":"module"}

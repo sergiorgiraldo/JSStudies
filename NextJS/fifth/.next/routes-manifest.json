@@ -1,0 +1,52 @@
+{
+	"version": 3,
+	"pages404": true,
+	"basePath": "",
+	"redirects": [
+		{
+			"source": "/:path+/",
+			"destination": "/:path+",
+			"internal": true,
+			"statusCode": 308,
+			"regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+		}
+	],
+	"rewrites": [],
+	"headers": [],
+	"dynamicRoutes": [
+		{
+			"page": "/events/[eventId]",
+			"regex": "^/events/([^/]+?)(?:/)?$",
+			"routeKeys": { "eventId": "eventId" },
+			"namedRegex": "^/events/(?<eventId>[^/]+?)(?:/)?$"
+		},
+		{
+			"page": "/events/[...slug]",
+			"regex": "^/events/(.+?)(?:/)?$",
+			"routeKeys": { "slug": "slug" },
+			"namedRegex": "^/events/(?<slug>.+?)(?:/)?$"
+		}
+	],
+	"dataRoutes": [
+		{
+			"page": "/",
+			"dataRouteRegex": "^/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/index.json$"
+		},
+		{
+			"page": "/events",
+			"dataRouteRegex": "^/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events.json$"
+		},
+		{
+			"page": "/events/[eventId]",
+			"routeKeys": { "eventId": "eventId" },
+			"dataRouteRegex": "^/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events/([^/]+?)\\.json$",
+			"namedDataRouteRegex": "^/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events/(?<eventId>[^/]+?)\\.json$"
+		},
+		{
+			"page": "/events/[...slug]",
+			"routeKeys": { "slug": "slug" },
+			"dataRouteRegex": "^/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events/(.+?)\\.json$",
+			"namedDataRouteRegex": "^/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events/(?<slug>.+?)\\.json$"
+		}
+	]
+}

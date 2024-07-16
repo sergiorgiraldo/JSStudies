@@ -1,0 +1,39 @@
+{
+	"version": 3,
+	"routes": {
+		"/": {
+			"initialRevalidateSeconds": 1800,
+			"srcRoute": null,
+			"dataRoute": "/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/index.json"
+		},
+		"/events": {
+			"initialRevalidateSeconds": 60,
+			"srcRoute": null,
+			"dataRoute": "/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events.json"
+		},
+		"/events/e2": {
+			"initialRevalidateSeconds": 30,
+			"srcRoute": "/events/[eventId]",
+			"dataRoute": "/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events/e2.json"
+		},
+		"/events/e3": {
+			"initialRevalidateSeconds": 30,
+			"srcRoute": "/events/[eventId]",
+			"dataRoute": "/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events/e3.json"
+		}
+	},
+	"dynamicRoutes": {
+		"/events/[eventId]": {
+			"routeRegex": "^/events/([^/]+?)(?:/)?$",
+			"dataRoute": "/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events/[eventId].json",
+			"fallback": "/events/[eventId].html",
+			"dataRouteRegex": "^/_next/data/ntzpW8Kw6Fu2jSWpq9SYn/events/([^/]+?)\\.json$"
+		}
+	},
+	"notFoundRoutes": [],
+	"preview": {
+		"previewModeId": "554b873f34aba26c7b13b66e4d7247cb",
+		"previewModeSigningKey": "cab78570fb5a74604cb21b296cd7d07189ead724c9356caecff1a5b1e1db12d1",
+		"previewModeEncryptionKey": "153ad2a1dfca1229684901e0978356e4eb38d35192762029ff52d358060e2858"
+	}
+}

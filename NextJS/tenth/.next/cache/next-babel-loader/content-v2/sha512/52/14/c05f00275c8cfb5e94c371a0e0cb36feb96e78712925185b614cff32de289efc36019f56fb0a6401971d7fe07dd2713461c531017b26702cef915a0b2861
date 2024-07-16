@@ -1,0 +1,1 @@
+{"ast":null,"code":"function ContactPage() {}\n\nexport default ContactPage;","map":{"version":3,"sources":["/Users/GK47LX/source/JSStudies/NextJS/ninth/pages/contact.js"],"names":["ContactPage"],"mappings":"AAAA,SAASA,WAAT,GAAuB,CAAE;;AAEzB,eAAeA,WAAf","sourcesContent":["function ContactPage() {}\n\nexport default ContactPage;\n"]},"metadata":{},"sourceType":"module"}
