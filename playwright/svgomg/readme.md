@@ -1,0 +1,1 @@
+use the page in https://demo.playwright.dev/svgomg
