@@ -54,7 +54,7 @@ test('check fields to reserve court', async ({ page }) => {
 test('reserve a court and expect alert', async ({ page }) => {
     await page.locator('ul li a').nth(0).click();
 
-    await page.fill('#reservationDate','2022-11-11');
+    await page.fill('#reservationDate', '2022-11-11');
 
     await page.fill('#reservationTime', '12:00');
 
@@ -74,4 +74,43 @@ test('reserve a court and expect alert', async ({ page }) => {
     await page.click('button[type="submit"]');
 
     await dialogPromise;
+});
+
+//all reservations
+test('check link to get courts reserved', async ({ page }) => {
+    await page.locator('ul li a').nth(1).click();
+
+    await expect(page).toHaveTitle(/Alle Reserveringen/);
+});
+
+test('reserve a court and expect to be shown', async ({ page }) => {
+    //first reserve
+    await page.locator('ul li a').nth(0).click();
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const formattedDate = tomorrow.toISOString().split('T')[0];
+    await page.fill('#reservationDate', formattedDate);
+
+    await page.fill('#reservationTime', '12:00');
+
+    await page.fill('#courtNumber', '1');
+
+    await page.fill('#reservationName', 'test-foo-bar');
+
+    const dialogPromise = new Promise(resolve => {
+        page.once('dialog', async dialog => {
+            await dialog.accept();
+            resolve(null);
+        });
+    });
+
+    await page.click('button[type="submit"]');
+
+    await dialogPromise;
+
+    //go to reservation list
+    await page.locator('ul li a').nth(0).click();
+    const reservations = page.locator('#reservationTable tbody tr');
+    expect(reservations).toHaveText('test-foo-bar');
 });
