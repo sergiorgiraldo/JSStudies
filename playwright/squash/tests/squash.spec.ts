@@ -31,23 +31,47 @@ test('check fields to reserve court', async ({ page }) => {
     await page.locator('ul li a').nth(0).click();
 
     const dateInput = page.locator('#reservationDate');
-    await expect(dateInput).toBeVisible();  
+    await expect(dateInput).toBeVisible();
     const dateInputType = await dateInput.getAttribute('type');
     expect(dateInputType).toBe('date');
 
     const timeInput = page.locator('#reservationTime');
-    await expect(timeInput).toBeVisible();  
+    await expect(timeInput).toBeVisible();
     const timeInputType = await timeInput.getAttribute('type');
     expect(timeInputType).toBe('time');
 
     const courtInput = page.locator('#courtNumber');
-    await expect(courtInput).toBeVisible();  
+    await expect(courtInput).toBeVisible();
     const courtInputType = await courtInput.getAttribute('type');
     expect(courtInputType).toBe('number');
 
     const vanInput = page.locator('#reservationName');
-    await expect(vanInput).toBeVisible();  
+    await expect(vanInput).toBeVisible();
     const vanInputType = await vanInput.getAttribute('type');
     expect(vanInputType).toBe('text');
+});
 
+test('reserve a court and expect alert', async ({ page }) => {
+    await page.locator('ul li a').nth(0).click();
+
+    await page.fill('#reservationDate','2022-11-11');
+
+    await page.fill('#reservationTime', '12:00');
+
+    await page.fill('#courtNumber', '1');
+
+    await page.fill('#reservationName', 'test');
+
+    const dialogPromise = new Promise(resolve => {
+        page.once('dialog', async dialog => {
+            expect(dialog.type()).toBe('alert');
+            expect(dialog.message()).toBe('Baanreservering succesvol opgeslagen!!');
+            await dialog.accept();
+            resolve(null);
+        });
+    });
+
+    await page.click('button[type="submit"]');
+
+    await dialogPromise;
 });
