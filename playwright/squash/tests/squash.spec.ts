@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { before } from 'node:test';
 
 test.beforeEach(async ({ page }) => {
     await page.goto('http://www.giral.do/stuff/squash/');
@@ -52,6 +53,7 @@ test('check fields to reserve court', async ({ page }) => {
 });
 
 test('reserve a court and expect alert', async ({ page }) => {
+
     await page.locator('ul li a').nth(0).click();
 
     await page.fill('#reservationDate', '2022-11-11');
@@ -83,7 +85,7 @@ test('check link to get courts reserved', async ({ page }) => {
     await expect(page).toHaveTitle(/Alle Reserveringen/);
 });
 
-test('reserve a court and expect to be shown', async ({ page }) => {
+test('reserve a court and expect to be shown. then delete it', async ({ page }) => {
     //first reserve
     await page.locator('ul li a').nth(0).click();
 
@@ -106,11 +108,20 @@ test('reserve a court and expect to be shown', async ({ page }) => {
     });
 
     await page.click('button[type="submit"]');
-
     await dialogPromise;
 
-    //go to reservation list
+    //go to reservation list and check if it is there
     await page.locator('ul li a').nth(0).click();
-    const reservations = page.locator('#reservationTable tbody tr');
-    expect(reservations).toHaveText('test-foo-bar');
+
+    let tdReservation = page.locator('#reservationTable tbody tr td:has-text("test-foo-bar")');
+    await expect(tdReservation).toBeVisible();
+
+    //delete reservation
+
+    //delete is in the next cell
+    const deleteButton = tdReservation.locator('xpath=./following-sibling::td[1]//button');
+    await deleteButton.click();
+
+    tdReservation = page.locator('#reservationTable tbody tr td:has-text("test-foo-bar")');
+    await expect(tdReservation).not.toBeVisible();
 });
