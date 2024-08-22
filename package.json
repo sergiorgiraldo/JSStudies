@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@faker-js/faker": "^8.1.0",
+    "@faker-js/faker": "^8.4.1",
     "postman-code-generators": "^1.8.0",
     "react-syntax-highlighter": "^15.5.0"
   },

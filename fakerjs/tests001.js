@@ -1,5 +1,5 @@
 //bun install @faker-js/faker --save-dev
-
+// run with bun ./tests001.js
 import { faker } from '@faker-js/faker';
 // or, if desiring a different locale
 // import { fakerDE as faker } from '@faker-js/faker';
