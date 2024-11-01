@@ -1,10 +1,12 @@
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
 import Database from "better-sqlite3";
 
 const db = new Database("squash_reservations.db");
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 // Endpoint to create a reservation

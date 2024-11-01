@@ -3,7 +3,7 @@
   let reservations = [];
 
   onMount(async () => {
-    const response = await fetch("/api/reservations");
+    const response = await fetch("http://localhost:3000/api/reservations");
     reservations = await response.json();
   });
 </script>

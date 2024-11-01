@@ -7,7 +7,7 @@
   let message = "";
 
   async function handleSubmit() {
-    const response = await fetch("/api/reservation", {
+    const response = await fetch("http://localhost:3000/api/reservation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
