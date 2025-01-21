@@ -21,13 +21,12 @@
 				margin: 0 auto;
 			}
 			span,
-            b,
+			b,
 			li {
 				font-style: italic;
 				font-size: small;
 			}
 		</style>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 	</head>
 
 	<body>
@@ -35,7 +34,7 @@
 		<canvas id="canvas" width="1200" height="700">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
-        <b>Generations</b> :: <span id="sEnd"></span>
+		<b>Generations</b> :: <span id="sEnd"></span>
 		<p>
 			<b>Rules</b>
 		</p>
@@ -61,16 +60,12 @@
 				cell, as if by reproduction.
 			</li>
 		</ol>
-        <b>Start</b>
+		<b>Start</b>
 		<canvas id="canvasStart" width="1200" height="700">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
 
-        <script>
-            function MD5(message) { 
-                return CryptoJS.MD5(message).toString(); 
-            }
-
+		<script>
 			class Cell {
 				static width = 10;
 				static height = 10;
@@ -99,11 +94,11 @@
 				static numColumns = 120;
 				static numRows = 70;
 
-                lastStates = [];
-                cycleCheck = [];
-                iteration = 0;
-                state = "";
-                stable = false;
+				lastStates = [];
+				cycleCheck = [];
+				iteration = 0;
+				state = "";
+				stable = false;
 
 				constructor(canvasId, animate) {
 					this.canvas = document.getElementById(canvasId);
@@ -112,15 +107,18 @@
 
 					this.createGrid();
 
-                    if (animate){
-                        let gameWorldStart = new GameWorld("canvasStart", false);
-                        for (let i = 0; i < this.gameObjects.length; i++) {
-                            gameWorldStart.gameObjects.push(new Cell(gameWorldStart.context, this.gameObjects[i].gridX, this.gameObjects[i].gridY));
-                            gameWorldStart.gameObjects[i].draw();
-                        }
-                        window.requestAnimationFrame(() => this.gameLoop());
-                    }    
+					if (animate) {
+						let gameWorldStart = new GameWorld(
+							"canvasStart",
+							false
+						);
+						gameWorldStart.gameObjects.push(
+							...this.gameObjects.map(o => new Cell(gameWorldStart.context, o.gridX, o.gridY))
+						);
+						gameWorldStart.gameObjects.forEach(o => o.draw());
 
+						window.requestAnimationFrame(() => this.gameLoop());
+					}
 				}
 
 				createGrid() {
@@ -167,8 +165,7 @@
 
 							if (numAlive == 2) {
 								// Do nothing
-								this.gameObjects[centerIndex].nextAlive =
-									this.gameObjects[centerIndex].alive;
+								this.gameObjects[centerIndex].nextAlive = this.gameObjects[centerIndex].alive;
 							} else if (numAlive == 3) {
 								// Make alive
 								this.gameObjects[centerIndex].nextAlive = true;
@@ -179,60 +176,68 @@
 						}
 					}
 
-					for (let i = 0; i < this.gameObjects.length; i++) {
-						this.gameObjects[i].alive =
-							this.gameObjects[i].nextAlive;
-					}
+					this.gameObjects.forEach((o) => o.alive = o.nextAlive);
 				}
 
-				gameLoop() {
-					this.checkNeighbours();
-
+				draw() {
 					this.context.clearRect(
 						0,
 						0,
 						this.canvas.width,
 						this.canvas.height
 					);
+	
+					this.gameObjects.forEach((o) => {
+						o.draw();
+						this.state += o.alive ? "1" : "0";
+					});
 
-                    this.state = "";
-					for (let i = 0; i < this.gameObjects.length; i++) {
-						this.gameObjects[i].draw();
-                        this.state += this.gameObjects[i].alive?"1":"0";
-					}
-                    this.state = MD5(this.state);
-
-                    if (this.checkEnd()) {
-                        this.stable = true;
-                        const message = `Lived for ${this.iteration} generations, stable now. Do you want to reset?`; 
-                        if (confirm(message)) { 
-                            gameWorld = new GameWorld("canvas", true);
-                        }
-                    }
-                    else{
-                        this.iteration += 1;
-                    }
-
-					if (!this.stable)
-                        setTimeout(() => {
-                            window.requestAnimationFrame(() => this.gameLoop());
-                        }, 100);
+					document.getElementById("sEnd").innerText = this.iteration;
 				}
 
-                checkEnd() {
-                    this.lastStates.push(this.state);
-                    const isSame = this.lastStates.length > 2 && this.lastStates.every(curr => curr === this.lastStates[0]);
+				gameLoop() {
+					this.state = "";
 
-                    this.cycleCheck.push(this.state);
-                    if (this.cycleCheck.length > 4){
-                        this.cycleCheck.shift();
-                    } 
-                    const isCycling = (this.cycleCheck.length == 4) && (this.cycleCheck[0] === this.cycleCheck[2]) && (this.cycleCheck[1] === this.cycleCheck[3]);
+					this.checkNeighbours();
 
-                    document.getElementById("sEnd").innerText = this.iteration;
+					this.draw();
 
-                    return isSame || isCycling;
-                }
+					this.stable = this.checkEnd();
+
+					if (this.stable){
+						const message = `Lived for ${this.iteration} generations, stable now. Do you want to reset?`;
+						if (confirm(message)) {
+							gameWorld = new GameWorld("canvas", true);
+						}
+					}
+					else{
+						this.iteration += 1;
+
+						setTimeout(() => {
+							window.requestAnimationFrame(() => this.gameLoop());
+						}, 100);
+					}
+				}
+
+				checkEnd() {
+					this.lastStates.push(this.state);
+					const isSame =
+						this.lastStates.length > 2 &&
+						this.lastStates.every(
+							(curr) => curr === this.lastStates[0]
+						);
+
+					this.cycleCheck.push(this.state);
+					if (this.cycleCheck.length > 4) {
+						this.cycleCheck.shift();
+					}
+					const isCycling =
+						this.cycleCheck.length == 4 &&
+						this.cycleCheck[0] === this.cycleCheck[2] &&
+						this.cycleCheck[1] === this.cycleCheck[3];
+
+					return isSame || isCycling;
+				}
 			}
 
 			window.onload = () => {
