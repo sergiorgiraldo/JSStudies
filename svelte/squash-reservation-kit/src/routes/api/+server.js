@@ -18,12 +18,12 @@ export async function POST({ request }) {
 	);
 
 	try {
-		console.log(date, time, court_number, name);
 		stmt.run(date, time, court_number, name);
 		return new Response(JSON.stringify({ success: true }), { status: 200 });
-	} 
-	catch (error) {
-		return new Response(JSON.stringify({ success: false, error: error.message }),{ status: 400 }
+	} catch (error) {
+		return new Response(
+			JSON.stringify({ success: false, error: error.message }),
+			{ status: 400 }
 		);
 	}
 }
