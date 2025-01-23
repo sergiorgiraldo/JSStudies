@@ -26,6 +26,12 @@
 				font-style: italic;
 				font-size: small;
 			}
+			input{
+				width: 55px;
+			}
+			a, a:visited {
+				color: blue;
+			}
 		</style>
 	</head>
 
@@ -34,9 +40,19 @@
 		<canvas id="canvas" width="1200" height="700">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
-		<b>Generations</b> :: <span id="sEnd"></span>
 		<p>
-			<b>Rules</b>
+			<b>Speed</b>&nbsp;&nbsp;<input type="number" id="speed" value="100" min="10" step="10" />
+			<button id="btnSpeed" onclick="gameWorld.speed = parseInt(document.getElementById('speed').value);">Set</button>
+			&nbsp;|&nbsp;
+			<button id="btnRestart" onclick="location.reload();">Restart</button>
+			&nbsp;|&nbsp;
+			<button id="btnPause" onclick="Utils.StopStart();">Pause</button>
+		</p>
+		<p>
+			<b>Generations</b>&nbsp;<span id="sEnd"></span>
+		</p>
+		<p>
+			<a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank"><b>Rules</b> </a>	
 		</p>
 		<ol>
 			<li>
@@ -66,6 +82,42 @@
 		</canvas>
 
 		<script>
+			var gameWorld;
+
+			class Utils{
+				static StopStart(){
+					gameWorld.paused = !gameWorld.paused;
+					document.getElementById("btnPause").innerText = gameWorld.paused ? "Continue" : "Pause";
+					if (!gameWorld.paused){
+						gameWorld.gameLoop();
+					}
+				}
+
+				static retrieve(key, defaultValue) {
+					let value = localStorage.getItem(key);
+
+					value = value ? parseInt(value) : defaultValue;
+					
+					return value;
+				}
+
+				static storeFail(newValue) {
+					let value = Utils.retrieve("gameOfLifeLowest", 9999999999);
+					
+					if (newValue < value) {
+						localStorage.setItem("gameOfLifeLowest", newValue);
+					}
+				}
+				
+				static storeRecord(newValue) {
+					let value = Utils.retrieve("gameOfLifeRecord", 0);
+					
+					if (newValue > value) {
+						localStorage.setItem("gameOfLifeRecord", newValue);
+					}
+				}
+			}
+
 			class Cell {
 				static width = 10;
 				static height = 10;
@@ -94,31 +146,34 @@
 				static numColumns = 120;
 				static numRows = 70;
 
-				lastStates = [];
-				cycleCheck = [];
-				iteration = 0;
-				state = "";
-				stable = false;
-
-				constructor(canvasId, animate) {
+				constructor(canvasId, animate, speed) {
 					this.canvas = document.getElementById(canvasId);
 					this.context = this.canvas.getContext("2d");
 					this.gameObjects = [];
-
+					this.lastStates = [];
+					this.iteration = 0;
+					this.state = "";
+					this.stable = false;
+					this.paused = false;
+					this.speed = speed || 100;
 					this.createGrid();
 
 					if (animate) {
-						let gameWorldStart = new GameWorld(
-							"canvasStart",
-							false
-						);
-						gameWorldStart.gameObjects.push(
-							...this.gameObjects.map(o => new Cell(gameWorldStart.context, o.gridX, o.gridY))
-						);
-						gameWorldStart.gameObjects.forEach(o => o.draw());
+						GameWorld.clone("canvasStart", this); // Clone the initial state for reference
 
 						window.requestAnimationFrame(() => this.gameLoop());
 					}
+				}
+
+				static clone(newCanvasId, baseline){
+					let newWorld = new GameWorld(
+							newCanvasId,
+							false
+						);
+						newWorld.gameObjects.push(
+							...baseline.gameObjects.map(o => new Cell(newWorld.context, o.gridX, o.gridY))
+						);
+						newWorld.gameObjects.forEach(o => o.draw());
 				}
 
 				createGrid() {
@@ -148,11 +203,15 @@
 					return x + y * GameWorld.numColumns;
 				}
 
-				checkNeighbours() {
+				// x x x
+				// x o x
+				// x x x
+				evolve() {
+					this.state = "";
+					
 					for (let x = 0; x < GameWorld.numColumns; x++) {
 						for (let y = 0; y < GameWorld.numRows; y++) {
-							// Count the nearby population
-							let numAlive =
+							const numAlive =
 								this.isAlive(x - 1, y - 1) +
 								this.isAlive(x, y - 1) +
 								this.isAlive(x + 1, y - 1) +
@@ -161,18 +220,21 @@
 								this.isAlive(x - 1, y + 1) +
 								this.isAlive(x, y + 1) +
 								this.isAlive(x + 1, y + 1);
-							let centerIndex = this.gridToIndex(x, y);
+
+							const cell = this.gridToIndex(x, y);
 
 							if (numAlive == 2) {
 								// Do nothing
-								this.gameObjects[centerIndex].nextAlive = this.gameObjects[centerIndex].alive;
+								this.gameObjects[cell].nextAlive = this.gameObjects[cell].alive;
 							} else if (numAlive == 3) {
 								// Make alive
-								this.gameObjects[centerIndex].nextAlive = true;
+								this.gameObjects[cell].nextAlive = true;
 							} else {
 								// Make dead
-								this.gameObjects[centerIndex].nextAlive = false;
+								this.gameObjects[cell].nextAlive = false;
 							}
+
+							this.state += this.gameObjects[cell].nextAlive ? "1" : "0";
 						}
 					}
 
@@ -189,59 +251,72 @@
 	
 					this.gameObjects.forEach((o) => {
 						o.draw();
-						this.state += o.alive ? "1" : "0";
 					});
 
-					document.getElementById("sEnd").innerText = this.iteration;
+					const record = Utils.retrieve("gameOfLifeRecord", 0);
+					const fail = Utils.retrieve("gameOfLifeLowest", 9999999999);
+
+					document.getElementById("sEnd").innerText = this.iteration + " (Lowest: " + fail + "," + " Highest: " + record + ")";
 				}
 
 				gameLoop() {
-					this.state = "";
-
-					this.checkNeighbours();
+					this.evolve();
 
 					this.draw();
 
 					this.stable = this.checkEnd();
 
 					if (this.stable){
+						Utils.storeRecord(this.iteration);  
+						Utils.storeFail(this.iteration);  
+
 						const message = `Lived for ${this.iteration} generations, stable now. Do you want to reset?`;
 						if (confirm(message)) {
 							gameWorld = new GameWorld("canvas", true);
 						}
 					}
 					else{
-						this.iteration += 1;
+						if (!this.paused) {
+							this.iteration += 1;
 
-						setTimeout(() => {
-							window.requestAnimationFrame(() => this.gameLoop());
-						}, 100);
+							setTimeout(() => {
+								window.requestAnimationFrame(() => this.gameLoop());
+							}, this.speed);
+						}
 					}
 				}
 
 				checkEnd() {
 					this.lastStates.push(this.state);
+					if (this.lastStates.length > 10) {
+						this.lastStates.shift();
+					}
 					const isSame =
-						this.lastStates.length > 2 &&
+						this.lastStates.length == 10 &&
 						this.lastStates.every(
 							(curr) => curr === this.lastStates[0]
 						);
 
-					this.cycleCheck.push(this.state);
-					if (this.cycleCheck.length > 4) {
-						this.cycleCheck.shift();
-					}
 					const isCycling =
-						this.cycleCheck.length == 4 &&
-						this.cycleCheck[0] === this.cycleCheck[2] &&
-						this.cycleCheck[1] === this.cycleCheck[3];
+						this.lastStates.length == 10 && // 10 is arbitrary, if cycle is bigger I wont catch it ¯\_(ツ)_/¯
+						(
+							(this.lastStates[8] === this.lastStates[9]) ||
+							(this.lastStates[7] === this.lastStates[9]) ||
+							(this.lastStates[6] === this.lastStates[9]) ||
+							(this.lastStates[5] === this.lastStates[9]) ||
+							(this.lastStates[4] === this.lastStates[9]) ||
+							(this.lastStates[3] === this.lastStates[9]) ||
+							(this.lastStates[2] === this.lastStates[9]) ||
+							(this.lastStates[1] === this.lastStates[9]) ||
+							(this.lastStates[0] === this.lastStates[9])
+						);
 
 					return isSame || isCycling;
 				}
 			}
 
 			window.onload = () => {
-				let gameWorld = new GameWorld("canvas", true);
+				gameWorld = new GameWorld("canvas", true);
 			};
 		</script>
 	</body>
