@@ -46,7 +46,7 @@
 			&nbsp;|&nbsp;
 			<button id="btnRestart" onclick="location.reload();">Restart</button>
 			&nbsp;|&nbsp;
-			<button id="btnPause" onclick="Utils.StopStart();">Pause</button>
+			<button id="btnPause" onclick="Utils.stopStart();">Pause</button>
 		</p>
 		<p>
 			<b>Generations</b>&nbsp;<span id="sEnd"></span>
@@ -85,7 +85,7 @@
 			var gameWorld;
 
 			class Utils{
-				static StopStart(){
+				static stopStart(){
 					gameWorld.paused = !gameWorld.paused;
 					document.getElementById("btnPause").innerText = gameWorld.paused ? "Continue" : "Pause";
 					if (!gameWorld.paused){
