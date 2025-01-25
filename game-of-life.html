@@ -161,9 +161,11 @@
 					this.canvas = document.getElementById(canvasId);
 					this.context = this.canvas.getContext("2d");
 					this.gameObjects = [];
+					this.lastStates = [];
 					this.stateHistory = [];
 					this.currentStateIndex = -1;
 					this.iteration = 0;
+					this.state = "";
 					this.stable = false;
 					this.paused = false;
 					this.speed = speed || 100;
@@ -212,6 +214,7 @@
 				}
 
 				evolve() {
+					this.state = "";
 					for (let x = 0; x < GameWorld.numColumns; x++) {
 						for (let y = 0; y < GameWorld.numRows; y++) {
 							const numAlive =
@@ -234,6 +237,10 @@
 							} else {
 								this.gameObjects[cell].nextAlive = false;
 							}
+
+							this.state += this.gameObjects[cell].nextAlive
+								? "1"
+								: "0";
 						}
 					}
 
@@ -275,6 +282,7 @@
 					this.stable = this.checkEnd();
 
 					if (this.stable) {
+						console.log(this.stateHistory[this.stateHistory.length - 1]);
 						Utils.storeRecord(this.iteration);
 						Utils.storeFail(this.iteration);
 
@@ -295,23 +303,26 @@
 				}
 
 				checkEnd() {
-					if (this.stateHistory.length <= 10) return false;
-					const pivot = this.stateHistory[this.stateHistory.length - 10];
-
+					this.lastStates.push(this.state);
+					if (this.lastStates.length > 10) {
+						this.lastStates.shift();
+					}
 					const isSame =
-						this.stateHistory.every(
-							(curr) => curr === pivot
+						this.lastStates.length == 10 &&
+						this.lastStates.every(
+							(curr) => curr === this.lastStates[0]
 						);
-					const isCycling = (
-							this.stateHistory[this.stateHistory.length - 9] === pivot ||
-							this.stateHistory[this.stateHistory.length - 8] === pivot ||
-							this.stateHistory[this.stateHistory.length - 7] === pivot ||
-							this.stateHistory[this.stateHistory.length - 6] === pivot ||
-							this.stateHistory[this.stateHistory.length - 5] === pivot ||
-							this.stateHistory[this.stateHistory.length - 4] === pivot ||
-							this.stateHistory[this.stateHistory.length - 3] === pivot ||
-							this.stateHistory[this.stateHistory.length - 2] === pivot ||
-							this.stateHistory[this.stateHistory.length - 1] === pivot);
+					const isCycling =
+						this.lastStates.length == 10 &&
+						(this.lastStates[8] === this.lastStates[9] ||
+							this.lastStates[7] === this.lastStates[9] ||
+							this.lastStates[6] === this.lastStates[9] ||
+							this.lastStates[5] === this.lastStates[9] ||
+							this.lastStates[4] === this.lastStates[9] ||
+							this.lastStates[3] === this.lastStates[9] ||
+							this.lastStates[2] === this.lastStates[9] ||
+							this.lastStates[1] === this.lastStates[9] ||
+							this.lastStates[0] === this.lastStates[9]);
 
 					return isSame || isCycling;
 				}
