@@ -26,10 +26,11 @@
 				font-style: italic;
 				font-size: small;
 			}
-			input{
+			input {
 				width: 55px;
 			}
-			a, a:visited {
+			a,
+			a:visited {
 				color: blue;
 			}
 		</style>
@@ -41,18 +42,33 @@
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
 		<p>
-			<b>Speed</b>&nbsp;&nbsp;<input type="number" id="speed" value="100" min="10" step="10" />
-			<button id="btnSpeed" onclick="gameWorld.speed = parseInt(document.getElementById('speed').value);">Set</button>
+			<b>Speed</b>&nbsp;&nbsp;<input
+				type="number"
+				id="speed"
+				value="100"
+				min="10"
+				step="10" />
+			<button
+				id="btnSpeed"
+				onclick="gameWorld.speed = parseInt(document.getElementById('speed').value);">
+				Set
+			</button>
 			&nbsp;|&nbsp;
-			<button id="btnRestart" onclick="location.reload();">Restart</button>
+			<button id="btnRestart" onclick="location.reload();">
+				Restart
+			</button>
 			&nbsp;|&nbsp;
+			<button id="btnPrev">Previous</button>
+			<button id="btnNext">Next</button>
 			<button id="btnPause" onclick="Utils.stopStart();">Pause</button>
 		</p>
+		<p><b>Generations</b>&nbsp;<span id="sEnd"></span></p>
 		<p>
-			<b>Generations</b>&nbsp;<span id="sEnd"></span>
-		</p>
-		<p>
-			<a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank"><b>Rules</b> </a>	
+			<a
+				href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life"
+				target="_blank"
+				><b>Rules</b>
+			</a>
 		</p>
 		<ol>
 			<li>
@@ -84,34 +100,31 @@
 		<script>
 			var gameWorld;
 
-			class Utils{
-				static stopStart(){
+			class Utils {
+				static stopStart() {
 					gameWorld.paused = !gameWorld.paused;
-					document.getElementById("btnPause").innerText = gameWorld.paused ? "Continue" : "Pause";
-					if (!gameWorld.paused){
+					document.getElementById("btnPause").innerText =
+						gameWorld.paused ? "Continue" : "Pause";
+					if (!gameWorld.paused) {
 						gameWorld.gameLoop();
 					}
 				}
 
 				static retrieve(key, defaultValue) {
 					let value = localStorage.getItem(key);
-
 					value = value ? parseInt(value) : defaultValue;
-					
 					return value;
 				}
 
 				static storeFail(newValue) {
 					let value = Utils.retrieve("gameOfLifeLowest", 9999999999);
-					
 					if (newValue < value) {
 						localStorage.setItem("gameOfLifeLowest", newValue);
 					}
 				}
-				
+
 				static storeRecord(newValue) {
 					let value = Utils.retrieve("gameOfLifeRecord", 0);
-					
 					if (newValue > value) {
 						localStorage.setItem("gameOfLifeRecord", newValue);
 					}
@@ -124,10 +137,8 @@
 
 				constructor(context, gridX, gridY) {
 					this.context = context;
-
 					this.gridX = gridX;
 					this.gridY = gridY;
-
 					this.alive = Math.random() > 0.5;
 				}
 
@@ -150,9 +161,9 @@
 					this.canvas = document.getElementById(canvasId);
 					this.context = this.canvas.getContext("2d");
 					this.gameObjects = [];
-					this.lastStates = [];
+					this.stateHistory = [];
+					this.currentStateIndex = -1;
 					this.iteration = 0;
-					this.state = "";
 					this.stable = false;
 					this.paused = false;
 					this.speed = speed || 100;
@@ -160,20 +171,18 @@
 
 					if (animate) {
 						GameWorld.clone("canvasStart", this); // Clone the initial state for reference
-
 						window.requestAnimationFrame(() => this.gameLoop());
 					}
 				}
 
-				static clone(newCanvasId, baseline){
-					let newWorld = new GameWorld(
-							newCanvasId,
-							false
-						);
-						newWorld.gameObjects.push(
-							...baseline.gameObjects.map(o => new Cell(newWorld.context, o.gridX, o.gridY))
-						);
-						newWorld.gameObjects.forEach(o => o.draw());
+				static clone(newCanvasId, baseline) {
+					let newWorld = new GameWorld(newCanvasId, false);
+					newWorld.gameObjects.push(
+						...baseline.gameObjects.map(
+							(o) => new Cell(newWorld.context, o.gridX, o.gridY)
+						)
+					);
+					newWorld.gameObjects.forEach((o) => o.draw());
 				}
 
 				createGrid() {
@@ -193,7 +202,6 @@
 					) {
 						return false;
 					}
-
 					return this.gameObjects[this.gridToIndex(x, y)].alive
 						? 1
 						: 0;
@@ -203,12 +211,7 @@
 					return x + y * GameWorld.numColumns;
 				}
 
-				// x x x
-				// x o x
-				// x x x
 				evolve() {
-					this.state = "";
-					
 					for (let x = 0; x < GameWorld.numColumns; x++) {
 						for (let y = 0; y < GameWorld.numRows; y++) {
 							const numAlive =
@@ -224,21 +227,17 @@
 							const cell = this.gridToIndex(x, y);
 
 							if (numAlive == 2) {
-								// Do nothing
-								this.gameObjects[cell].nextAlive = this.gameObjects[cell].alive;
+								this.gameObjects[cell].nextAlive =
+									this.gameObjects[cell].alive;
 							} else if (numAlive == 3) {
-								// Make alive
 								this.gameObjects[cell].nextAlive = true;
 							} else {
-								// Make dead
 								this.gameObjects[cell].nextAlive = false;
 							}
-
-							this.state += this.gameObjects[cell].nextAlive ? "1" : "0";
 						}
 					}
 
-					this.gameObjects.forEach((o) => o.alive = o.nextAlive);
+					this.gameObjects.forEach((o) => (o.alive = o.nextAlive));
 				}
 
 				draw() {
@@ -248,75 +247,108 @@
 						this.canvas.width,
 						this.canvas.height
 					);
-	
-					this.gameObjects.forEach((o) => {
-						o.draw();
-					});
+					this.gameObjects.forEach((o) => o.draw());
 
 					const record = Utils.retrieve("gameOfLifeRecord", 0);
 					const fail = Utils.retrieve("gameOfLifeLowest", 9999999999);
 
-					document.getElementById("sEnd").innerText = this.iteration + " (Lowest: " + fail + "," + " Highest: " + record + ")";
+					document.getElementById("sEnd").innerText =
+						this.iteration +
+						" (Lowest: " +
+						fail +
+						"," +
+						" Highest: " +
+						record +
+						")";
 				}
 
 				gameLoop() {
 					this.evolve();
-
 					this.draw();
+
+					// Store the current state in history
+					this.stateHistory.push(
+						this.gameObjects.map((cell) => cell.alive)
+					);
+					this.currentStateIndex = this.stateHistory.length - 1;
 
 					this.stable = this.checkEnd();
 
-					if (this.stable){
-						Utils.storeRecord(this.iteration);  
-						Utils.storeFail(this.iteration);  
+					if (this.stable) {
+						Utils.storeRecord(this.iteration);
+						Utils.storeFail(this.iteration);
 
 						const message = `Lived for ${this.iteration} generations, stable now. Do you want to reset?`;
 						if (confirm(message)) {
 							gameWorld = new GameWorld("canvas", true);
 						}
-					}
-					else{
+					} else {
 						if (!this.paused) {
 							this.iteration += 1;
-
 							setTimeout(() => {
-								window.requestAnimationFrame(() => this.gameLoop());
+								window.requestAnimationFrame(() =>
+									this.gameLoop()
+								);
 							}, this.speed);
 						}
 					}
 				}
 
 				checkEnd() {
-					this.lastStates.push(this.state);
-					if (this.lastStates.length > 10) {
-						this.lastStates.shift();
-					}
-					const isSame =
-						this.lastStates.length == 10 &&
-						this.lastStates.every(
-							(curr) => curr === this.lastStates[0]
-						);
+					if (this.stateHistory.length <= 10) return false;
+					const pivot = this.stateHistory[this.stateHistory.length - 10];
 
-					const isCycling =
-						this.lastStates.length == 10 && // 10 is arbitrary, if cycle is bigger I wont catch it ¯\_(ツ)_/¯
-						(
-							(this.lastStates[8] === this.lastStates[9]) ||
-							(this.lastStates[7] === this.lastStates[9]) ||
-							(this.lastStates[6] === this.lastStates[9]) ||
-							(this.lastStates[5] === this.lastStates[9]) ||
-							(this.lastStates[4] === this.lastStates[9]) ||
-							(this.lastStates[3] === this.lastStates[9]) ||
-							(this.lastStates[2] === this.lastStates[9]) ||
-							(this.lastStates[1] === this.lastStates[9]) ||
-							(this.lastStates[0] === this.lastStates[9])
+					const isSame =
+						this.stateHistory.every(
+							(curr) => curr === pivot
 						);
+					const isCycling = (
+							this.stateHistory[this.stateHistory.length - 9] === pivot ||
+							this.stateHistory[this.stateHistory.length - 8] === pivot ||
+							this.stateHistory[this.stateHistory.length - 7] === pivot ||
+							this.stateHistory[this.stateHistory.length - 6] === pivot ||
+							this.stateHistory[this.stateHistory.length - 5] === pivot ||
+							this.stateHistory[this.stateHistory.length - 4] === pivot ||
+							this.stateHistory[this.stateHistory.length - 3] === pivot ||
+							this.stateHistory[this.stateHistory.length - 2] === pivot ||
+							this.stateHistory[this.stateHistory.length - 1] === pivot);
 
 					return isSame || isCycling;
+				}
+
+				loadState(index) {
+					if (index >= 0 && index < this.stateHistory.length) {
+						const state = this.stateHistory[index];
+						this.gameObjects.forEach((cell, i) => {
+							cell.alive = state[i];
+						});
+						this.draw();
+						this.currentStateIndex = index;
+					}
+				}
+
+				prevState() {
+					if (this.currentStateIndex > 0) {
+						this.loadState(this.currentStateIndex - 1);
+					}
+				}
+
+				nextState() {
+					if (this.currentStateIndex < this.stateHistory.length - 1) {
+						this.loadState(this.currentStateIndex + 1);
+					}
 				}
 			}
 
 			window.onload = () => {
 				gameWorld = new GameWorld("canvas", true);
+
+				document
+					.getElementById("btnPrev")
+					.addEventListener("click", () => gameWorld.prevState());
+				document
+					.getElementById("btnNext")
+					.addEventListener("click", () => gameWorld.nextState());
 			};
 		</script>
 	</body>
