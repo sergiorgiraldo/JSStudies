@@ -52,31 +52,10 @@ currentGuessInputs.forEach((input, index) => {
 		if (this.value.length > 1) {
 			this.value = this.value.slice(-1);
 		}
-
-		// Move to next field after entering a digit
-		if (this.value.length === 1 && index < currentGuessInputs.length - 1) {
-			currentGuessInputs[index + 1].focus();
-		}
 	});
 
 	// Prevent non-numeric input
 	input.addEventListener("keydown", function (e) {
-		// Allow: backspace, delete, tab, escape, enter, navigation keys
-		if (
-			[46, 8, 9, 27, 13, 37, 38, 39, 40].indexOf(e.keyCode) !== -1 ||
-			// Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-			(e.keyCode === 65 && e.ctrlKey === true) ||
-			(e.keyCode === 67 && e.ctrlKey === true) ||
-			(e.keyCode === 86 && e.ctrlKey === true) ||
-			(e.keyCode === 88 && e.ctrlKey === true) ||
-			// Allow: home, end
-			(e.keyCode >= 35 && e.keyCode <= 39)
-		) {
-			// Let it happen
-			return;
-		}
-        console.log(e.key);
-        console.log(e.keyCode);
 		// Navigation with arrow keys
 		if (e.key === "ArrowRight" && index < currentGuessInputs.length - 1) {
 			currentGuessInputs[index + 1].focus();
@@ -84,37 +63,6 @@ currentGuessInputs.forEach((input, index) => {
 			currentGuessInputs[index - 1].focus();
 		} else if (e.key === "Enter") {
 			submitGuess();
-		}
-
-		// Ensure it's a number and prevent the default if not
-		if (
-			(e.shiftKey || e.keyCode < 48 || e.keyCode > 57) &&
-			(e.keyCode < 96 || e.keyCode > 105)
-		) {
-			e.preventDefault();
-		}
-
-		// If there's already a digit and it's not a control key, replace the content
-		if (
-			this.value.length === 1 &&
-			!([46, 8, 9, 27, 13, 37, 38, 39, 40].indexOf(e.keyCode) !== -1)
-		) {
-			this.value = "";
-		}
-	});
-
-	// Prevent paste of multiple characters
-	input.addEventListener("paste", function (e) {
-		e.preventDefault();
-		const pastedData = (e.clipboardData || window.clipboardData).getData(
-			"text"
-		);
-		if (/^\d$/.test(pastedData)) {
-			this.value = pastedData.charAt(0);
-			// Move to next field after pasting a digit
-			if (index < currentGuessInputs.length - 1) {
-				currentGuessInputs[index + 1].focus();
-			}
 		}
 	});
 });
