@@ -2,6 +2,7 @@
 let secretCode = [];
 let attempts = 6;
 let gameOver = false;
+let mode = "easy";
 const codeLength = 5;
 
 // DOM elements
@@ -11,6 +12,7 @@ const currentGuessInputs = document.querySelectorAll(
 );
 const submitButton = document.getElementById("submitGuess");
 const newGameButton = document.getElementById("newGame");
+const toggleModeButton = document.getElementById("toggleMode");
 const messageDiv = document.getElementById("message");
 const attemptsSpan = document.getElementById("attempts");
 
@@ -26,7 +28,9 @@ function initGame() {
 	// Reset game state
 	attempts = 6;
 	gameOver = false;
+	mode = "normal";
 	attemptsSpan.textContent = attempts;
+	toggleMode("reset");
 
 	// Clear previous game
 	guessContainer.innerHTML = "";
@@ -117,23 +121,54 @@ function submitGuess() {
 	guess.forEach((digit, index) => {
 		const resultBox = document.createElement("div");
 		resultBox.className = "result-box";
-		resultBox.textContent = digit;
+		if (mode == "normal"){
+			resultBox.textContent = digit;			
+		}
 
 		if (digit === secretCode[index]) {
 			resultBox.classList.add("correct-position");
-		} else if (secretCode.includes(digit)) {
-			// Need to check if this is a duplicate that's already counted
-			if (isPartialMatch(guess, index)) {
-				resultBox.classList.add("correct-number");
-			} else {
+			resultBox.setAttribute("itemprop", "1");
+		} 
+		else{ 
+			if (secretCode.includes(digit)) {
+				// Need to check if this is a duplicate that's already counted
+				if (isPartialMatch(guess, index)) {
+					resultBox.classList.add("correct-number");
+					resultBox.setAttribute("itemprop", "2");
+				} 
+				else {
+					resultBox.classList.add("wrong");
+					resultBox.setAttribute("itemprop", "3");
+				}
+			} 
+			else {
 				resultBox.classList.add("wrong");
+				resultBox.setAttribute("itemprop", "3");
 			}
-		} else {
-			resultBox.classList.add("wrong");
-		}
-
+		}	
 		guessResults.appendChild(resultBox);
 	});
+
+	// in hard mode, I show the black results first, then white, then grey
+	//in normal mode, I show the results in the order they were inputted
+	if (mode == "hard"){
+		const children = Array.from(guessResults.children);
+
+		children.sort((a, b) => {
+			const valueA = parseInt(a.getAttribute("itemprop")) || 0;
+			const valueB = parseInt(b.getAttribute("itemprop")) || 0;
+			return valueA - valueB;
+		});
+
+		while (guessResults.firstChild) {
+			guessResults.removeChild(guessResults.firstChild);
+		}
+
+		children.forEach(child => {
+			guessResults.appendChild(child);
+		});
+	}
+
 
 	guessRow.appendChild(guessResults);
 	guessContainer.appendChild(guessRow);
@@ -242,10 +277,24 @@ function endGame(isWin) {
 	}
 }
 
+function toggleMode(which="toggle") {
+	if (mode == "hard" || which == "reset"){
+		mode = "normal";
+		toggleModeButton.innerText = "Hard mode";
+	}
+	else{
+		mode = "hard";
+		toggleModeButton.innerText = "Normal mode";
+	}
+	currentGuessInputs[0].focus();
+}
+
 // Event listeners
 submitButton.addEventListener("click", submitGuess);
 
 newGameButton.addEventListener("click", initGame);
+
+toggleModeButton.addEventListener("click", toggleMode);
 
 // Start the game
 initGame();
