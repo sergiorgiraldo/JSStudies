@@ -3,6 +3,7 @@ let secretCode = [];
 let attempts = 6;
 let gameOver = false;
 let mode = "easy";
+let withRepeating = false;
 const codeLength = 5;
 
 // DOM elements
@@ -13,26 +14,37 @@ const currentGuessInputs = document.querySelectorAll(
 const submitButton = document.getElementById("submitGuess");
 const newGameButton = document.getElementById("newGame");
 const toggleModeButton = document.getElementById("toggleMode");
+const canRepeatButton = document.getElementById("canRepeat");
 const messageDiv = document.getElementById("message");
 const attemptsSpan = document.getElementById("attempts");
 
+function generateSecretCode(codeLength) {
+	const availableDigits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+	const secretCode = [];
+		
+	for (let i = 0; i < codeLength; i++) {
+		const randomIndex = Math.floor(Math.random() * availableDigits.length);
+	  
+	  	secretCode.push(availableDigits[randomIndex]);
+
+		if (!withRepeating){
+			availableDigits.splice(randomIndex, 1);
+		}
+	}
+	console.log("Secret code:", secretCode.join('')); // For debugging
+	
+	return secretCode;
+  }
+
 // Initialize the game
 function initGame() {
-	// Generate random 5-digit code
-	secretCode = [];
-	for (let i = 0; i < codeLength; i++) {
-		secretCode.push(Math.floor(Math.random() * 10));
-	}
-	console.log("Secret code:", secretCode); // For debugging
+	secretCode = generateSecretCode(codeLength);
 
 	// Reset game state
 	attempts = 6;
 	gameOver = false;
 	mode = "normal";
 	attemptsSpan.textContent = attempts;
-	toggleMode("reset");
-
-	// Clear previous game
 	guessContainer.innerHTML = "";
 	messageDiv.classList.add("hidden");
 	messageDiv.classList.remove("win", "lose");
@@ -286,15 +298,27 @@ function toggleMode(which="toggle") {
 		mode = "hard";
 		toggleModeButton.innerText = "Normal mode";
 	}
-	currentGuessInputs[0].focus();
+	initGame();
 }
+
+function canRepeat(which="toggle") {
+	if (withRepeating || which == "reset"){
+		withRepeating = false;
+		canRepeatButton.innerText = "With repetition";
+	}
+	else{
+		withRepeating = true;
+		canRepeatButton.innerText = "No repetition";
+	}
+	initGame();
+}
+
 
 // Event listeners
 submitButton.addEventListener("click", submitGuess);
-
 newGameButton.addEventListener("click", initGame);
-
 toggleModeButton.addEventListener("click", toggleMode);
+canRepeatButton.addEventListener("click", canRepeat);
 
 // Start the game
 initGame();
