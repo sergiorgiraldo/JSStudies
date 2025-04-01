@@ -2,7 +2,7 @@
 let secretCode = [];
 let attempts = 6;
 let gameOver = false;
-let mode = "easy";
+let mode = "normal";
 let withRepeating = false;
 const codeLength = 5;
 
@@ -32,6 +32,8 @@ function generateSecretCode(codeLength) {
 		}
 	}
 	console.log("Secret code:", secretCode.join('')); // For debugging
+	console.log("Mode:", mode); // For debugging
+	console.log("Repetition:", withRepeating); // For debugging
 	
 	return secretCode;
   }
@@ -43,7 +45,6 @@ function initGame() {
 	// Reset game state
 	attempts = 6;
 	gameOver = false;
-	mode = "normal";
 	attemptsSpan.textContent = attempts;
 	guessContainer.innerHTML = "";
 	messageDiv.classList.add("hidden");
