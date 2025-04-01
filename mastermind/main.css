@@ -53,8 +53,20 @@ button {
 	font-size: 16px;
 	margin: 0 10px;
 }
+button.options{
+	background-color: #af8e4c;
+}
+button.new{
+	background-color: #5a53a4;
+}
 button:hover {
 	background-color: #45a049;
+}
+button.options:hover{
+	background-color: #c49028;
+}
+button.new:hover{
+	background-color: #6256e9;
 }
 button:disabled {
 	background-color: #cccccc;
@@ -103,4 +115,8 @@ button:disabled {
 }
 .hidden {
 	display: none;
+}
+fieldset{
+	padding: 15px;
+	margin-right: 15px;
 }

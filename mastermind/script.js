@@ -8,9 +8,7 @@ const codeLength = 5;
 
 // DOM elements
 const guessContainer = document.getElementById("guessContainer");
-const currentGuessInputs = document.querySelectorAll(
-	"#currentGuess .input-digit"
-);
+const currentGuessInputs = document.querySelectorAll("#currentGuess .input-digit");
 const submitButton = document.getElementById("submitGuess");
 const newGameButton = document.getElementById("newGame");
 const toggleModeButton = document.getElementById("toggleMode");
@@ -24,16 +22,13 @@ function generateSecretCode(codeLength) {
 		
 	for (let i = 0; i < codeLength; i++) {
 		const randomIndex = Math.floor(Math.random() * availableDigits.length);
-	  
-	  	secretCode.push(availableDigits[randomIndex]);
+
+		secretCode.push(availableDigits[randomIndex]);
 
 		if (!withRepeating){
 			availableDigits.splice(randomIndex, 1);
 		}
 	}
-	console.log("Secret code:", secretCode.join('')); // For debugging
-	console.log("Mode:", mode); // For debugging
-	console.log("Repetition:", withRepeating); // For debugging
 	
 	return secretCode;
   }
@@ -59,6 +54,11 @@ function initGame() {
 
 	// Focus on first input
 	currentGuessInputs[0].focus();
+
+	// For debugging
+	console.log("Secret code:", secretCode.join('')); 
+	console.log("Mode:", mode); 
+	console.log("Repetition:", withRepeating); 
 }
 
 // Handle input restrictions and navigation
@@ -76,10 +76,17 @@ currentGuessInputs.forEach((input, index) => {
 		// Navigation with arrow keys
 		if (e.key === "ArrowRight" && index < currentGuessInputs.length - 1) {
 			currentGuessInputs[index + 1].focus();
-		} else if (e.key === "ArrowLeft" && index > 0) {
+		} 
+		else if (e.key === "ArrowLeft" && index > 0) {
 			currentGuessInputs[index - 1].focus();
-		} else if (e.key === "Enter") {
-			submitGuess();
+		} 
+		else if (e.key === "Enter") {
+			if (index === currentGuessInputs.length - 1) {
+					submitGuess();
+				} 
+				else {
+					currentGuessInputs[index + 1].focus();
+				}		
 		}
 	});
 });
@@ -313,7 +320,6 @@ function canRepeat(which="toggle") {
 	}
 	initGame();
 }
-
 
 // Event listeners
 submitButton.addEventListener("click", submitGuess);

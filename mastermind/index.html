@@ -87,9 +87,15 @@
 			<div
 				class="guess-row"
 				style="justify-content: center; margin-top: 20px">
-				<button id="newGame">New Game</button>
-				<button id="toggleMode">Hard mode</button>
-				<button id="canRepeat">Allow repetition</button>
+				<fieldset>
+					<legend>Start over</legend>
+					<button id="newGame" class="new">New Game</button>
+				</fieldset>
+				<fieldset>
+					<legend>Options</legend>
+					<button id="toggleMode" class="options" title="Hard mode does not show the digit in the response">Hard mode</button>
+					<button id="canRepeat" class="options" title="Secret code may/may not/ have repeated digits">Allow repetition</button>
+				</fieldset>
 			</div>
 
 
