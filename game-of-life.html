@@ -61,6 +61,7 @@
 			<button id="btnPrev">Previous</button>
 			<button id="btnNext">Next</button>
 			<button id="btnPause" onclick="Utils.stopStart();">Pause</button>
+			<input id="chkNonStop" onclick="Utils.dontStop();" type="checkbox"/>Run continuously 
 		</p>
 		<p><b>Generations</b>&nbsp;<span id="sEnd"></span></p>
 		<p>
@@ -108,6 +109,11 @@
 					if (!gameWorld.paused) {
 						gameWorld.gameLoop();
 					}
+				}
+
+				static dontStop(){
+					const mode = document.getElementById("chkNonStop").checked;
+					gameWorld.runNonStop = mode;
 				}
 
 				static retrieve(key, defaultValue) {
@@ -285,10 +291,15 @@
 						console.log(this.stateHistory[this.stateHistory.length - 1]);
 						Utils.storeRecord(this.iteration);
 						Utils.storeFail(this.iteration);
-
-						const message = `Lived for ${this.iteration} generations, stable now. Do you want to reset?`;
-						if (confirm(message)) {
+						
+						if (this.runNonStop){
 							gameWorld = new GameWorld("canvas", true);
+						}
+						else{
+							const message = `Lived for ${this.iteration} generations, stable now. Do you want to reset?`;
+							if (confirm(message)) {
+								gameWorld = new GameWorld("canvas", true);
+							}
 						}
 					} else {
 						if (!this.paused) {
