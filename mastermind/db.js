@@ -1,60 +1,48 @@
 let db;
 let conn;
 
-import * as duckdb from './duckdb.wasm';
-
 async function initDuckDB() {
 	try {
-        const JSDELIVR_BUNDLES = {
-            mvp: {
-                mainModule: './duckdb-mvp.wasm',
-                mainWorker: './duckdb-browser-mvp.worker.js',
-            },
-            eh: {
-                mainModule: './duckdb-eh.wasm',
-                mainWorker: './duckdb-browser-eh.worker.js',
-            }
-        };
-        
-        // Select bundle based on browser support
+        const duckdb = await import("https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.28.1-dev106.0/+esm");
+        const JSDELIVR_BUNDLES = duckdb.getJsDelivrBundles();
         const bundle = await duckdb.selectBundle(JSDELIVR_BUNDLES);
-        
-        // Instantiate the asynchronous version of DuckDB
-        const worker = new Worker(bundle.mainWorker);
+        const worker_url = URL.createObjectURL(
+            new Blob([`importScripts("${bundle.mainWorker}");`], { type: "text/javascript" })
+        );
+        const worker = new Worker(worker_url);
         const logger = new duckdb.ConsoleLogger();
         db = new duckdb.AsyncDuckDB(logger, worker);
-        await db.instantiate(bundle.mainModule);
+        await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+        URL.revokeObjectURL(worker_url);
 
-		// Create a connection
-		conn = await db.connect();
-
-		// Fetch the DuckDB file
-		const response = await fetch("main.duckdb");
-		if (!response.ok) {
-			throw new Error(
-				`Failed to load database file: ${response.statusText}`
-			);
-		}
-
-		// Get the file as ArrayBuffer
-		const dbData = await response.arrayBuffer();
-
-		// Register the database file
-		await db.registerFileBuffer("main.duckdb", new Uint8Array(dbData));
-
-		// Attach the database file
-		await conn.query(`ATTACH 'main.duckdb' AS db`);
+        console.log("DuckDB initialized successfully");
 
     } 
-    catch (error) {
-		console.error(error);
-	}
+	catch (error) {
+        console.log(`Error initializing DuckDB: ${error.message}`);
+    }
 }
+
+async function loadFileFromUrl(filename) {
+    const response = await fetch(filename);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const arrayBuffer = await response.arrayBuffer();
+    if (arrayBuffer.byteLength === 0) {
+        throw new Error(`File ${filename} is empty (0 bytes)`);
+    }
+    await db.registerFileBuffer(filename, new Uint8Array(arrayBuffer));
+    console.log(`Loaded ${filename} (${arrayBuffer.byteLength} bytes)`);
+};
 
 // Run SQL query
 async function getSecrets(dt) {
 	try {
-		const query = 'select nb_normal, nb_hard from secrets';
+		await loadFileFromUrl('./main.duckdb');
+		const conn = await db.connect();
+
+		const query = 'select nb_normal, nb_hard from secrets;';
 		const result = await conn.query(query);
 
 		// Convert result to JSON and display
@@ -73,4 +61,5 @@ async function getSecrets(dt) {
 		console.error(error);
 	}
 }
+
 initDuckDB();
