@@ -16,8 +16,7 @@ async function initDuckDB() {
 
         console.log("DuckDB initialized successfully");
         
-        // Load the database file right after initialization
-        await loadFileFromUrl("./main.duckdb");
+        await loadFileFromUrl("http://www.giral.do/tmp/main.duckdb");
         console.log("Database file loaded successfully");
     } 
     catch (error) {
@@ -47,8 +46,7 @@ async function getSecrets() {
     let conn = null;
     try {
         conn = await db.connect();
-        
-        const query = "SELECT nb_normal, nb_hard FROM main.secrets;";
+        const query = "SELECT nb_normal, nb_hard FROM secrets;";
         const result = await conn.query(query);
 
         // Convert result to JSON and display
