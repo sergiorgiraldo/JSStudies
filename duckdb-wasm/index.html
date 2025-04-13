@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DuckDB-Wasm File Upload</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="scripts.js" defer></script> 
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-column">
+            <h1>Vanilla🍦Duck🦆</h1>
+            
+            <input type="file" id="fileInput" />
+
+            <div id="createTableDiv">
+                <input type="text" id="tableNameInput" placeholder="Enter table name"/>
+                <button type="button" id="uploadBtn" onclick="uploadTable()">Create Table</button>
+            </div>
+
+            <div id="tablesDiv" style="display:none">
+                <table id="tablesTable"></table>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div id="queryEntryDiv" style="display:none">  
+                <h2>SQL Query</h2>
+                <textarea id="queryInput" rows="10" placeholder="Write SQL query here"></textarea>
+                <button type="button" id="queryBtn" onclick="runQuery()">Run Query</button>
+            </div>
+
+            <div id="queryResultsDiv" style="display:none">
+                <h4>Query:</h4>
+                <div id="lastQueryDiv"></div>
+                <h4>Result:</h4>
+                <div id="resultErrorDiv"></div>
+                <table id="resultTable"></table>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -16,7 +16,7 @@ async function initDuckDB() {
 
         console.log("DuckDB initialized successfully");
         
-        await loadFileFromUrl("http://www.giral.do/tmp/main.duckdb");
+        await loadFileFromUrl("./main.duckdb");
         console.log("Database file loaded successfully");
     } 
     catch (error) {
@@ -30,11 +30,17 @@ async function loadFileFromUrl(filename) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        else{
+            console.log("fetch ok")
+        }
         const arrayBuffer = await response.arrayBuffer();
         if (arrayBuffer.byteLength === 0) {
             throw new Error(`File ${filename} is empty (0 bytes)`);
         }
         await db.registerFileBuffer(filename, new Uint8Array(arrayBuffer));
+        
+        await db.registerFileHandle('main.duckdb', 'main.duckdb', true);
+
         console.log(`Loaded ${filename} (${arrayBuffer.byteLength} bytes)`);
     } catch (error) {
         console.error(`Error loading file: ${error.message}`);
@@ -46,7 +52,9 @@ async function getSecrets() {
     let conn = null;
     try {
         conn = await db.connect();
-        const query = "SELECT nb_normal, nb_hard FROM secrets;";
+        await conn.query(`ATTACH DATABASE 'main.duckdb' AS main;`);
+
+        const query = "SELECT nb_normal, nb_hard FROM main.secrets;";
         const result = await conn.query(query);
 
         // Convert result to JSON and display
