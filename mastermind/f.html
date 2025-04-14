@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DuckDB Browser Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        #results {
+            white-space: pre-wrap;
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        #query {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>DuckDB Browser Example</h1>
+    
+    <div>
+        <h3>SQL Query:</h3>
+        <textarea id="query">SELECT * FROM information_schema.tables WHERE table_schema = 'main';</textarea>
+        <div>
+            <button id="runQuery">Run Query</button>
+            <button id="showTables">Show Tables</button>
+        </div>
+    </div>
+    
+    <div id="results"></div>
+
+    <!-- Step 1: Include the DuckDB WASM CDN scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.1-dev132.0/dist/duckdb-browser.mjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.1-dev132.0/dist/duckdb-browser-blocking.mjs"></script>
+
+    <!-- Step 2: Main script for working with DuckDB -->
+    <script>
+        // Function to display results in the UI
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results');
+            if (typeof results === 'object') {
+                resultsDiv.textContent = JSON.stringify(results, null, 2);
+            } else {
+                resultsDiv.textContent = results;
+            }
+        }
+
+        // Initialize DuckDB
+        let db;
+        let conn;
+
+        async function initializeDuckDB() {
+            try {
+                // Display loading message
+                displayResults("Loading DuckDB WASM...");
+                
+                // Initialize DuckDB with a bundle (required for WASM)
+                const JSDELIVR_BUNDLES = {
+                    mvp: {
+                        mainModule: 'https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.1-dev132.0/dist/duckdb-mvp.wasm',
+                        mainWorker: 'https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.1-dev132.0/dist/duckdb-browser-mvp.worker.js',
+                    },
+                    eh: {
+                        mainModule: 'https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.1-dev132.0/dist/duckdb-eh.wasm',
+                        mainWorker: 'https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.1-dev132.0/dist/duckdb-browser-eh.worker.js',
+                    }
+                };
+                
+                // Select a bundle based on browser capabilities
+                const bundle = await duckdb.selectBundle(JSDELIVR_BUNDLES);
+                const worker = new Worker(bundle.mainWorker);
+                const logger = new duckdb.ConsoleLogger();
+                
+                // Create a database instance
+                db = new duckdb.AsyncDuckDB(logger, worker);
+                await db.instantiate(bundle.mainModule);
+                
+                // Open the database and create a connection
+                await db.open({
+                    path: 'main.duckdb',
+                    query: {
+                        castTimestampToDate: true
+                    }
+                });
+                
+                conn = await db.connect();
+                
+                displayResults("DuckDB initialized and ready! You can now run queries.");
+                
+                // Load your database
+                // Note: In a real application, you would need to fetch your .duckdb file from a server
+                // or let the user select it from their device
+                
+                // This is a simplified example - in a real application you would need to:
+                // 1. Let the user upload their .duckdb file or
+                // 2. Fetch it from your server or
+                // 3. Create it from scratch
+                
+                // For this example, we'll attach an in-memory database as 'main'
+                // In a real scenario, you'd use the file the user provided
+                try {
+                    // Since we can't directly load a file from disk in the browser,
+                    // this is just a placeholder. In real use, you'd need file input.
+                    await conn.query(`ATTACH DATABASE ':memory:' AS main`);
+                    await conn.query(`
+                        CREATE TABLE main.example(id INTEGER, name VARCHAR);
+                        INSERT INTO main.example VALUES (1, 'Item 1'), (2, 'Item 2'), (3, 'Item 3');
+                    `);
+                    
+                    displayResults("Created sample data since we can't access your local file directly in the browser.");
+                } catch (error) {
+                    displayResults("Error setting up database: " + error.message);
+                }
+                
+            } catch (error) {
+                displayResults("Failed to initialize DuckDB: " + error.message);
+                console.error("DuckDB initialization error:", error);
+            }
+        }
+
+        // Run a query against the database
+        async function runQuery(query) {
+            if (!conn) {
+                displayResults("Database not connected. Please wait for initialization or try again.");
+                return;
+            }
+            
+            try {
+                displayResults("Running query...");
+                const result = await conn.query(query);
+                displayResults(result);
+            } catch (error) {
+                displayResults("Query error: " + error.message);
+                console.error("Query error:", error);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('runQuery').addEventListener('click', () => {
+            const query = document.getElementById('query').value;
+            runQuery(query);
+        });
+        
+        document.getElementById('showTables').addEventListener('click', () => {
+            runQuery("SELECT table_name FROM information_schema.tables WHERE table_schema = 'main'");
+        });
+
+        // Initialize DuckDB when the page loads
+        window.addEventListener('DOMContentLoaded', initializeDuckDB);
+    </script>
+</body>
+</html>
