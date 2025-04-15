@@ -16,8 +16,8 @@ async function initDuckDB() {
 
         console.log("DuckDB initialized successfully");
         
-        await loadFileFromUrl("./main.duckdb");
-        console.log("Database file loaded successfully");
+        // await loadFileFromUrl("./main.duckdb");
+        // console.log("Database file loaded successfully");
     } 
     catch (error) {
         console.error(`Error initializing DuckDB: ${error.message}`);
@@ -51,23 +51,19 @@ async function loadFileFromUrl(filename) {
 async function getSecrets() {
     let conn = null;
     try {
+        console.log('<<<<<<<<<<<<<<<<<<<')
         conn = await db.connect();
-        await conn.query(`ATTACH DATABASE 'main.duckdb' AS main;`);
+        await conn.query(`ATTACH DATABASE 'main.duckdb' AS t;`);
 
-        const query = "SELECT nb_normal, nb_hard FROM main.secrets;";
+        const query = "SELECT * FROM information_schema.tables WHERE table_schema = 'main';";
+        // const query = "SELECT * FROM information_schema.schemata;";
+        // const query = "SELECT * FROM information_schema.tables WHERE table_schema = 'main';";
+        // const query = "SELECT nb_normal, nb_hard FROM main.secrets;";
         const result = await conn.query(query);
 
-        // Convert result to JSON and display
-        const jsonResult = result.toArray().map((row) => {
-            const obj = {};
-            for (let i = 0; i < result.getChildrenCount(); i++) {
-                const colName = result.getChildName(i);
-                obj[colName] = row.getChild(i).toJS();
-            }
-            return obj;
-        });
+        const tableData = result.toArray();
 
-        console.log(JSON.stringify(jsonResult, null, 2));
+        console.log(JSON.stringify(tableData, null, 2));
         return jsonResult;
     } 
     catch (error) {
