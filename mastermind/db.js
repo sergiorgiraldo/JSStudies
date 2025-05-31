@@ -24,28 +24,29 @@ async function initDuckDB() {
     }
 }
 
-async function loadFileFromUrl(filename) {
-    try {
-        const response = await fetch(filename);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        else{
-            console.log("fetch ok")
-        }
-        const arrayBuffer = await response.arrayBuffer();
-        if (arrayBuffer.byteLength === 0) {
-            throw new Error(`File ${filename} is empty (0 bytes)`);
-        }
-        await db.registerFileBuffer(filename, new Uint8Array(arrayBuffer));
+// async function loadFileFromUrl(filename) {
+//     try {
+//         const response = await fetch(filename);
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         else{
+//             console.log("fetch ok")
+//         }
+//         const arrayBuffer = await response.arrayBuffer();
+//         if (arrayBuffer.byteLength === 0) {
+//             throw new Error(`File ${filename} is empty (0 bytes)`);
+//         }
+//         await db.registerFileBuffer(filename, new Uint8Array(arrayBuffer));
         
-        await db.registerFileHandle('main.duckdb', 'main.duckdb', true);
+//         await db.registerFileHandle('main.duckdb', 'main.duckdb', true);
 
-        console.log(`Loaded ${filename} (${arrayBuffer.byteLength} bytes)`);
-    } catch (error) {
-        console.error(`Error loading file: ${error.message}`);
-    }
-}
+//         console.log(`Loaded ${filename} (${arrayBuffer.byteLength} bytes)`);
+//     } 
+//      catch (error) {
+//         console.error(`Error loading file: ${error.message}`);
+//     }
+// }
 
 // Run SQL query
 async function getSecrets() {
@@ -53,18 +54,19 @@ async function getSecrets() {
     try {
         console.log('<<<<<<<<<<<<<<<<<<<')
         conn = await db.connect();
-        await conn.query(`ATTACH DATABASE 'main.duckdb' AS t;`);
+        await conn.query(`ATTACH 'https://blobs.duckdb.org/databases/stations.duckdb' AS t (READ_ONLY);`);
 
-        const query = "SELECT * FROM information_schema.tables WHERE table_schema = 'main';";
-        // const query = "SELECT * FROM information_schema.schemata;";
         // const query = "SELECT * FROM information_schema.tables WHERE table_schema = 'main';";
+        // const query = "SELECT * FROM information_schema.schemata;";
+        // const query = "SELECT * FROM information_schema.tables WHERE table_catalog = 't';";
         // const query = "SELECT nb_normal, nb_hard FROM main.secrets;";
+        const query = "SELECT * FROM t.stations;";
         const result = await conn.query(query);
 
         const tableData = result.toArray();
 
-        console.log(JSON.stringify(tableData, null, 2));
-        return jsonResult;
+        console.log(JSON.stringify(tableData));
+        // return jsonResult;
     } 
     catch (error) {
         console.error("Error querying database:", error);

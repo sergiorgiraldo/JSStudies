@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/supabase/2.39.3/supabase.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            min-height: 600px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="email"], input[type="password"], input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-bottom: 15px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .toggle-link {
+            text-align: center;
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .nav-buttons button {
+            flex: 1;
+            background: #f8f9fa;
+            color: #555;
+            border: 2px solid #e1e5e9;
+        }
+
+        .nav-buttons button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .pet-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .pet-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #667eea;
+        }
+
+        .pet-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #fdf2f2;
+            border-radius: 8px;
+        }
+
+        .success {
+            color: #27ae60;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f2fdf2;
+            border-radius: 8px;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            margin-top: 20px;
+        }
+
+        .image-preview {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            border: 2px solid #e1e5e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Auth Page -->
+        <div id="authPage" class="page active">
+            <h1>🐾 Pet Manager</h1>
+            
+            <div id="signInForm">
+                <h2>Sign In</h2>
+                <div id="authError" class="error" style="display: none;"></div>
+                <div id="authSuccess" class="success" style="display: none;"></div>
+                
+                <div class="form-group">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" required>
+                </div>
+                
+                <button id="signInBtn">Sign In</button>
+                
+                <div class="toggle-link" onclick="toggleAuthForm()">
+                    Don't have an account? Sign up
+                </div>
+            </div>
+            
+            <div id="signUpForm" style="display: none;">
+                <h2>Sign Up</h2>
+                <div id="signUpError" class="error" style="display: none;"></div>
+                <div id="signUpSuccess" class="success" style="display: none;"></div>
+                
+                <div class="form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signUpPassword">Password</label>
+                    <input type="password" id="signUpPassword" required>
+                </div>
+                
+                <button id="signUpBtn">Sign Up</button>
+                
+                <div class="toggle-link" onclick="toggleAuthForm()">
+                    Already have an account? Sign in
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Pet Page -->
+        <div id="addPetPage" class="page">
+            <div class="nav-buttons">
+                <button onclick="showPage('addPetPage')" class="active">Add Pet</button>
+                <button onclick="showPage('listPetsPage')">My Pets</button>
+            </div>
+            
+            <h2>Add New Pet</h2>
+            <div id="addPetError" class="error" style="display: none;"></div>
+            <div id="addPetSuccess" class="success" style="display: none;"></div>
+            
+            <div class="form-group">
+                <label for="petName">Pet Name</label>
+                <input type="text" id="petName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="petImage">Pet Photo</label>
+                <input type="file" id="petImage" accept="image/*">
+                <div id="imagePreview" class="image-preview"></div>
+            </div>
+            
+            <button id="addPetBtn">Add Pet</button>
+            
+            <button class="logout-btn" onclick="signOut()">Sign Out</button>
+        </div>
+
+        <!-- List Pets Page -->
+        <div id="listPetsPage" class="page">
+            <div class="nav-buttons">
+                <button onclick="showPage('addPetPage')">Add Pet</button>
+                <button onclick="showPage('listPetsPage')" class="active">My Pets</button>
+            </div>
+            
+            <h2>My Pets</h2>
+            <div id="petsContainer">
+                <p style="text-align: center; color: #666;">Loading pets...</p>
+            </div>
+            
+            <button class="logout-btn" onclick="signOut()">Sign Out</button>
+        </div>
+    </div>
+
+    <script>
+        // Replace with your Supabase URL and anon key
+        const SUPABASE_URL = 'https://dlirtvigbwrixwfdffln.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsaXJ0dmlnYndyaXh3ZmRmZmxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg3MTgwNDIsImV4cCI6MjA2NDI5NDA0Mn0.FD0AZpMo-l1j6z5DuK6GujXQSA3oKta7006ORuzJ5oI';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        let currentUser = null;
+
+        // Check if user is already signed in
+        checkAuth();
+
+        async function checkAuth() {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                currentUser = user;
+                showPage('addPetPage');
+            }
+        }
+
+        function toggleAuthForm() {
+            const signInForm = document.getElementById('signInForm');
+            const signUpForm = document.getElementById('signUpForm');
+            
+            if (signInForm.style.display === 'none') {
+                signInForm.style.display = 'block';
+                signUpForm.style.display = 'none';
+            } else {
+                signInForm.style.display = 'none';
+                signUpForm.style.display = 'block';
+            }
+            
+            // Clear error messages
+            hideMessage('authError');
+            hideMessage('signUpError');
+            hideMessage('authSuccess');
+            hideMessage('signUpSuccess');
+        }
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-buttons button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (pageId === 'listPetsPage') {
+                loadPets();
+            }
+        }
+
+        function showMessage(elementId, message, isError = true) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        function hideMessage(elementId) {
+            document.getElementById(elementId).style.display = 'none';
+        }
+
+        // Sign Up
+        document.getElementById('signUpBtn').addEventListener('click', async () => {
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            
+            if (!email || !password) {
+                showMessage('signUpError', 'Please fill in all fields');
+                return;
+            }
+            
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+            });
+            
+            if (error) {
+                showMessage('signUpError', error.message);
+            } else {
+                showMessage('signUpSuccess', 'Check your email for verification link!', false);
+            }
+        });
+
+        // Sign In
+        document.getElementById('signInBtn').addEventListener('click', async () => {
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            
+            if (!email || !password) {
+                showMessage('authError', 'Please fill in all fields');
+                return;
+            }
+            
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+            
+            if (error) {
+                showMessage('authError', error.message);
+            } else {
+                currentUser = data.user;
+                showPage('addPetPage');
+            }
+        });
+
+        // Sign Out
+        async function signOut() {
+            await supabase.auth.signOut();
+            currentUser = null;
+            showPage('authPage');
+            document.getElementById('authPage').classList.add('active');
+        }
+
+        // Image preview
+        document.getElementById('petImage').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+            }
+        });
+
+        // Add Pet
+        document.getElementById('addPetBtn').addEventListener('click', async () => {
+            const petName = document.getElementById('petName').value;
+            const petImageFile = document.getElementById('petImage').files[0];
+            
+            if (!petName) {
+                showMessage('addPetError', 'Please enter a pet name');
+                return;
+            }
+            
+            if (!currentUser) {
+                showMessage('addPetError', 'You must be signed in');
+                return;
+            }
+            
+            let imageUrl = null;
+            
+            // Upload image if provided
+            if (petImageFile) {
+                const fileExt = petImageFile.name.split('.').pop();
+                const fileName = `${currentUser.id}/${Date.now()}.${fileExt}`;
+                
+                const { data: uploadData, error: uploadError } = await supabase.storage
+                    .from('pet-images')
+                    .upload(fileName, petImageFile);
+                
+                if (uploadError) {
+                    showMessage('addPetError', 'Error uploading image: ' + uploadError.message);
+                    return;
+                }
+                
+                // Get public URL
+                const { data: { publicUrl } } = supabase.storage
+                    .from('pet-images')
+                    .getPublicUrl(fileName);
+                
+                imageUrl = publicUrl;
+            }
+            
+            // Insert pet record
+            const { data, error } = await supabase
+                .from('pets')
+                .insert([
+                    {
+                        name: petName,
+                        image_url: imageUrl,
+                        user_id: currentUser.id
+                    }
+                ]);
+            
+            if (error) {
+                showMessage('addPetError', 'Error adding pet: ' + error.message);
+            } else {
+                showMessage('addPetSuccess', 'Pet added successfully!', false);
+                document.getElementById('petName').value = '';
+                document.getElementById('petImage').value = '';
+                document.getElementById('imagePreview').innerHTML = '';
+            }
+        });
+
+        // Load Pets
+        async function loadPets() {
+            if (!currentUser) return;
+            
+            const { data: pets, error } = await supabase
+                .from('pets')
+                .select('*')
+                .eq('user_id', currentUser.id)
+                .order('created_at', { ascending: false });
+            
+            const container = document.getElementById('petsContainer');
+            
+            if (error) {
+                container.innerHTML = '<p style="text-align: center; color: #e74c3c;">Error loading pets</p>';
+                return;
+            }
+            
+            if (pets.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">No pets added yet. Add your first pet!</p>';
+                return;
+            }
+            
+            container.innerHTML = pets.map(pet => `
+                <div class="pet-item">
+                    ${pet.image_url ? 
+                        `<img src="${pet.image_url}" alt="${pet.name}" class="pet-image">` : 
+                        `<div class="pet-image" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 24px;">🐾</div>`
+                    }
+                    <div class="pet-name">${pet.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // Update nav button active state
+        document.querySelectorAll('.nav-buttons button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-buttons button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
