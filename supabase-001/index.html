@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Manager</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/supabase/2.39.3/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.8/dist/umd/supabase.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -345,6 +345,8 @@
             const element = document.getElementById(elementId);
             element.textContent = message;
             element.style.display = 'block';
+
+            console.log(message);
         }
 
         function hideMessage(elementId) {
