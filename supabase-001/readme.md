@@ -76,3 +76,7 @@ The app includes three main views:
 2.Add Pet Page: Add new pets with names and photos
 
 3.List Pets Page: View all your added pets
+
+## Deploy
+
+Test locally with `python3 -m http.server`
