@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "baseUrl": "src"
+  },
+  "include": ["src","global.d.ts","*.d.ts"]
+}
