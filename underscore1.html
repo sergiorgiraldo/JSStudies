@@ -22,4 +22,17 @@
 			document.write("&nbsp;&nbsp;&nbsp;&bull;" + _.movie + "<br/>");
 		});
 	});
+
+	//only javascript
+	var groups2 = {};
+	actors.forEach(function (actor) {
+		(groups2[actor.name] = groups2[actor.name] || []).push(actor);
+	});
+
+	Object.keys(groups2).forEach(function (actor) {
+		document.write(actor + "<br/>");
+		groups2[actor].forEach(function (item) {
+			document.write("&nbsp;&nbsp;&nbsp;&bull;" + item.movie + "<br/>");
+		});
+	});
 </script>
